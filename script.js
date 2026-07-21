@@ -1752,3 +1752,64 @@ async ()=>{
 
 
 });
+/* ======================================================
+        PHOTO VIEWER
+====================================================== */
+
+const photoViewer =
+document.getElementById(
+    "photoViewer"
+);
+
+const viewerImage =
+document.getElementById(
+    "viewerImage"
+);
+
+
+
+
+function openPhotoViewer(img){
+
+    viewerImage.src =
+    img.src;
+
+    photoViewer.classList.add(
+        "active"
+    );
+
+}
+
+
+
+
+function closePhotoViewer(){
+
+    photoViewer.classList.remove(
+        "active"
+    );
+
+}
+
+
+
+document
+.getElementById(
+    "viewerClose"
+)
+.addEventListener(
+    "click",
+    closePhotoViewer
+);
+
+
+
+
+document
+.querySelector(
+    ".viewer-background"
+)
+.addEventListener(
+    "click",
+    closePhotoViewer
+);
