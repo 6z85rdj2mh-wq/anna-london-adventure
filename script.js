@@ -288,13 +288,12 @@ function flyPlane(){
 
 
 
-        plane.style.left =
-        x + "px";
+     plane.style.left =
+x + "px";
 
 
-
-        plane.style.top =
-        y + "px";
+plane.style.top =
+(y - 18) + "px";
 
 
 
