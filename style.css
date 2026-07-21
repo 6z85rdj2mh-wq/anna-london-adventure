@@ -577,21 +577,22 @@ body{
 
 #plane svg{
 
-
     width:100%;
-
 
     fill:white;
 
-
-
     filter:
-
     drop-shadow(
-
-    0 0 15px white
-
+    0 0 8px rgba(255,255,255,.7)
     );
+   #plane{
+
+    transition:
+    opacity .5s ease;
+
+}
+
+}
 
 
 }
