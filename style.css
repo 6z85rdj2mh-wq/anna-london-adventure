@@ -385,6 +385,7 @@ transform:translateY(0);
     left:86%;
 
     top:34%;
+    flex-direction:row-reverse;
 
 }
 
