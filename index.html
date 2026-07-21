@@ -165,6 +165,7 @@ PERUGIA
 
 
 
+
 <circle
 
 class="map-dot destination-dot"
@@ -192,6 +193,8 @@ y="140">
 LONDRA
 
 </text>
+
+
 
 
 
@@ -241,10 +244,12 @@ Z
 
 
 
+
 </div>
 
 
 </div>
+
 
 
 
@@ -365,7 +370,8 @@ id="degreeGallery">
 
 
 </section>
-<!-- ================= VIAGGIO ================= -->
+
+
 
 
 <section class="card adventure-card">
@@ -390,8 +396,6 @@ id="degreeGallery">
 
 
 </div>
-
-
 
 
 
@@ -445,8 +449,6 @@ Ora manca solo partire.
 
 
 
-
-
 <div class="photo-area">
 
 
@@ -455,8 +457,6 @@ Ora manca solo partire.
 🌃 Album Londra
 
 </h3>
-
-
 
 
 
@@ -491,8 +491,6 @@ onchange="uploadToSupabase(event,'londonGallery')">
 
 
 
-
-
 <div
 
 class="gallery"
@@ -513,11 +511,13 @@ id="londonGallery">
 
 
 
+
 </div>
 
 
 
 </section>
+
 
 
 
@@ -550,7 +550,47 @@ per sempre.
 
 
 
+
 </main>
+
+
+
+
+
+
+
+<!-- ===============================
+        PHOTO LONG PRESS MENU
+================================ -->
+
+
+<div id="photoMenu" class="photo-menu">
+
+
+<button id="savePhoto">
+
+💾 Salva foto
+
+</button>
+
+
+
+<button id="deletePhoto">
+
+🗑 Elimina
+
+</button>
+
+
+
+<button id="closePhotoMenu">
+
+❌ Chiudi
+
+</button>
+
+
+</div>
 
 
 
@@ -574,6 +614,7 @@ per sempre.
 
 
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -581,6 +622,7 @@ per sempre.
 
 
 <script src="script.js"></script>
+
 
 
 
