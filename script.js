@@ -1,3 +1,4 @@
+```javascript
 /* ======================================================
    ANNA'S LONDON ADVENTURE
    SCRIPT.JS FINAL CLEAN
@@ -391,6 +392,49 @@ function toggleSection(header){
     }
 
 }
+```
+/* ======================================================
+            GALLERY PAGINATION SETTINGS
+====================================================== */
+
+
+const GALLERY_PAGE_SIZE = 50;
+
+
+const galleryStates = {
+
+    degreeGallery:{
+
+        folder:"laurea",
+
+        offset:0,
+
+        hasMore:true,
+
+        loading:false,
+
+        buttonId:"loadMoreDegree"
+
+    },
+
+
+    londonGallery:{
+
+        folder:"londra",
+
+        offset:0,
+
+        hasMore:true,
+
+        loading:false,
+
+        buttonId:"loadMoreLondon"
+
+    }
+
+};
+
+
 /* ======================================================
             SUPABASE PHOTO UPLOAD
 ====================================================== */
@@ -401,46 +445,24 @@ async function uploadToSupabase(event,galleryId){
     const files =
     event.target.files;
 
+
     const gallery =
     document.getElementById(
         galleryId
     );
 
+
+    const galleryState =
+    galleryStates[galleryId];
+
+
     if(
         !gallery ||
+        !galleryState ||
         !files ||
         files.length === 0
     )
     return;
-
-
-    let folder = "";
-
-
-    if(galleryId === "degreeGallery"){
-
-        folder = "laurea";
-
-    }
-
-
-    if(galleryId === "londonGallery"){
-
-        folder = "londra";
-
-    }
-
-
-    if(!folder){
-
-        console.error(
-            "Galleria non riconosciuta:",
-            galleryId
-        );
-
-        return;
-
-    }
 
 
     for(const file of files){
@@ -455,14 +477,21 @@ async function uploadToSupabase(event,galleryId){
             );
 
 
+            const uniquePart =
+
+            Math.random()
+            .toString(36)
+            .slice(2,8);
+
+
             const fileName =
 
-            `${Date.now()}-${safeName}`;
+            `${Date.now()}-${uniquePart}-${safeName}`;
 
 
             const filePath =
 
-            `${folder}/${fileName}`;
+            `${galleryState.folder}/${fileName}`;
 
 
             const {error} =
@@ -514,6 +543,13 @@ async function uploadToSupabase(event,galleryId){
             );
 
 
+            /*
+            La fotografia viene aggiunta
+            immediatamente alla bacheca,
+            senza ricaricare la pagina.
+            */
+
+
             addPhotoToGallery(
 
                 gallery,
@@ -549,6 +585,12 @@ async function uploadToSupabase(event,galleryId){
     }
 
 
+    /*
+    Permette di selezionare di nuovo
+    anche la stessa fotografia.
+    */
+
+
     event.target.value = "";
 
 }
@@ -571,6 +613,33 @@ function addPhotoToGallery(
         !filePath
     )
     return null;
+
+
+    /*
+    Evita duplicati quando una foto
+    appena caricata viene poi incontrata
+    dalla paginazione di Supabase.
+    */
+
+
+    const existingImage =
+
+    Array.from(
+        gallery.querySelectorAll("img")
+    )
+
+    .find(img=>
+
+        img.dataset.path === filePath
+
+    );
+
+
+    if(existingImage){
+
+        return existingImage;
+
+    }
 
 
     const polaroid =
@@ -608,8 +677,19 @@ function addPhotoToGallery(
     "lazy";
 
 
+    img.decoding =
+    "async";
+
+
     img.draggable =
     false;
+
+
+    /*
+    Rotazione e altezza leggermente casuali.
+    Le Polaroid rimangono sempre separate
+    nelle rispettive celle della griglia.
+    */
 
 
     const rotation =
@@ -640,6 +720,80 @@ function addPhotoToGallery(
     );
 
 
+    /*
+    Puntine di colori casuali.
+    Ogni colore ha una tonalità
+    più scura per l'effetto tridimensionale.
+    */
+
+
+    const pinColors = [
+
+        {
+            main:"#c94343",
+            dark:"#801e1e"
+        },
+
+        {
+            main:"#3f78c5",
+            dark:"#1f467d"
+        },
+
+        {
+            main:"#e0a52f",
+            dark:"#946715"
+        },
+
+        {
+            main:"#4f9b63",
+            dark:"#28613a"
+        },
+
+        {
+            main:"#8b5fbf",
+            dark:"#55337d"
+        },
+
+        {
+            main:"#e06f9f",
+            dark:"#93415f"
+        }
+
+    ];
+
+
+    const randomPin =
+
+    pinColors[
+
+        Math.floor(
+
+            Math.random() *
+            pinColors.length
+
+        )
+
+    ];
+
+
+    polaroid.style.setProperty(
+
+        "--pin-color",
+
+        randomPin.main
+
+    );
+
+
+    polaroid.style.setProperty(
+
+        "--pin-dark",
+
+        randomPin.dark
+
+    );
+
+
     polaroid.appendChild(
         img
     );
@@ -656,11 +810,65 @@ function addPhotoToGallery(
 
 
 /* ======================================================
+        UPDATE LOAD MORE BUTTON
+====================================================== */
+
+
+function updateLoadMoreButton(galleryId){
+
+    const state =
+    galleryStates[galleryId];
+
+
+    if(!state)
+    return;
+
+
+    const loadMoreButton =
+
+    document.getElementById(
+        state.buttonId
+    );
+
+
+    if(!loadMoreButton)
+    return;
+
+
+    loadMoreButton.classList.toggle(
+
+        "visible",
+
+        state.hasMore
+
+    );
+
+
+    loadMoreButton.disabled =
+    state.loading;
+
+
+    loadMoreButton.textContent =
+
+    state.loading
+
+    ? "CARICAMENTO..."
+
+    : "＋ CARICA ALTRE FOTO";
+
+}
+
+
+/* ======================================================
             LOAD SAVED PHOTOS
 ====================================================== */
 
 
-async function loadGallery(folder,galleryId){
+async function loadGallery(
+    folder,
+    galleryId,
+    reset=false
+){
 
     const gallery =
 
@@ -669,45 +877,164 @@ async function loadGallery(folder,galleryId){
     );
 
 
-    if(!gallery)
+    const state =
+    galleryStates[galleryId];
+
+
+    if(
+        !gallery ||
+        !state
+    )
     return;
 
 
-    gallery.innerHTML = "";
+    if(state.loading)
+    return;
 
 
-    const {data,error} =
-
-    await supabaseClient
-
-    .storage
-
-    .from(
-        "anna-graduation-trip"
+    if(
+        !state.hasMore &&
+        !reset
     )
+    return;
 
-    .list(
 
-        folder,
+    if(reset){
 
-        {
+        gallery.innerHTML = "";
 
-            limit:100,
+        state.offset = 0;
 
-            sort:{
+        state.hasMore = true;
 
-                column:"created_at",
+    }
 
-                order:"asc"
 
-            }
+    state.loading = true;
 
-        }
 
+    updateLoadMoreButton(
+        galleryId
     );
 
 
-    if(error){
+    try{
+
+        /*
+        Richiediamo una foto in più
+        per sapere se esiste una pagina
+        successiva senza fare una seconda richiesta.
+        */
+
+
+        const {data,error} =
+
+        await supabaseClient
+
+        .storage
+
+        .from(
+            "anna-graduation-trip"
+        )
+
+        .list(
+
+            folder,
+
+            {
+
+                limit:
+                GALLERY_PAGE_SIZE + 1,
+
+                offset:
+                state.offset,
+
+                sortBy:{
+
+                    column:"created_at",
+
+                    order:"asc"
+
+                }
+
+            }
+
+        );
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const availableFiles =
+
+        Array.isArray(data)
+        ? data
+        : [];
+
+
+        const filesToShow =
+
+        availableFiles.slice(
+
+            0,
+
+            GALLERY_PAGE_SIZE
+
+        );
+
+
+        filesToShow.forEach(file=>{
+
+            const filePath =
+
+            `${folder}/${file.name}`;
+
+
+            const {data:urlData} =
+
+            supabaseClient
+
+            .storage
+
+            .from(
+                "anna-graduation-trip"
+            )
+
+            .getPublicUrl(
+                filePath
+            );
+
+
+            addPhotoToGallery(
+
+                gallery,
+
+                urlData.publicUrl,
+
+                filePath
+
+            );
+
+        });
+
+
+        state.offset +=
+
+        filesToShow.length;
+
+
+        state.hasMore =
+
+        availableFiles.length >
+        GALLERY_PAGE_SIZE;
+
+    }
+
+    catch(error){
 
         console.error(
 
@@ -717,41 +1044,83 @@ async function loadGallery(folder,galleryId){
 
         );
 
-        return;
+    }
+
+    finally{
+
+        state.loading = false;
+
+
+        updateLoadMoreButton(
+            galleryId
+        );
 
     }
 
-
-    data.forEach(file=>{
-
-        const {data:urlData} =
-
-        supabaseClient
-
-        .storage
-
-        .from(
-            "anna-graduation-trip"
-        )
-
-        .getPublicUrl(
-
-            `${folder}/${file.name}`
-
-        );
+}
 
 
-        addPhotoToGallery(
+/* ======================================================
+            LOAD MORE BUTTON EVENTS
+====================================================== */
 
-            gallery,
 
-            urlData.publicUrl,
+const loadMoreDegreeButton =
 
-            `${folder}/${file.name}`
+document.getElementById(
+    "loadMoreDegree"
+);
 
-        );
 
-    });
+if(loadMoreDegreeButton){
+
+    loadMoreDegreeButton.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            loadGallery(
+
+                "laurea",
+
+                "degreeGallery"
+
+            );
+
+        }
+
+    );
+
+}
+
+
+const loadMoreLondonButton =
+
+document.getElementById(
+    "loadMoreLondon"
+);
+
+
+if(loadMoreLondonButton){
+
+    loadMoreLondonButton.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            loadGallery(
+
+                "londra",
+
+                "londonGallery"
+
+            );
+
+        }
+
+    );
 
 }
 
@@ -800,7 +1169,9 @@ window.addEventListener(
 
         "laurea",
 
-        "degreeGallery"
+        "degreeGallery",
+
+        true
 
     );
 
@@ -809,7 +1180,9 @@ window.addEventListener(
 
         "londra",
 
-        "londonGallery"
+        "londonGallery",
+
+        true
 
     );
 
@@ -924,6 +1297,7 @@ function cancelPress(){
         pressTimer
     );
 
+
     pressTimer = null;
 
 }
@@ -993,6 +1367,7 @@ function closePhotoMenu(){
     longPressTriggered = false;
 
     pointerMoved = false;
+
 
     cancelPress();
 
@@ -1099,6 +1474,7 @@ event=>{
 
         pointerMoved = true;
 
+
         cancelPress();
 
     }
@@ -1174,6 +1550,7 @@ document.addEventListener(
 
     pointerMoved = true;
 
+
     cancelPress();
 
 });
@@ -1197,6 +1574,8 @@ event=>{
     }
 
 });
+
+
 /* ======================================================
         SAVE PHOTO
 ====================================================== */
@@ -1308,12 +1687,33 @@ if(deletePhotoButton){
             const confirmDelete =
 
             confirm(
-                "Vuoi eliminare questa foto?"
+                "Sei sicura di voler eliminare questo ricordo?"
             );
 
 
             if(!confirmDelete)
             return;
+
+
+            const gallery =
+
+            imageToDelete.closest(
+                "#degreeGallery, #londonGallery"
+            );
+
+
+            const galleryId =
+
+            gallery
+            ? gallery.id
+            : null;
+
+
+            const polaroidToDelete =
+
+            imageToDelete.closest(
+                ".polaroid"
+            );
 
 
             try{
@@ -1347,25 +1747,50 @@ if(deletePhotoButton){
 
 
                 /*
-                Rimuove subito la foto
-                dalla schermata
+                Rimuove immediatamente
+                tutta la Polaroid dalla bacheca.
                 */
 
-                imageToDelete.remove();
+
+                if(polaroidToDelete){
+
+                    polaroidToDelete.remove();
+
+                }
+
+                else{
+
+                    imageToDelete.remove();
+
+                }
 
 
                 /*
-                Chiude il menu
-                e azzera la selezione
+                Corregge l'offset della paginazione.
+                In questo modo la prossima pagina
+                non salta una fotografia.
                 */
+
+
+                if(
+                    galleryId &&
+                    galleryStates[galleryId] &&
+                    galleryStates[galleryId].offset > 0
+                ){
+
+                    galleryStates[galleryId].offset--;
+
+                }
+
 
                 closePhotoMenu();
 
 
                 /*
                 Se il viewer stava mostrando
-                la stessa foto, lo chiude
+                la stessa fotografia, lo chiude.
                 */
+
 
                 if(
 
@@ -1394,7 +1819,7 @@ if(deletePhotoButton){
 
 
                 alert(
-                    "Errore durante eliminazione foto"
+                    "Errore durante l'eliminazione della foto."
                 );
 
             }
@@ -1404,6 +1829,7 @@ if(deletePhotoButton){
     );
 
 }
+```javascript
 /* ======================================================
         PHOTO VIEWER
 ====================================================== */
@@ -1438,9 +1864,9 @@ document.querySelector(
 
 
 /*
-I vecchi pulsanti Salva ed Elimina
-del viewer vengono riutilizzati
-come precedente e successiva
+I due pulsanti laterali del viewer
+vengono utilizzati per mostrare
+la foto precedente e successiva.
 */
 
 
@@ -1492,7 +1918,7 @@ function getGalleryPhotos(img){
     return Array.from(
 
         gallery.querySelectorAll(
-            "img"
+            ".polaroid img"
         )
 
     );
@@ -1571,6 +1997,10 @@ function updateViewerImage(){
     ];
 
 
+    if(!currentPhoto)
+    return;
+
+
     viewerImage.src =
 
     currentPhoto.src;
@@ -1608,7 +2038,7 @@ function updateViewerButtons(){
         : "none";
 
 
-        viewerPreviousButton.innerHTML =
+        viewerPreviousButton.textContent =
         "←";
 
 
@@ -1632,7 +2062,7 @@ function updateViewerButtons(){
         : "none";
 
 
-        viewerNextButton.innerHTML =
+        viewerNextButton.textContent =
         "→";
 
 
@@ -1729,6 +2159,10 @@ function closePhotoViewer(){
 
     viewerIndex = 0;
 
+    viewerTouchStartX = 0;
+
+    viewerTouchEndX = 0;
+
 }
 
 
@@ -1746,6 +2180,7 @@ if(viewerPreviousButton){
         event=>{
 
             event.stopPropagation();
+
 
             showPreviousPhoto();
 
@@ -1766,6 +2201,7 @@ if(viewerNextButton){
 
             event.stopPropagation();
 
+
             showNextPhoto();
 
         }
@@ -1785,6 +2221,7 @@ if(viewerCloseButton){
 
             event.stopPropagation();
 
+
             closePhotoViewer();
 
         }
@@ -1800,7 +2237,11 @@ if(viewerBackground){
 
         "click",
 
-        closePhotoViewer
+        ()=>{
+
+            closePhotoViewer();
+
+        }
 
     );
 
@@ -1819,6 +2260,13 @@ if(photoViewer){
         "touchstart",
 
         event=>{
+
+            if(
+                !event.changedTouches ||
+                event.changedTouches.length === 0
+            )
+            return;
+
 
             viewerTouchStartX =
 
@@ -1839,6 +2287,13 @@ if(photoViewer){
         "touchend",
 
         event=>{
+
+            if(
+                !event.changedTouches ||
+                event.changedTouches.length === 0
+            )
+            return;
+
 
             viewerTouchEndX =
 
@@ -1905,12 +2360,18 @@ event=>{
 
     if(event.key === "ArrowLeft"){
 
+        event.preventDefault();
+
+
         showPreviousPhoto();
 
     }
 
 
     if(event.key === "ArrowRight"){
+
+        event.preventDefault();
+
 
         showNextPhoto();
 
@@ -1919,8 +2380,12 @@ event=>{
 
     if(event.key === "Escape"){
 
+        event.preventDefault();
+
+
         closePhotoViewer();
 
     }
 
 });
+```
