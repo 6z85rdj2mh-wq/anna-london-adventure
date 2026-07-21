@@ -30,7 +30,21 @@ const button = document.getElementById("startButton");
 
 
 
+// sicurezza:
+// il contenuto appare solo dopo il volo
+
+if(content){
+
+    content.style.display="none";
+
+}
+
+
+
+
 let started = false;
+
+
 
 
 
@@ -50,7 +64,7 @@ function startJourney(){
     return;
 
 
-    started = true;
+    started=true;
 
 
 
@@ -74,6 +88,8 @@ function startJourney(){
 
 
 
+
+
     // nasconde bottone
 
 
@@ -82,6 +98,7 @@ function startJourney(){
 
     button.style.transform =
     "scale(.8)";
+
 
 
 
@@ -100,6 +117,8 @@ function startJourney(){
 
 
 
+
+
     // apre overlay volo
 
 
@@ -110,6 +129,9 @@ function startJourney(){
 
 
     },600);
+
+
+
 
 
 
@@ -139,6 +161,11 @@ function startJourney(){
 
 
 
+
+
+
+
+
 /* ======================================================
                 START FLIGHT
 ====================================================== */
@@ -154,6 +181,7 @@ function startFlight(){
 
 
 
+
     line.style.strokeDasharray =
     length;
 
@@ -161,6 +189,7 @@ function startFlight(){
 
     line.style.strokeDashoffset =
     length;
+
 
 
 
@@ -207,6 +236,7 @@ function startFlight(){
 
 
 
+
     setTimeout(()=>{
 
 
@@ -219,6 +249,10 @@ function startFlight(){
 
 
 }
+
+
+
+
 
 
 
@@ -247,8 +281,10 @@ function animatePlane(){
 
 
 
+
     const start =
     performance.now();
+
 
 
 
@@ -273,6 +309,7 @@ function animatePlane(){
 
         if(progress>1)
         progress=1;
+
 
 
 
@@ -308,18 +345,8 @@ function animatePlane(){
             )
 
         );
-
-
-
-
-
-
-
-
-        const matrix =
+               const matrix =
         svg.getScreenCTM();
-
-
 
 
 
@@ -358,6 +385,11 @@ function animatePlane(){
 
 
 
+        /*
+            POSIZIONE AEREO
+        */
+
+
         plane.style.left =
         screenPoint.x + "px";
 
@@ -371,6 +403,12 @@ function animatePlane(){
 
 
 
+
+
+
+        /*
+            ROTAZIONE
+        */
 
 
         const angle =
@@ -437,11 +475,25 @@ function animatePlane(){
 
 
 
+
     requestAnimationFrame(frame);
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ======================================================
                 ARRIVAL
 ====================================================== */
@@ -459,7 +511,10 @@ function finishFlight(){
 
 
 
+
+
     const destination =
+
     document.querySelector(
         ".destination-dot"
     );
@@ -468,18 +523,24 @@ function finishFlight(){
 
 
 
+
+
+
     if(destination){
+
 
 
         destination.style.transform =
         "scale(2)";
 
 
-        destination.style.boxShadow =
-        "0 0 60px white";
+
+        destination.style.filter =
+        "drop-shadow(0 0 30px white)";
 
 
     }
+
 
 
 
@@ -493,11 +554,16 @@ function finishFlight(){
         closeFlight();
 
 
+
     },1500);
 
 
 
 }
+
+
+
+
 
 
 
@@ -519,8 +585,11 @@ function closeFlight(){
     overlay.style.opacity="0";
 
 
+
     overlay.style.transform =
     "scale(1.05)";
+
+
 
 
 
@@ -539,11 +608,16 @@ function closeFlight(){
 
 
 
+
+
         hero.style.opacity="0";
 
 
         hero.style.transform =
         "scale(1.05)";
+
+
+
 
 
 
@@ -559,21 +633,32 @@ function closeFlight(){
 
 
 
+
+
             content.style.display="block";
+
+
 
 
 
             window.scrollTo({
 
+
                 top:0,
 
+
                 behavior:"smooth"
+
 
             });
 
 
 
+
+
         },700);
+
+
 
 
 
@@ -583,6 +668,10 @@ function closeFlight(){
 
 
 }
+
+
+
+
 
 
 
@@ -602,13 +691,16 @@ function toggleSection(header){
 
 
     const body =
+
     header.nextElementSibling;
 
 
 
 
 
+
     const isOpen =
+
     body.classList.contains(
         "open"
     );
@@ -618,11 +710,16 @@ function toggleSection(header){
 
 
 
+
+
     document
+
     .querySelectorAll(
         ".card-body"
     )
+
     .forEach(section=>{
+
 
 
         section.classList.remove(
@@ -630,7 +727,10 @@ function toggleSection(header){
         );
 
 
+
     });
+
+
 
 
 
@@ -639,10 +739,13 @@ function toggleSection(header){
 
 
     document
+
     .querySelectorAll(
         ".card-header"
     )
+
     .forEach(item=>{
+
 
 
         item.classList.remove(
@@ -650,7 +753,9 @@ function toggleSection(header){
         );
 
 
+
     });
+
 
 
 
@@ -674,20 +779,12 @@ function toggleSection(header){
         );
 
 
+
     }
 
 
 
 }
-
-
-
-
-
-
-
-
-
 /* ======================================================
             SUPABASE PHOTO UPLOAD
 ====================================================== */
@@ -732,7 +829,7 @@ async function uploadToSupabase(event, galleryId){
             if(galleryId === "degreeGallery"){
 
 
-                folder = "laurea";
+                folder="laurea";
 
 
             }
@@ -744,7 +841,7 @@ async function uploadToSupabase(event, galleryId){
             if(galleryId === "londonGallery"){
 
 
-                folder = "londra";
+                folder="londra";
 
 
             }
@@ -758,6 +855,7 @@ async function uploadToSupabase(event, galleryId){
             const fileName =
 
             `${Date.now()}-${file.name}`;
+
 
 
 
@@ -809,7 +907,6 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-
             if(error){
 
 
@@ -826,7 +923,7 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-            const {data:urlData} =
+            const {data:urlData}=
 
             supabaseClient
 
@@ -860,13 +957,9 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-
             img.src =
 
             urlData.publicUrl;
-
-
-
 
 
 
@@ -895,11 +988,7 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-
-
         }
-
-
 
 
 
@@ -921,18 +1010,30 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-
     }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ======================================================
             LOAD SAVED PHOTOS
 ====================================================== */
 
 
-async function loadGallery(folder, galleryId){
+async function loadGallery(folder,galleryId){
 
 
 
@@ -954,7 +1055,9 @@ async function loadGallery(folder, galleryId){
 
 
 
-    const {data,error} =
+
+
+    const {data,error}=
 
     await supabaseClient
 
@@ -967,6 +1070,7 @@ async function loadGallery(folder, galleryId){
     .list(
         folder
     );
+
 
 
 
@@ -999,13 +1103,15 @@ async function loadGallery(folder, galleryId){
 
 
 
+
     data.forEach(file=>{
 
 
 
 
 
-        const {data:urlData} =
+
+        const {data:urlData}=
 
         supabaseClient
 
@@ -1028,7 +1134,8 @@ async function loadGallery(folder, galleryId){
 
 
 
-        const img =
+
+        const img=
 
         document.createElement(
             "img"
@@ -1041,11 +1148,9 @@ async function loadGallery(folder, galleryId){
 
 
 
-        img.src =
+        img.src=
 
         urlData.publicUrl;
-
-
 
 
 
@@ -1059,13 +1164,17 @@ async function loadGallery(folder, galleryId){
 
 
 
+
     });
 
 
 
 
-
 }
+
+
+
+
 
 
 
@@ -1091,14 +1200,16 @@ window.addEventListener(
 
 
 
+
     // reset linea volo
+
 
 
     if(line){
 
 
 
-        const length =
+        const length=
 
         line.getTotalLength();
 
@@ -1106,7 +1217,7 @@ window.addEventListener(
 
 
 
-        line.style.strokeDasharray =
+        line.style.strokeDasharray=
 
         length;
 
@@ -1114,7 +1225,7 @@ window.addEventListener(
 
 
 
-        line.style.strokeDashoffset =
+        line.style.strokeDashoffset=
 
         length;
 
@@ -1129,7 +1240,9 @@ window.addEventListener(
 
 
 
-    // carica foto salvate
+
+    // carica immagini già presenti
+
 
 
     loadGallery(
@@ -1139,6 +1252,7 @@ window.addEventListener(
         "degreeGallery"
 
     );
+
 
 
 
