@@ -650,73 +650,93 @@ function toggleSection(header){
 ====================================================== */
 
 
-function uploadToSupabase(event,galleryId){
+async function uploadToSupabase(event, galleryId){
+
+    const files = event.target.files;
+
+    const gallery = document.getElementById(galleryId);
+
+
+    for (const file of files){
+
+        try {
+
+            let folder = "";
+
+            if(galleryId === "degreeGallery"){
+                folder = "laurea";
+            }
+
+            if(galleryId === "londonGallery"){
+                folder = "londra";
+            }
+
+
+            const fileName =
+            `${Date.now()}-${file.name}`;
+
+
+            const filePath =
+            `${folder}/${fileName}`;
 
 
 
-    const files =
-    event.target.files;
+            const {data,error} =
+            await supabaseClient
+            .storage
+            .from("anna-adventure")
+            .upload(
+                filePath,
+                file
+            );
+
+
+            if(error){
+                throw error;
+            }
 
 
 
-    const gallery =
-    document.getElementById(
-        galleryId
-    );
-
-
-
-
-
-    Array.from(files)
-    .forEach(file=>{
-
-
-
-        const reader =
-        new FileReader();
-
-
-
-
-        reader.onload =
-        function(e){
+            const {data:urlData} =
+            supabaseClient
+            .storage
+            .from("anna-adventure")
+            .getPublicUrl(
+                filePath
+            );
 
 
 
             const img =
-            document.createElement(
-                "img"
-            );
-
+            document.createElement("img");
 
 
             img.src =
-            e.target.result;
+            urlData.publicUrl;
+
+
+            gallery.appendChild(img);
 
 
 
-            gallery.appendChild(
-                img
+            console.log(
+                "Foto caricata:",
+                urlData.publicUrl
             );
 
 
+        }
 
-        };
+        catch(error){
 
+            console.error(
+                "Errore upload:",
+                error
+            );
 
+        }
 
-
-
-        reader.readAsDataURL(
-            file
-        );
-
-
-
-    });
-
-
+    }
 
 }
 
