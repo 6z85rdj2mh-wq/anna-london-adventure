@@ -1266,3 +1266,686 @@ window.addEventListener(
 
 
 });
+/* ======================================================
+                ARRIVAL
+====================================================== */
+
+
+function finishFlight(){
+
+
+    plane.classList.add(
+        "landing-glow"
+    );
+
+
+
+
+    const destination =
+
+    document.querySelector(
+        ".destination-dot"
+    );
+
+
+
+
+
+    if(destination){
+
+
+        destination.style.transform =
+        "scale(2)";
+
+
+        destination.style.filter =
+        "drop-shadow(0 0 30px white)";
+
+
+    }
+
+
+
+
+
+    setTimeout(()=>{
+
+
+        closeFlight();
+
+
+    },1500);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ======================================================
+                CLOSE FLIGHT
+====================================================== */
+
+
+function closeFlight(){
+
+
+    overlay.style.opacity="0";
+
+
+    overlay.style.transform =
+    "scale(1.05)";
+
+
+
+
+
+
+    setTimeout(()=>{
+
+
+        overlay.classList.remove(
+            "active"
+        );
+
+
+
+
+
+        hero.style.opacity="0";
+
+
+        hero.style.transform =
+        "scale(1.05)";
+
+
+
+
+
+
+
+        setTimeout(()=>{
+
+
+            hero.style.display="none";
+
+
+            content.style.display="block";
+
+
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+
+
+        },700);
+
+
+
+
+    },900);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ======================================================
+            CARD OPEN / CLOSE
+====================================================== */
+
+
+function toggleSection(header){
+
+
+    const body =
+    header.nextElementSibling;
+
+
+
+    const isOpen =
+    body.classList.contains(
+        "open"
+    );
+
+
+
+
+
+    document
+    .querySelectorAll(
+        ".card-body"
+    )
+    .forEach(section=>{
+
+
+        section.classList.remove(
+            "open"
+        );
+
+
+    });
+
+
+
+
+
+
+    document
+    .querySelectorAll(
+        ".card-header"
+    )
+    .forEach(item=>{
+
+
+        item.classList.remove(
+            "active"
+        );
+
+
+    });
+
+
+
+
+
+
+    if(!isOpen){
+
+
+        body.classList.add(
+            "open"
+        );
+
+
+        header.classList.add(
+            "active"
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ======================================================
+            SUPABASE PHOTO UPLOAD
+====================================================== */
+
+
+async function uploadToSupabase(event,galleryId){
+
+
+    const files =
+    event.target.files;
+
+
+
+    const gallery =
+    document.getElementById(
+        galleryId
+    );
+
+
+
+
+
+    for(const file of files){
+
+
+        try{
+
+
+            let folder="";
+
+
+
+            if(galleryId==="degreeGallery"){
+
+                folder="laurea";
+
+            }
+
+
+
+            if(galleryId==="londonGallery"){
+
+                folder="londra";
+
+            }
+
+
+
+
+
+
+
+            const fileName =
+
+            `${Date.now()}-${file.name}`;
+
+
+
+
+
+            const filePath =
+
+            `${folder}/${fileName}`;
+
+
+
+
+
+
+
+            const {data,error}=
+
+            await supabaseClient
+
+            .storage
+
+            .from(
+                "anna-graduation-trip"
+            )
+
+            .upload(
+
+                filePath,
+
+                file,
+
+                {
+
+                    contentType:file.type,
+
+                    upsert:false
+
+                }
+
+            );
+
+
+
+
+
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+
+
+
+
+
+            const {data:urlData}=
+
+            supabaseClient
+
+            .storage
+
+            .from(
+                "anna-graduation-trip"
+            )
+
+            .getPublicUrl(
+
+                filePath
+
+            );
+
+
+
+
+
+
+
+
+            const img =
+
+            document.createElement(
+                "img"
+            );
+
+
+
+
+
+            img.src =
+
+            urlData.publicUrl;
+
+
+
+
+
+            // percorso necessario
+            // per eliminazione futura
+
+            img.dataset.path =
+
+            `${folder}/${fileName}`;
+
+
+
+
+
+
+
+            gallery.appendChild(
+                img
+            );
+
+
+
+
+
+
+
+            console.log(
+
+                "Foto caricata:",
+
+                urlData.publicUrl
+
+            );
+
+
+
+        }
+
+
+
+        catch(error){
+
+
+            console.error(
+
+                "Errore upload:",
+
+                error
+
+            );
+
+
+        }
+
+
+
+    }
+
+
+
+}/* ======================================================
+            LOAD SAVED PHOTOS
+====================================================== */
+
+
+async function loadGallery(folder,galleryId){
+
+
+
+    const gallery =
+
+    document.getElementById(
+        galleryId
+    );
+
+
+
+    if(!gallery)
+    return;
+
+
+
+
+
+
+
+    const {data,error}=
+
+    await supabaseClient
+
+    .storage
+
+    .from(
+        "anna-graduation-trip"
+    )
+
+    .list(
+        folder
+    );
+
+
+
+
+
+
+
+    if(error){
+
+
+        console.error(
+
+            "Errore caricamento galleria:",
+
+            error
+
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+
+    data.forEach(file=>{
+
+
+
+
+
+        const {data:urlData}=
+
+        supabaseClient
+
+        .storage
+
+        .from(
+            "anna-graduation-trip"
+        )
+
+        .getPublicUrl(
+
+            `${folder}/${file.name}`
+
+        );
+
+
+
+
+
+
+
+
+
+        const img =
+
+        document.createElement(
+            "img"
+        );
+
+
+
+
+
+
+
+        img.src =
+
+        urlData.publicUrl;
+
+
+
+
+
+
+        // salva il percorso Supabase
+        // servirà per delete
+
+        img.dataset.path =
+
+        `${folder}/${file.name}`;
+
+
+
+
+
+
+
+        gallery.appendChild(
+            img
+        );
+
+
+
+
+
+    });
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================
+                RESET + LOAD
+====================================================== */
+
+
+window.addEventListener(
+
+"load",
+
+()=>{
+
+
+
+    // reset linea volo
+
+
+    if(line){
+
+
+
+        const length =
+
+        line.getTotalLength();
+
+
+
+
+        line.style.strokeDasharray =
+
+        length;
+
+
+
+
+        line.style.strokeDashoffset =
+
+        length;
+
+
+
+    }
+
+
+
+
+
+
+
+
+    // carica foto laurea
+
+
+    loadGallery(
+
+        "laurea",
+
+        "degreeGallery"
+
+    );
+
+
+
+
+
+
+
+    // carica foto londra
+
+
+    loadGallery(
+
+        "londra",
+
+        "londonGallery"
+
+    );
+
+
+
+
+
+});
