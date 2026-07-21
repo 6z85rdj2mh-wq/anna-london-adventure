@@ -1405,11 +1405,32 @@ function cancelPress(){
 function openPhotoMenu(img){
 
 
+    selectedImage = img;
 
-    console.log(
-        "Pressione lunga:",
-        img.dataset.path
+
+
+    const rect =
+    img.getBoundingClientRect();
+
+
+
+    photoMenu.style.left =
+    rect.left + rect.width/2 + "px";
+
+
+
+    photoMenu.style.top =
+    rect.top + rect.height/2 + "px";
+
+
+
+    photoMenu.classList.add(
+        "active"
     );
+
+
+
+}
 
 
 
