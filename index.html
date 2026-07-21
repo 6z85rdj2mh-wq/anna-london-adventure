@@ -100,46 +100,22 @@ onclick="startJourney()">
 <div class="overlay-background"></div>
 
 
+
 <div class="flight-container">
 
 
-<!-- PARTENZA -->
 
-<div class="city perugia">
-
-<div class="dot"></div>
-
-<span>
-PERUGIA
-</span>
-
-</div>
+<!-- ROUTE SVG -->
 
 
-
-
-<!-- ARRIVO -->
-
-<div class="city london">
-
-<div class="dot destination-dot"></div>
-
-<span>
-LONDRA
-</span>
-
-</div>
-
-
-
-
-
-<!-- SVG PERCORSO -->
-
-<svg
+<svg 
 id="flightSVG"
 viewBox="0 0 1000 500"
 preserveAspectRatio="xMidYMid meet">
+
+
+
+<!-- percorso invisibile per JS -->
 
 
 <path
@@ -153,6 +129,9 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 
+<!-- linea tratteggiata -->
+
+
 <path
 
 id="flightLine"
@@ -160,6 +139,81 @@ id="flightLine"
 d="M140 360 C340 140 650 140 860 170">
 
 </path>
+
+
+
+
+
+<!-- =====================
+        PERUGIA
+===================== -->
+
+
+<circle
+
+class="map-dot"
+
+cx="140"
+
+cy="360"
+
+r="8">
+
+</circle>
+
+
+
+
+<text
+
+class="map-label start-label"
+
+x="140"
+
+y="405">
+
+PERUGIA
+
+</text>
+
+
+
+
+
+
+<!-- =====================
+        LONDRA
+===================== -->
+
+
+<circle
+
+class="map-dot destination-dot"
+
+cx="860"
+
+cy="170"
+
+r="8">
+
+</circle>
+
+
+
+
+<text
+
+class="map-label end-label"
+
+x="860"
+
+y="140">
+
+LONDRA
+
+</text>
+
+
 
 
 </svg>
@@ -170,6 +224,7 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 <!-- AEREO -->
+
 
 <div id="plane">
 
@@ -209,12 +264,6 @@ Z
 
 
 </div>
-
-
-
-
-
-
 
 <!-- ==================================================
                      CONTENT
