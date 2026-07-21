@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="it">
 
@@ -82,8 +83,6 @@ onclick="startJourney()">
 
 
 
-
-
 <div id="flightOverlay">
 
 
@@ -157,8 +156,6 @@ y="405">
 PERUGIA
 
 </text>
-
-
 
 
 
@@ -524,8 +521,6 @@ id="londonGallery">
 
 
 
-
-
 <section class="final">
 
 
@@ -597,6 +592,7 @@ per sempre.
         PHOTO VIEWER
 ====================================== -->
 
+
 <div id="photoViewer" class="photo-viewer">
 
     <div class="viewer-background"></div>
@@ -610,16 +606,28 @@ per sempre.
 
         <div class="viewer-actions">
 
-            <button id="viewerSave">
-                💾 Salva foto
+            <button
+                id="viewerSave"
+                aria-label="Foto precedente">
+
+                ←
+
             </button>
 
-            <button id="viewerDelete">
-                🗑 Elimina
+            <button
+                id="viewerDelete"
+                aria-label="Foto successiva">
+
+                →
+
             </button>
 
-            <button id="viewerClose">
+            <button
+                id="viewerClose"
+                aria-label="Chiudi viewer">
+
                 ❌ Chiudi
+
             </button>
 
         </div>
@@ -627,6 +635,7 @@ per sempre.
     </div>
 
 </div>
+
 
 
 
@@ -664,3 +673,4 @@ per sempre.
 </body>
 
 </html>
+```
