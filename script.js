@@ -1571,3 +1571,180 @@ document
 
 
 });
+
+/* ======================================================
+        DELETE PHOTO
+====================================================== */
+
+
+document
+.getElementById("deletePhoto")
+.addEventListener(
+"click",
+async ()=>{
+
+
+    if(!selectedImage)
+    return;
+
+
+
+
+    const path =
+
+    selectedImage.dataset.path;
+
+
+
+
+    if(!path){
+
+        console.error(
+            "Percorso foto non trovato"
+        );
+
+        return;
+
+    }
+
+
+
+
+
+
+
+    const confirmDelete =
+
+    confirm(
+        "Vuoi eliminare questa foto?"
+    );
+
+
+
+
+
+    if(!confirmDelete)
+    return;
+
+
+
+
+
+
+
+    try{
+
+
+
+        const {error}=
+
+        await supabaseClient
+
+        .storage
+
+        .from(
+            "anna-graduation-trip"
+        )
+
+        .remove([path]);
+
+
+
+
+
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+
+
+
+
+
+        console.log(
+            "Foto eliminata:",
+            path
+        );
+
+
+
+
+
+
+
+
+        // aggiorna la gallery corretta
+
+
+        if(path.startsWith("laurea/")){
+
+
+            await loadGallery(
+
+                "laurea",
+
+                "degreeGallery"
+
+            );
+
+
+        }
+
+
+
+
+        if(path.startsWith("londra/")){
+
+
+            await loadGallery(
+
+                "londra",
+
+                "londonGallery"
+
+            );
+
+
+        }
+
+
+
+
+
+
+        closePhotoMenu();
+
+
+
+
+    }
+
+    catch(error){
+
+
+
+        console.error(
+
+            "Errore eliminazione:",
+
+            error
+
+        );
+
+
+
+        alert(
+            "Errore durante eliminazione foto"
+        );
+
+
+    }
+
+
+
+});
