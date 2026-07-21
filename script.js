@@ -1679,6 +1679,10 @@ async function uploadToSupabase(event,galleryId){
                 urlData.publicUrl
 
             );
+         loadGallery(
+    folder,
+    galleryId
+);
 
 
 
