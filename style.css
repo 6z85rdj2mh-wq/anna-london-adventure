@@ -1,8 +1,8 @@
+```css
 /* ======================================================
    ANNA'S LONDON ADVENTURE
    STYLE CSS FINAL CLEAN
 ====================================================== */
-
 
 
 *{
@@ -12,7 +12,6 @@
 }
 
 
-
 html{
 
     scroll-behavior:smooth;
@@ -20,28 +19,19 @@ html{
 }
 
 
-
 body{
-
 
     margin:0;
 
     padding:0;
 
-
     font-family:
     'Inter',
     sans-serif;
 
-
-
     color:white;
 
-
-
     min-height:100vh;
-
-
 
     background:
 
@@ -55,19 +45,13 @@ body{
 
     url("https://th.bing.com/th/id/R.704e8b423b88f862732f7fc3a435d5cb?rik=2%2bEZgyDaFaRBRw&pid=ImgRaw&r=0");
 
-
-
     background-size:cover;
 
     background-position:center;
 
     background-attachment:fixed;
 
-
 }
-
-
-
 
 
 /* ======================================================
@@ -77,25 +61,17 @@ body{
 
 .hero-screen{
 
-
     height:100vh;
-
 
     display:flex;
 
-
     justify-content:center;
-
 
     align-items:center;
 
-
     text-align:center;
 
-
     padding:30px;
-
-
 
     transition:
 
@@ -103,44 +79,28 @@ body{
 
     transform 1.5s ease;
 
-
 }
-
-
-
 
 
 .hero-content{
 
-
     max-width:700px;
-
 
 }
 
 
-
-
-
 .graduation-icon{
 
-
     font-size:75px;
-
 
     animation:
 
     float 3s ease-in-out infinite;
 
-
 }
 
 
-
-
-
 @keyframes float{
-
 
     0%{
 
@@ -148,13 +108,11 @@ body{
 
     }
 
-
     50%{
 
         transform:translateY(-12px);
 
     }
-
 
     100%{
 
@@ -162,115 +120,70 @@ body{
 
     }
 
-
 }
 
 
-
-
-
 .hero-screen h1{
-
 
     font-family:
 
     'Cormorant Garamond',
     serif;
 
-
-
     font-size:55px;
-
 
     font-weight:600;
 
-
     line-height:1.15;
-
 
     margin:25px 0;
 
-
-
 }
-
-
-
 
 
 .hero-screen p{
 
-
     font-size:22px;
-
 
     line-height:1.6;
 
-
     opacity:.9;
-
 
 }
 
 
-
-
-
-
-
 .hero-screen button{
 
-
     margin-top:40px;
-
 
     padding:
 
     18px 45px;
 
-
-
     border:none;
-
 
     border-radius:50px;
 
-
-
     cursor:pointer;
-
-
 
     font-size:18px;
 
-
     letter-spacing:1px;
-
-
 
     background:white;
 
-
     color:#111;
 
-
-
     transition:.4s;
-
 
     box-shadow:
 
     0 15px 40px rgba(0,0,0,.5);
 
-
 }
 
 
-
-
-
 .hero-screen button:hover{
-
 
     transform:
 
@@ -278,15 +191,7 @@ body{
 
     scale(1.03);
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -296,23 +201,15 @@ body{
 
 #flightOverlay{
 
-
     position:fixed;
-
 
     inset:0;
 
-
     z-index:50;
-
 
     display:none;
 
-
-
     opacity:0;
-
-
 
     transition:
 
@@ -320,85 +217,49 @@ body{
 
     transform 1s ease;
 
-
 }
-
-
-
 
 
 #flightOverlay.active{
 
-
     display:block;
 
-
     opacity:1;
-
 
 }
 
 
-
-
-
-
-
 .overlay-background{
-
 
     position:absolute;
 
-
     inset:0;
-
-
 
     background:
 
     rgba(3,8,25,.96);
 
-
 }
-
-
-
-
-
 
 
 .flight-container{
 
-
     position:absolute;
-
 
     width:100%;
 
-
     height:100%;
-
 
     inset:0;
 
-
     overflow:hidden;
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
                     SVG ROTTA
 ====================================================== */
-
 
 
 #flightSVG{
@@ -420,60 +281,33 @@ body{
 }
 
 
-
-
-
-
-
 #flightPath{
-
 
     fill:none;
 
-
     stroke:none;
 
-
 }
-
-
-
-
-
 
 
 #flightLine{
 
-
     fill:none;
-
 
     stroke:white;
 
-
     stroke-width:3;
-
 
     stroke-dasharray:12 12;
 
-
     opacity:.8;
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
                 PUNTI E TESTI SVG
 ====================================================== */
-
 
 
 .map-dot{
@@ -488,33 +322,22 @@ body{
 
     );
 
-
-
 }
-
-
-
-
-
 
 
 .map-label{
 
-
     fill:white;
-
 
     font-size:26px;
 
-
     font-weight:500;
-
 
     letter-spacing:4px;
 
-
-    font-family:'Inter', sans-serif;
-
+    font-family:
+    'Inter',
+    sans-serif;
 
     filter:
 
@@ -524,42 +347,21 @@ body{
 
     );
 
-
 }
-
-
-
-
-
 
 
 .start-label{
 
-
     text-anchor:middle;
 
-
 }
-
-
-
-
-
 
 
 .end-label{
 
-
     text-anchor:end;
 
-
 }
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -567,72 +369,42 @@ body{
 ====================================================== */
 
 
-
 #plane{
-
 
     position:absolute;
 
-
     width:55px;
-
 
     opacity:0;
 
-
     z-index:10;
-
 
     pointer-events:none;
 
+    transition:
+
+    opacity .5s ease;
 
 }
-
-
-
-
-
 
 
 #plane svg{
 
-
     width:100%;
-
 
     fill:white;
 
-
     filter:
-
 
     drop-shadow(
 
-
     0 0 8px rgba(255,255,255,.7)
-
 
     );
 
-
 }
 
 
-
-
-
-
-
-#plane{
-
-
-    transition:
-
-
-    opacity .5s ease;
-
-
-}
 /* ======================================================
                     CONTENT
 ====================================================== */
@@ -640,81 +412,48 @@ body{
 
 .content{
 
-
     display:none;
-
 
     width:90%;
 
-
     max-width:850px;
-
 
     margin:auto;
 
-
     padding:
-
 
     70px 20px;
 
-
-
     animation:
-
 
     fadeIn 1.2s ease;
 
-
 }
-
-
-
-
-
-
 
 
 @keyframes fadeIn{
 
-
     from{
-
 
         opacity:0;
 
-
         transform:
-
 
         translateY(40px);
 
-
     }
-
 
     to{
 
-
         opacity:1;
-
 
         transform:
 
-
         translateY(0);
-
 
     }
 
-
 }
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -724,68 +463,36 @@ body{
 
 .card{
 
-
     margin-bottom:35px;
-
 
     padding:30px;
 
-
     border-radius:25px;
-
-
 
     background:
 
-
     rgba(255,255,255,.12);
-
-
 
     backdrop-filter:
 
-
     blur(15px);
-
-
 
     border:
 
-
     1px solid rgba(255,255,255,.25);
-
-
 
     box-shadow:
 
-
     0 20px 50px rgba(0,0,0,.35);
 
-
-
 }
-
-
-
-
-
-
 
 
 .adventure-card{
 
-
     overflow:hidden;
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -795,91 +502,49 @@ body{
 
 .card-header{
 
-
     display:flex;
-
 
     justify-content:space-between;
 
-
     align-items:center;
-
-
 
     cursor:pointer;
 
-
-
 }
-
-
-
-
 
 
 .card-header h2{
 
-
     margin:0;
 
-
     font-family:
-
 
     'Cormorant Garamond',
     serif;
 
-
     font-size:35px;
-
 
     font-weight:600;
 
-
 }
-
-
-
-
-
-
 
 
 .open-icon{
 
-
     font-size:35px;
-
 
     transition:.4s;
 
-
 }
-
-
-
-
-
-
 
 
 .card-header.active .open-icon{
 
-
     transform:
-
 
     rotate(45deg);
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -889,20 +554,13 @@ body{
 
 .card-body{
 
-
     max-height:0;
-
 
     overflow:hidden;
 
-
-
     opacity:0;
 
-
-
     transition:
-
 
     max-height .8s ease,
 
@@ -910,57 +568,27 @@ body{
 
     padding .6s ease;
 
-
-
 }
-
-
-
-
-
-
 
 
 .card-body.open{
 
-
     max-height:1200px;
-
 
     opacity:1;
 
-
-
     padding-top:30px;
 
-
 }
-
-
-
-
-
-
-
 
 
 .card p{
 
-
     font-size:18px;
-
 
     line-height:1.7;
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -970,36 +598,20 @@ body{
 
 .destination{
 
-
     display:inline-block;
-
-
 
     font-size:55px;
 
-
     letter-spacing:8px;
-
 
     font-weight:bold;
 
-
-
     font-family:
-
 
     'Cormorant Garamond',
     serif;
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -1010,81 +622,43 @@ body{
 .button,
 .upload-button{
 
-
     display:inline-flex;
-
 
     justify-content:center;
 
-
     align-items:center;
-
-
 
     margin-top:25px;
 
-
     padding:
-
 
     15px 30px;
 
-
-
     border-radius:50px;
-
-
 
     background:white;
 
-
     color:#111;
-
-
 
     text-decoration:none;
 
-
     font-size:16px;
-
 
     cursor:pointer;
 
-
-
     transition:.3s;
 
-
 }
-
-
-
-
-
-
 
 
 .button:hover,
 .upload-button:hover{
 
-
     transform:
-
 
     scale(1.05);
 
-
 }
-
-
-
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -1094,182 +668,380 @@ body{
 
 .photo-area{
 
-
     margin-top:35px;
-
 
     padding-top:25px;
 
-
-
     border-top:
-
 
     1px solid rgba(255,255,255,.25);
 
-
 }
-
-
-
-
-
-
 
 
 .photo-area h3{
 
-
     font-size:25px;
 
-
     font-family:
-
 
     'Cormorant Garamond',
     serif;
 
-
 }
-
-
-
-
-
-
 
 
 .upload-button input{
 
-
     display:none;
 
-
 }
-
-
-
-
-
-
-
-
-
+```
+```css
 /* ======================================================
-                    GALLERY
+            GALLERY — BACHECA DEI RICORDI
 ====================================================== */
 
 
 .gallery{
 
+    position:relative;
 
     margin-top:30px;
 
-
     display:grid;
-
 
     grid-template-columns:
 
+    repeat(3,minmax(0,1fr));
 
-    repeat(3,1fr);
+    align-items:center;
 
+    justify-items:center;
 
+    gap:34px 22px;
 
-    gap:15px;
+    padding:
 
+    38px 24px 45px;
+
+    overflow:visible;
+
+    border-radius:18px;
+
+    background:
+
+    radial-gradient(
+
+        circle at 20% 30%,
+
+        rgba(255,255,255,.08) 0 1px,
+
+        transparent 2px
+
+    ),
+
+    radial-gradient(
+
+        circle at 70% 65%,
+
+        rgba(70,35,15,.12) 0 1px,
+
+        transparent 2px
+
+    ),
+
+    linear-gradient(
+
+        135deg,
+
+        #b77946,
+
+        #9e6339 45%,
+
+        #b97845
+
+    );
+
+    background-size:
+
+    18px 18px,
+
+    23px 23px,
+
+    100% 100%;
+
+    border:
+
+    8px solid rgba(86,45,23,.8);
+
+    box-shadow:
+
+    inset 0 0 25px
+    rgba(75,35,12,.35),
+
+    inset 0 2px 2px
+    rgba(255,255,255,.18),
+
+    0 15px 35px
+    rgba(0,0,0,.28);
 
 }
 
 
+/* ======================================================
+                POLAROID CONTAINER
+====================================================== */
 
 
+.polaroid{
 
+    position:relative;
 
+    display:inline-flex;
 
+    justify-content:center;
 
-.gallery img{
-
+    align-items:center;
 
     width:100%;
 
+    max-width:220px;
 
-    aspect-ratio:1/1;
+    padding:
 
+    12px
+    12px
+    34px;
 
+    background:
 
-    object-fit:cover;
+    linear-gradient(
 
+        145deg,
 
+        #fffefa,
 
-    border-radius:15px;
+        #f1eee6
 
+    );
 
+    border-radius:3px;
+
+    box-shadow:
+
+    0 4px 7px
+    rgba(40,20,10,.25),
+
+    0 13px 20px
+    rgba(40,20,10,.25);
+
+    transform:
+
+    rotate(
+        var(--photo-rotation,0deg)
+    )
+
+    translateY(
+        var(--photo-offset,0px)
+    );
+
+    transform-origin:center top;
+
+    transition:
+
+    transform .3s ease,
+
+    box-shadow .3s ease;
 
     animation:
 
+    polaroidAppear .55s ease both;
 
-    photoAppear .6s ease;
+    z-index:1;
+
+}
 
 
+/* ======================================================
+                    PUNTINA
+====================================================== */
+
+
+.polaroid::before{
+
+    content:"";
+
+    position:absolute;
+
+    z-index:3;
+
+    top:5px;
+
+    left:50%;
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    transform:
+
+    translateX(-50%);
+
+    background:
+
+    radial-gradient(
+
+        circle at 35% 30%,
+
+        #ffaaaa 0 15%,
+
+        #c94343 35%,
+
+        #801e1e 100%
+
+    );
+
+    box-shadow:
+
+    0 3px 4px
+    rgba(0,0,0,.42),
+
+    inset 0 1px 2px
+    rgba(255,255,255,.6);
+
+    pointer-events:none;
+
+}
+
+
+.polaroid::after{
+
+    content:"";
+
+    position:absolute;
+
+    z-index:2;
+
+    top:16px;
+
+    left:50%;
+
+    width:12px;
+
+    height:5px;
+
+    border-radius:50%;
+
+    transform:
+
+    translateX(-50%);
+
+    background:
+
+    rgba(0,0,0,.22);
+
+    filter:blur(2px);
+
+    pointer-events:none;
+
+}
+
+
+/* ======================================================
+                IMAGE INSIDE POLAROID
+====================================================== */
+
+
+.polaroid img{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    max-height:230px;
+
+    object-fit:contain;
+
+    border-radius:1px;
+
+    background:
+
+    rgba(225,225,225,.25);
+
+    cursor:pointer;
 
     -webkit-touch-callout:none;
 
+    -webkit-user-select:none;
 
     user-select:none;
 
+    touch-action:pan-y;
 
 }
 
 
+/* ======================================================
+            DESKTOP POLAROID INTERACTION
+====================================================== */
 
 
+@media(hover:hover){
+
+    .polaroid:hover{
+
+        transform:
+
+        rotate(0deg)
+
+        translateY(-7px)
+
+        scale(1.035);
+
+        box-shadow:
+
+        0 8px 12px
+        rgba(40,20,10,.25),
+
+        0 20px 30px
+        rgba(40,20,10,.32);
+
+        z-index:4;
+
+    }
+
+}
 
 
+/* ======================================================
+            POLAROID APPEAR ANIMATION
+====================================================== */
 
 
-@keyframes photoAppear{
-
+@keyframes polaroidAppear{
 
     from{
 
-
         opacity:0;
 
-
-        transform:
-
-
-        scale(.8);
-
+        filter:blur(3px);
 
     }
-
-
 
     to{
 
-
         opacity:1;
 
-
-        transform:
-
-
-        scale(1);
-
+        filter:blur(0);
 
     }
 
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -1279,38 +1051,21 @@ body{
 
 .final{
 
-
     margin-top:80px;
-
 
     padding-bottom:60px;
 
-
-
     text-align:center;
-
 
     font-size:27px;
 
-
-
     font-style:italic;
-
-
 
     line-height:1.7;
 
-
 }
-
-
-
-
-
-
-
-
-
+```
+```css
 /* ======================================================
                     MOBILE RESPONSIVE
 ====================================================== */
@@ -1318,230 +1073,164 @@ body{
 
 @media(max-width:768px){
 
+    .hero-screen{
+
+        padding:20px;
+
+    }
 
 
+    .graduation-icon{
+
+        font-size:60px;
+
+    }
 
 
+    .hero-screen h1{
 
-.hero-screen{
+        font-size:42px;
+
+    }
 
 
-    padding:20px;
+    .hero-screen p{
 
+        font-size:18px;
+
+    }
+
+
+    #plane{
+
+        width:42px;
+
+    }
+
+
+    .content{
+
+        width:100%;
+
+        padding:
+
+        40px 15px;
+
+    }
+
+
+    .card{
+
+        padding:22px 18px;
+
+        border-radius:22px;
+
+    }
+
+
+    .card-header h2{
+
+        font-size:30px;
+
+    }
+
+
+    .open-icon{
+
+        font-size:28px;
+
+    }
+
+
+    .card p{
+
+        font-size:16px;
+
+    }
+
+
+    .destination{
+
+        font-size:38px;
+
+        letter-spacing:4px;
+
+    }
+
+
+    .gallery{
+
+        grid-template-columns:
+
+        repeat(2,minmax(0,1fr));
+
+        gap:28px 10px;
+
+        padding:
+
+        32px 12px 38px;
+
+        border-width:6px;
+
+    }
+
+
+    .polaroid{
+
+        width:100%;
+
+        max-width:175px;
+
+        padding:
+
+        8px
+        8px
+        25px;
+
+    }
+
+
+    .polaroid img{
+
+        max-height:190px;
+
+    }
+
+
+    .polaroid::before{
+
+        width:12px;
+
+        height:12px;
+
+        top:4px;
+
+    }
+
+
+    .final{
+
+        font-size:22px;
+
+    }
 
 }
 
 
-
-
-
-
-.graduation-icon{
-
-
-    font-size:60px;
-
-
-}
-
-
-
-
-
-
-.hero-screen h1{
-
-
-    font-size:42px;
-
-
-}
-
-
-
-
-
-
-.hero-screen p{
-
-
-    font-size:18px;
-
-
-}
-
-
-
-
-
-
-
-
-
-#plane{
-
-
-    width:42px;
-
-
-}
-
-
-
-
-
-
-
-
-
-.content{
-
-
-    width:100%;
-
-
-    padding:
-
-
-    40px 15px;
-
-
-}
-
-
-
-
-
-
-
-
-.card{
-
-
-    padding:22px 18px;
-
-
-    border-radius:22px;
-
-
-}
-
-
-
-
-
-
-
-
-.card-header h2{
-
-
-    font-size:30px;
-
-
-}
-
-
-
-
-
-
-
-
-.open-icon{
-
-
-    font-size:28px;
-
-
-}
-
-
-
-
-
-
-
-
-.card p{
-
-
-    font-size:16px;
-
-
-}
-
-
-
-
-
-
-
-
-.destination{
-
-
-    font-size:38px;
-
-
-    letter-spacing:4px;
-
-
-}
-
-
-
-
-
-
-
-
-.gallery{
-
-
-    grid-template-columns:
-
-
-    repeat(2,1fr);
-
-
-}
-
-
-
-
-
-
-
-
-.final{
-
-
-    font-size:22px;
-
-
-}
-
-}/* ======================================================
+/* ======================================================
         PHOTO LONG PRESS MENU
 ====================================================== */
 
 
 .photo-menu{
 
-
     position:fixed;
-
 
     z-index:9999;
 
-
     left:0;
 
-
     top:0;
-
-
 
     transform:
 
@@ -1549,203 +1238,110 @@ body{
 
     scale(.8);
 
-
-
-
     display:flex;
-
 
     flex-direction:column;
 
-
     gap:12px;
-
-
 
     padding:20px;
 
-
-
-
     background:
-
 
     rgba(20,20,30,.95);
 
-
-
-
     border:
-
 
     1px solid rgba(255,255,255,.3);
 
-
-
-
     border-radius:20px;
-
-
 
     backdrop-filter:blur(15px);
 
-
-
     box-shadow:
-
 
     0 20px 50px rgba(0,0,0,.5);
 
-
-
-
-
     opacity:0;
-
-
 
     pointer-events:none;
 
-
-
     transition:.3s ease;
-
-
 
 }
 
 
-
-
-
-
-
 .photo-menu.active{
-
 
     opacity:1;
 
-
-
     pointer-events:auto;
 
-
-
-
     transform:
-
 
     translate(-50%,-50%)
 
     scale(1);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 .photo-menu button{
 
-
     border:none;
-
-
 
     border-radius:30px;
 
-
-
-
     padding:
-
 
     12px 25px;
 
-
-
-
     cursor:pointer;
 
-
-
-
     font-size:16px;
-
-
 
     font-family:
 
     'Inter',
     sans-serif;
 
-
-
-
     background:white;
-
-
 
     color:#111;
 
-
-
-
     transition:.25s;
 
-
-
 }
-
-
-
-
-
-
 
 
 .photo-menu button:hover{
 
-
     transform:
-
 
     scale(1.05);
 
-
-
 }
 
 
+/* evita il menu nativo del telefono
+   durante la pressione sulle fotografie */
 
 
-
-
-
-
-
-/* evita menu nativo telefono
-   durante pressione immagini */
-
-
-.gallery img{
-
+.polaroid img{
 
     -webkit-touch-callout:none;
 
+    -webkit-user-select:none;
 
     user-select:none;
-   
+
 }
+
+
 /* ======================================================
         PHOTO VIEWER (ALBUM)
 ====================================================== */
+
 
 .photo-viewer{
 
@@ -1770,7 +1366,6 @@ body{
 }
 
 
-
 .photo-viewer.active{
 
     opacity:1;
@@ -1778,7 +1373,6 @@ body{
     pointer-events:auto;
 
 }
-
 
 
 .viewer-background{
@@ -1792,7 +1386,6 @@ body{
     backdrop-filter:blur(12px);
 
 }
-
 
 
 .viewer-content{
@@ -1816,27 +1409,36 @@ body{
 }
 
 
-
 #viewerImage{
 
-    width:100%;
+    display:block;
+
+    width:auto;
+
+    max-width:100%;
+
+    height:auto;
 
     max-height:75vh;
 
     object-fit:contain;
 
-    background:white;
+    background:transparent;
 
-    padding:18px 18px 60px 18px;
+    padding:0;
 
-    border-radius:6px;
+    border-radius:10px;
 
     box-shadow:
 
-    0 30px 70px rgba(0,0,0,.6);
+    0 30px 70px
+    rgba(0,0,0,.65);
+
+    user-select:none;
+
+    -webkit-user-select:none;
 
 }
-
 
 
 .viewer-actions{
@@ -1850,7 +1452,6 @@ body{
     justify-content:center;
 
 }
-
 
 
 .viewer-actions button{
@@ -1874,13 +1475,11 @@ body{
 }
 
 
-
 .viewer-actions button:hover{
 
     transform:translateY(-2px);
 
 }
-
 
 
 @keyframes albumOpen{
@@ -1912,16 +1511,20 @@ body{
 }
 
 
-
 @media(max-width:768px){
 
     #viewerImage{
 
-        max-height:60vh;
+        width:auto;
 
-        padding:12px 12px 45px 12px;
+        max-width:100%;
+
+        max-height:68vh;
+
+        padding:0;
 
     }
+
 
     .viewer-actions{
 
@@ -1931,6 +1534,7 @@ body{
 
     }
 
+
     .viewer-actions button{
 
         width:100%;
@@ -1938,5 +1542,4 @@ body{
     }
 
 }
-
-
+```
