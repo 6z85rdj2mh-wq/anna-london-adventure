@@ -324,3 +324,186 @@ function animatePlane(){
 
 
 }
+/* ==========================================================
+        ARRIVAL
+========================================================== */
+
+
+function finishFlight(){
+
+
+
+    /*
+        effetto arrivo aereo
+    */
+
+
+    plane.classList.add(
+        "landing-glow"
+    );
+
+
+
+    /*
+        illumina destinazione
+    */
+
+
+    const londonDot =
+    document.querySelector(
+        ".destination-dot"
+    );
+
+
+    if(londonDot){
+
+
+        londonDot.style.transform =
+        "scale(2)";
+
+
+        londonDot.style.boxShadow =
+        "0 0 50px white";
+
+
+    }
+
+
+
+    /*
+        attesa prima apertura
+    */
+
+
+    setTimeout(()=>{
+
+
+        closeFlight();
+
+
+    },1500);
+
+
+
+}
+
+
+
+
+
+
+/* ==========================================================
+        CLOSE FLIGHT
+========================================================== */
+
+
+function closeFlight(){
+
+
+
+    /*
+        dissolve overlay
+    */
+
+
+    overlay.style.opacity="0";
+
+
+
+    overlay.style.transform=
+    "scale(1.05)";
+
+
+
+    /*
+        apre contenuto
+    */
+
+
+    setTimeout(()=>{
+
+
+        overlay.classList.remove(
+            "active"
+        );
+
+
+
+        hero.classList.add(
+            "fade-away"
+        );
+
+
+
+        setTimeout(()=>{
+
+
+            hero.style.display="none";
+
+
+
+            content.style.display=
+            "block";
+
+
+
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+
+
+        },700);
+
+
+
+    },1000);
+
+
+
+}
+
+
+
+
+
+/* ==========================================================
+        PRELOAD EFFECTS
+========================================================== */
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+    /*
+        prepara linea SVG
+    */
+
+
+    if(line){
+
+
+        const length =
+        line.getTotalLength();
+
+
+
+        line.style.strokeDasharray =
+        length;
+
+
+
+        line.style.strokeDashoffset =
+        length;
+
+
+    }
+
+
+});
