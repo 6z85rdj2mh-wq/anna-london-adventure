@@ -22,6 +22,7 @@
 </head>
 
 
+
 <body>
 
 
@@ -37,9 +38,7 @@
 
 
 <div class="graduation-icon">
-
 🎓
-
 </div>
 
 
@@ -54,6 +53,7 @@ Dottoressa Anna
 
 
 
+
 <p>
 
 Un traguardo raggiunto.<br>
@@ -64,17 +64,25 @@ Una nuova avventura pronta ad iniziare.
 
 
 
-<button id="startButton" onclick="startJourney()">
+
+
+<button 
+id="startButton"
+onclick="startJourney()">
 
 ✈️ INIZIA IL VIAGGIO
 
 </button>
 
 
+
 </div>
 
 
 </section>
+
+
+
 
 
 
@@ -97,7 +105,34 @@ Una nuova avventura pronta ad iniziare.
 
 
 
-<!-- ROUTE SVG -->
+<div class="city perugia">
+
+<div class="dot"></div>
+
+<span>
+PERUGIA
+</span>
+
+</div>
+
+
+
+
+
+
+<div class="city london">
+
+<div class="dot destination-dot"></div>
+
+<span>
+LONDRA
+</span>
+
+</div>
+
+
+
+
 
 
 <svg 
@@ -105,9 +140,6 @@ id="flightSVG"
 viewBox="0 0 1000 500"
 preserveAspectRatio="xMidYMid meet">
 
-
-
-<!-- percorso invisibile per JS -->
 
 
 <path
@@ -121,8 +153,6 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 
-<!-- linea tratteggiata -->
-
 
 <path
 
@@ -134,80 +164,6 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 
-
-
-<!-- =====================
-        PERUGIA
-===================== -->
-
-
-<circle
-
-class="map-dot"
-
-cx="140"
-
-cy="360"
-
-r="8">
-
-</circle>
-
-
-
-
-<text
-
-class="map-label start-label"
-
-x="140"
-
-y="405">
-
-PERUGIA
-
-</text>
-
-
-
-
-
-
-<!-- =====================
-        LONDRA
-===================== -->
-
-
-<circle
-
-class="map-dot destination-dot"
-
-cx="860"
-
-cy="170"
-
-r="8">
-
-</circle>
-
-
-
-
-<text
-
-class="map-label end-label"
-
-x="860"
-
-y="140">
-
-LONDRA
-
-</text>
-
-
-
-
 </svg>
 
 
@@ -215,54 +171,6 @@ LONDRA
 
 
 
-<!-- AEREO -->
-
-
-<div id="plane">
-
-
-<svg viewBox="0 0 64 64">
-
-
-<path d="
-M60 32
-L37 27
-L25 6
-L19 7
-L23 27
-L5 23
-L3 27
-L18 32
-L3 37
-L5 41
-L23 37
-L19 57
-L25 58
-L37 37
-L60 32
-Z
-"/>
-
-
-</svg>
-
-
-</div>
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-<!-- AEREO -->
 
 
 <div id="plane">
@@ -300,10 +208,13 @@ Z
 
 
 
+
 </div>
 
 
 </div>
+
+
 
 
 
@@ -320,13 +231,19 @@ Z
 
 
 
+
+
+
 <!-- ================= LAUREA ================= -->
+
 
 
 <section class="card adventure-card">
 
 
+
 <div class="card-header" onclick="toggleSection(this)">
+
 
 
 <h2>
@@ -334,16 +251,22 @@ Z
 </h2>
 
 
+
 <span class="open-icon">
 ＋
 </span>
+
 
 
 </div>
 
 
 
+
+
+
 <div class="card-body">
+
 
 
 <p>
@@ -368,12 +291,18 @@ i ricordi di una giornata speciale.
 
 
 
+
+
 <div class="photo-area">
+
 
 
 <h3>
 📸 Ricordi della laurea
 </h3>
+
+
+
 
 
 <label class="upload-button">
@@ -382,25 +311,38 @@ i ricordi di una giornata speciale.
 ＋ CARICA FOTO
 
 
-<input 
+<input
+
 type="file"
+
 accept="image/*"
+
 multiple
-onchange="uploadPhotos(event,'degreeGallery')">
+
+onchange="uploadToSupabase(event,'degreeGallery')">
 
 
 </label>
 
 
 
-<div 
+
+
+<div
+
 class="gallery"
+
 id="degreeGallery">
 
+
 </div>
 
 
+
 </div>
+
+
+
 
 
 
@@ -416,13 +358,17 @@ id="degreeGallery">
 
 
 
+
 <!-- ================= VIAGGIO ================= -->
+
 
 
 <section class="card adventure-card">
 
 
+
 <div class="card-header" onclick="toggleSection(this)">
+
 
 
 <h2>
@@ -430,9 +376,12 @@ id="degreeGallery">
 </h2>
 
 
+
+
 <span class="open-icon">
 ＋
 </span>
+
 
 
 </div>
@@ -441,7 +390,10 @@ id="degreeGallery">
 
 
 
+
+
 <div class="card-body">
+
 
 
 <p>
@@ -454,11 +406,13 @@ DESTINAZIONE CONFERMATA
 
 
 
+
 <span class="destination">
 
 LONDRA
 
 </span>
+
 
 
 
@@ -469,13 +423,14 @@ Una nuova avventura sta per iniziare.
 
 <br><br>
 
-
 Il biglietto è pronto.
 
 Ora manca solo partire.
 
 
 </p>
+
+
 
 
 
@@ -493,25 +448,41 @@ Ora manca solo partire.
 
 
 
+
+
+
+
 <label class="upload-button">
 
 
 ＋ AGGIUNGI FOTO
 
 
-<input 
+
+<input
+
 type="file"
+
 accept="image/*"
+
 multiple
-onchange="uploadPhotos(event,'londonGallery')">
+
+onchange="uploadToSupabase(event,'londonGallery')">
+
 
 
 </label>
 
 
 
-<div 
+
+
+
+
+<div
+
 class="gallery"
+
 id="londonGallery">
 
 
@@ -519,22 +490,19 @@ id="londonGallery">
 
 
 
-</div>
-
-
-
 
 </div>
+
+
+
+
+
+
+</div>
+
 
 
 </section>
-
-
-
-
-
-
-
 
 
 
@@ -565,7 +533,14 @@ per sempre.
 
 
 
+
+
+
 </main>
+
+
+
+
 
 
 
@@ -585,14 +560,24 @@ per sempre.
 </audio>
 
 
+
+
+
+
+
+
+<!-- ==================================================
+                     SCRIPTS
+================================================== -->
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script src="supabase.js"></script>
 
+
 <script src="script.js"></script>
-
-
-
 
 
 
