@@ -26,11 +26,6 @@
 <body>
 
 
-<!-- ==================================================
-                        HERO
-================================================== -->
-
-
 <section class="hero-screen" id="hero">
 
 
@@ -89,11 +84,6 @@ onclick="startJourney()">
 
 
 
-<!-- ==================================================
-                    FLIGHT EXPERIENCE
-================================================== -->
-
-
 <div id="flightOverlay">
 
 
@@ -105,9 +95,6 @@ onclick="startJourney()">
 
 
 
-<!-- ROUTE SVG -->
-
-
 <svg 
 id="flightSVG"
 viewBox="0 0 1000 500"
@@ -115,7 +102,6 @@ preserveAspectRatio="xMidYMid meet">
 
 
 
-<!-- percorso invisibile per JS -->
 
 
 <path
@@ -128,8 +114,6 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 
-
-<!-- linea tratteggiata -->
 
 
 <path
@@ -144,9 +128,6 @@ d="M140 360 C340 140 650 140 860 170">
 
 
 
-<!-- =====================
-        PERUGIA
-===================== -->
 
 
 <circle
@@ -160,6 +141,7 @@ cy="360"
 r="8">
 
 </circle>
+
 
 
 
@@ -181,9 +163,6 @@ PERUGIA
 
 
 
-<!-- =====================
-        LONDRA
-===================== -->
 
 
 <circle
@@ -197,6 +176,7 @@ cy="170"
 r="8">
 
 </circle>
+
 
 
 
@@ -216,14 +196,13 @@ LONDRA
 
 
 
+
 </svg>
 
 
 
 
 
-
-<!-- AEREO -->
 
 
 <div id="plane">
@@ -260,24 +239,19 @@ Z
 
 
 
-</div>
 
 
 </div>
 
-<!-- ==================================================
-                     CONTENT
-================================================== -->
 
-
-<main class="content" id="content">
+</div>
 
 
 
 
 
 
-<!-- ================= LAUREA ================= -->
+<main class="content" id="content" style="display:none;">
 
 
 
@@ -307,7 +281,6 @@ Z
 
 
 
-
 <div class="card-body">
 
 
@@ -330,7 +303,6 @@ Questo spazio conserverà
 i ricordi di una giornata speciale.
 
 </p>
-
 
 
 
@@ -393,17 +365,7 @@ id="degreeGallery">
 
 
 </section>
-
-
-
-
-
-
-
-
-
 <!-- ================= VIAGGIO ================= -->
-
 
 
 <section class="card adventure-card">
@@ -435,6 +397,8 @@ id="degreeGallery">
 
 
 
+
+
 <div class="card-body">
 
 
@@ -450,11 +414,13 @@ DESTINAZIONE CONFERMATA
 
 
 
+
 <span class="destination">
 
 LONDRA
 
 </span>
+
 
 
 
@@ -480,6 +446,7 @@ Ora manca solo partire.
 
 
 
+
 <div class="photo-area">
 
 
@@ -488,6 +455,8 @@ Ora manca solo partire.
 🌃 Album Londra
 
 </h3>
+
+
 
 
 
@@ -522,6 +491,8 @@ onchange="uploadToSupabase(event,'londonGallery')">
 
 
 
+
+
 <div
 
 class="gallery"
@@ -530,6 +501,7 @@ id="londonGallery">
 
 
 </div>
+
 
 
 
@@ -546,7 +518,6 @@ id="londonGallery">
 
 
 </section>
-
 
 
 
@@ -589,11 +560,6 @@ per sempre.
 
 
 
-<!-- ==================================================
-                     AUDIO
-================================================== -->
-
-
 <audio id="song" loop>
 
 
@@ -608,12 +574,6 @@ per sempre.
 
 
 
-
-<!-- ==================================================
-                     SCRIPTS
-================================================== -->
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
@@ -621,6 +581,7 @@ per sempre.
 
 
 <script src="script.js"></script>
+
 
 
 
