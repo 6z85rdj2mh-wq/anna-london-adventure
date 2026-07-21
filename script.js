@@ -7,11 +7,25 @@ const hero = document.getElementById("hero");
 
 const content = document.getElementById("content");
 
+const song = document.getElementById("song");
 
+
+
+// parte la musica
+
+song.volume = 0.35;
+
+song.play();
+
+
+
+// parte l'aereo
 
 plane.classList.add("fly");
 
 
+
+// chiusura copertina
 
 setTimeout(()=>{
 
@@ -25,6 +39,8 @@ hero.style.transform="scale(1.05)";
 
 
 
+
+// apertura viaggio
 
 setTimeout(()=>{
 
