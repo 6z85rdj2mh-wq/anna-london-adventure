@@ -1213,5 +1213,35 @@ translate(100px,50px);
 
 
 }
+@media(max-width:768px){
 
+
+.content{
+
+    width:100%;
+
+    padding:40px 15px;
+
+}
+
+
+
+.card{
+
+    border-radius:25px;
+
+    padding:25px 20px;
+
+}
+
+
+
+.card h2{
+
+    font-size:30px;
+
+}
+
+
+}
 }
