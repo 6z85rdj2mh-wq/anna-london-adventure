@@ -947,42 +947,36 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-            const img =
+           const img =
 
-            document.createElement(
-                "img"
-            );
-
-
-
-
-
-            img.src =
-
-            urlData.publicUrl;
+document.createElement(
+    "img"
+);
 
 
 
 
 
-            gallery.appendChild(
-                img
-            );
+img.src =
+
+urlData.publicUrl;
+
+
+
+// salva il percorso Supabase
+// servirà per eliminare la foto
+
+img.dataset.path =
+
+`${folder}/${file.name}`;
 
 
 
 
 
-
-
-
-            console.log(
-
-                "Foto caricata:",
-
-                urlData.publicUrl
-
-            );
+gallery.appendChild(
+    img
+);
 
 
 
