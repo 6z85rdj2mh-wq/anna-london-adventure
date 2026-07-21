@@ -555,7 +555,7 @@ async function uploadToSupabase(event,galleryId){
 
 
 /* ======================================================
-        CREATE GALLERY IMAGE
+        CREATE GALLERY POLAROID
 ====================================================== */
 
 
@@ -571,6 +571,18 @@ function addPhotoToGallery(
         !filePath
     )
     return null;
+
+
+    const polaroid =
+
+    document.createElement(
+        "div"
+    );
+
+
+    polaroid.classList.add(
+        "polaroid"
+    );
 
 
     const img =
@@ -600,8 +612,41 @@ function addPhotoToGallery(
     false;
 
 
-    gallery.appendChild(
+    const rotation =
+
+    Math.random() * 6 - 3;
+
+
+    const verticalOffset =
+
+    Math.random() * 10 - 5;
+
+
+    polaroid.style.setProperty(
+
+        "--photo-rotation",
+
+        `${rotation.toFixed(2)}deg`
+
+    );
+
+
+    polaroid.style.setProperty(
+
+        "--photo-offset",
+
+        `${verticalOffset.toFixed(2)}px`
+
+    );
+
+
+    polaroid.appendChild(
         img
+    );
+
+
+    gallery.appendChild(
+        polaroid
     );
 
 
