@@ -1,56 +1,36 @@
-```css
 /* ======================================================
    ANNA'S LONDON ADVENTURE
    STYLE CSS FINAL CLEAN
 ====================================================== */
 
-
-*{
-
-    box-sizing:border-box;
-
+* {
+  box-sizing: border-box;
 }
 
-
-html{
-
-    scroll-behavior:smooth;
-
+html {
+  scroll-behavior: smooth;
 }
 
+body {
+  margin: 0;
 
-body{
+  padding: 0;
 
-    margin:0;
+  font-family: "Inter", sans-serif;
 
-    padding:0;
+  color: white;
 
-    font-family:
-    'Inter',
-    sans-serif;
+  min-height: 100vh;
 
-    color:white;
-
-    min-height:100vh;
-
-    background:
-
-    linear-gradient(
-
-        rgba(7,12,30,.65),
-
-        rgba(5,8,20,.9)
-
-    ),
-
+  background:
+    linear-gradient(rgba(7, 12, 30, 0.65), rgba(5, 8, 20, 0.9)),
     url("https://th.bing.com/th/id/R.704e8b423b88f862732f7fc3a435d5cb?rik=2%2bEZgyDaFaRBRw&pid=ImgRaw&r=0");
 
-    background-size:cover;
+  background-size: cover;
 
-    background-position:center;
+  background-position: center;
 
-    background-attachment:fixed;
-
+  background-attachment: fixed;
 }
 
 
@@ -58,139 +38,94 @@ body{
                     HERO
 ====================================================== */
 
+.hero-screen {
+  height: 100vh;
 
-.hero-screen{
+  display: flex;
 
-    height:100vh;
+  justify-content: center;
 
-    display:flex;
+  align-items: center;
 
-    justify-content:center;
+  text-align: center;
 
-    align-items:center;
+  padding: 30px;
 
-    text-align:center;
-
-    padding:30px;
-
-    transition:
-
+  transition:
     opacity 1.5s ease,
-
     transform 1.5s ease;
-
 }
 
-
-.hero-content{
-
-    max-width:700px;
-
+.hero-content {
+  max-width: 700px;
 }
 
+.graduation-icon {
+  font-size: 75px;
 
-.graduation-icon{
-
-    font-size:75px;
-
-    animation:
-
-    float 3s ease-in-out infinite;
-
+  animation: float 3s ease-in-out infinite;
 }
 
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
 
-@keyframes float{
+  50% {
+    transform: translateY(-12px);
+  }
 
-    0%{
-
-        transform:translateY(0);
-
-    }
-
-    50%{
-
-        transform:translateY(-12px);
-
-    }
-
-    100%{
-
-        transform:translateY(0);
-
-    }
-
+  100% {
+    transform: translateY(0);
+  }
 }
 
+.hero-screen h1 {
+  font-family: "Cormorant Garamond", serif;
 
-.hero-screen h1{
+  font-size: 55px;
 
-    font-family:
+  font-weight: 600;
 
-    'Cormorant Garamond',
-    serif;
+  line-height: 1.15;
 
-    font-size:55px;
-
-    font-weight:600;
-
-    line-height:1.15;
-
-    margin:25px 0;
-
+  margin: 25px 0;
 }
 
+.hero-screen p {
+  font-size: 22px;
 
-.hero-screen p{
+  line-height: 1.6;
 
-    font-size:22px;
-
-    line-height:1.6;
-
-    opacity:.9;
-
+  opacity: 0.9;
 }
 
+.hero-screen button {
+  margin-top: 40px;
 
-.hero-screen button{
+  padding: 18px 45px;
 
-    margin-top:40px;
+  border: none;
 
-    padding:
+  border-radius: 50px;
 
-    18px 45px;
+  cursor: pointer;
 
-    border:none;
+  font-size: 18px;
 
-    border-radius:50px;
+  letter-spacing: 1px;
 
-    cursor:pointer;
+  background: white;
 
-    font-size:18px;
+  color: #111;
 
-    letter-spacing:1px;
+  transition: 0.4s;
 
-    background:white;
-
-    color:#111;
-
-    transition:.4s;
-
-    box-shadow:
-
-    0 15px 40px rgba(0,0,0,.5);
-
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-
-.hero-screen button:hover{
-
-    transform:
-
-    translateY(-5px)
-
-    scale(1.03);
-
+.hero-screen button:hover {
+  transform: translateY(-5px) scale(1.03);
 }
 
 
@@ -198,62 +133,46 @@ body{
                     FLIGHT OVERLAY
 ====================================================== */
 
+#flightOverlay {
+  position: fixed;
 
-#flightOverlay{
+  inset: 0;
 
-    position:fixed;
+  z-index: 50;
 
-    inset:0;
+  display: none;
 
-    z-index:50;
+  opacity: 0;
 
-    display:none;
-
-    opacity:0;
-
-    transition:
-
+  transition:
     opacity 1s ease,
-
     transform 1s ease;
-
 }
 
+#flightOverlay.active {
+  display: block;
 
-#flightOverlay.active{
-
-    display:block;
-
-    opacity:1;
-
+  opacity: 1;
 }
 
+.overlay-background {
+  position: absolute;
 
-.overlay-background{
+  inset: 0;
 
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    rgba(3,8,25,.96);
-
+  background: rgba(3, 8, 25, 0.96);
 }
 
+.flight-container {
+  position: absolute;
 
-.flight-container{
+  width: 100%;
 
-    position:absolute;
+  height: 100%;
 
-    width:100%;
+  inset: 0;
 
-    height:100%;
-
-    inset:0;
-
-    overflow:hidden;
-
+  overflow: hidden;
 }
 
 
@@ -261,47 +180,38 @@ body{
                     SVG ROTTA
 ====================================================== */
 
+#flightSVG {
+  position: absolute;
 
-#flightSVG{
+  width: 100%;
 
-    position:absolute;
+  height: auto;
 
-    width:100%;
+  aspect-ratio: 2 / 1;
 
-    height:auto;
+  left: 0;
 
-    aspect-ratio:2 / 1;
+  top: 50%;
 
-    left:0;
-
-    top:50%;
-
-    transform:translateY(-50%);
-
+  transform: translateY(-50%);
 }
 
+#flightPath {
+  fill: none;
 
-#flightPath{
-
-    fill:none;
-
-    stroke:none;
-
+  stroke: none;
 }
 
+#flightLine {
+  fill: none;
 
-#flightLine{
+  stroke: white;
 
-    fill:none;
+  stroke-width: 3;
 
-    stroke:white;
+  stroke-dasharray: 12 12;
 
-    stroke-width:3;
-
-    stroke-dasharray:12 12;
-
-    opacity:.8;
-
+  opacity: 0.8;
 }
 
 
@@ -309,58 +219,32 @@ body{
                 PUNTI E TESTI SVG
 ====================================================== */
 
+.map-dot {
+  fill: white;
 
-.map-dot{
-
-    fill:white;
-
-    filter:
-
-    drop-shadow(
-
-    0 0 10px white
-
-    );
-
+  filter: drop-shadow(0 0 10px white);
 }
 
+.map-label {
+  fill: white;
 
-.map-label{
+  font-size: 26px;
 
-    fill:white;
+  font-weight: 500;
 
-    font-size:26px;
+  letter-spacing: 4px;
 
-    font-weight:500;
+  font-family: "Inter", sans-serif;
 
-    letter-spacing:4px;
-
-    font-family:
-    'Inter',
-    sans-serif;
-
-    filter:
-
-    drop-shadow(
-
-    0 0 8px rgba(255,255,255,.8)
-
-    );
-
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
 }
 
-
-.start-label{
-
-    text-anchor:middle;
-
+.start-label {
+  text-anchor: middle;
 }
 
-
-.end-label{
-
-    text-anchor:end;
-
+.end-label {
+  text-anchor: end;
 }
 
 
@@ -368,40 +252,26 @@ body{
                     AEREO
 ====================================================== */
 
+#plane {
+  position: absolute;
 
-#plane{
+  width: 55px;
 
-    position:absolute;
+  opacity: 0;
 
-    width:55px;
+  z-index: 10;
 
-    opacity:0;
+  pointer-events: none;
 
-    z-index:10;
-
-    pointer-events:none;
-
-    transition:
-
-    opacity .5s ease;
-
+  transition: opacity 0.5s ease;
 }
 
+#plane svg {
+  width: 100%;
 
-#plane svg{
+  fill: white;
 
-    width:100%;
-
-    fill:white;
-
-    filter:
-
-    drop-shadow(
-
-    0 0 8px rgba(255,255,255,.7)
-
-    );
-
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
 }
 
 
@@ -409,50 +279,32 @@ body{
                     CONTENT
 ====================================================== */
 
+.content {
+  display: none;
 
-.content{
+  width: 90%;
 
-    display:none;
+  max-width: 850px;
 
-    width:90%;
+  margin: auto;
 
-    max-width:850px;
+  padding: 70px 20px;
 
-    margin:auto;
-
-    padding:
-
-    70px 20px;
-
-    animation:
-
-    fadeIn 1.2s ease;
-
+  animation: fadeIn 1.2s ease;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
 
-@keyframes fadeIn{
+    transform: translateY(40px);
+  }
 
-    from{
+  to {
+    opacity: 1;
 
-        opacity:0;
-
-        transform:
-
-        translateY(40px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateY(0);
-
-    }
-
+    transform: translateY(0);
+  }
 }
 
 
@@ -460,38 +312,24 @@ body{
                     CARD
 ====================================================== */
 
+.card {
+  margin-bottom: 35px;
 
-.card{
+  padding: 30px;
 
-    margin-bottom:35px;
+  border-radius: 25px;
 
-    padding:30px;
+  background: rgba(255, 255, 255, 0.12);
 
-    border-radius:25px;
+  backdrop-filter: blur(15px);
 
-    background:
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
-    rgba(255,255,255,.12);
-
-    backdrop-filter:
-
-    blur(15px);
-
-    border:
-
-    1px solid rgba(255,255,255,.25);
-
-    box-shadow:
-
-    0 20px 50px rgba(0,0,0,.35);
-
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
-
-.adventure-card{
-
-    overflow:hidden;
-
+.adventure-card {
+  overflow: hidden;
 }
 
 
@@ -499,51 +337,34 @@ body{
                 CARD HEADER
 ====================================================== */
 
+.card-header {
+  display: flex;
 
-.card-header{
+  justify-content: space-between;
 
-    display:flex;
+  align-items: center;
 
-    justify-content:space-between;
-
-    align-items:center;
-
-    cursor:pointer;
-
+  cursor: pointer;
 }
 
+.card-header h2 {
+  margin: 0;
 
-.card-header h2{
+  font-family: "Cormorant Garamond", serif;
 
-    margin:0;
+  font-size: 35px;
 
-    font-family:
-
-    'Cormorant Garamond',
-    serif;
-
-    font-size:35px;
-
-    font-weight:600;
-
+  font-weight: 600;
 }
 
+.open-icon {
+  font-size: 35px;
 
-.open-icon{
-
-    font-size:35px;
-
-    transition:.4s;
-
+  transition: 0.4s;
 }
 
-
-.card-header.active .open-icon{
-
-    transform:
-
-    rotate(45deg);
-
+.card-header.active .open-icon {
+  transform: rotate(45deg);
 }
 
 
@@ -551,45 +372,33 @@ body{
                 CARD BODY
 ====================================================== */
 
+.card-body {
+  max-height: 0;
 
-.card-body{
+  overflow: hidden;
 
-    max-height:0;
+  opacity: 0;
 
-    overflow:hidden;
-
-    opacity:0;
-
-    transition:
-
-    max-height .8s ease,
-
-    opacity .6s ease,
-
-    padding .6s ease;
-
+  transition:
+    max-height 0.8s ease,
+    opacity 0.6s ease,
+    padding 0.6s ease;
 }
 
+.card-body.open {
+  max-height: 100000px;
 
-.card-body.open{
+  overflow: visible;
 
-    max-height:10000px;
+  opacity: 1;
 
-    overflow:visible;
-
-    opacity:1;
-
-    padding-top:30px;
-
+  padding-top: 30px;
 }
 
+.card p {
+  font-size: 18px;
 
-.card p{
-
-    font-size:18px;
-
-    line-height:1.7;
-
+  line-height: 1.7;
 }
 
 
@@ -597,22 +406,16 @@ body{
                 DESTINAZIONE
 ====================================================== */
 
+.destination {
+  display: inline-block;
 
-.destination{
+  font-size: 55px;
 
-    display:inline-block;
+  letter-spacing: 8px;
 
-    font-size:55px;
+  font-weight: bold;
 
-    letter-spacing:8px;
-
-    font-weight:bold;
-
-    font-family:
-
-    'Cormorant Garamond',
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
 }
 
 
@@ -620,46 +423,36 @@ body{
                 BUTTONS
 ====================================================== */
 
-
 .button,
-.upload-button{
+.upload-button {
+  display: inline-flex;
 
-    display:inline-flex;
+  justify-content: center;
 
-    justify-content:center;
+  align-items: center;
 
-    align-items:center;
+  margin-top: 25px;
 
-    margin-top:25px;
+  padding: 15px 30px;
 
-    padding:
+  border-radius: 50px;
 
-    15px 30px;
+  background: white;
 
-    border-radius:50px;
+  color: #111;
 
-    background:white;
+  text-decoration: none;
 
-    color:#111;
+  font-size: 16px;
 
-    text-decoration:none;
+  cursor: pointer;
 
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
+  transition: 0.3s;
 }
 
-
 .button:hover,
-.upload-button:hover{
-
-    transform:
-
-    scale(1.05);
-
+.upload-button:hover {
+  transform: scale(1.05);
 }
 
 
@@ -667,127 +460,103 @@ body{
                 PHOTO AREA
 ====================================================== */
 
+.photo-area {
+  margin-top: 35px;
 
-.photo-area{
+  padding-top: 25px;
 
-    margin-top:35px;
-
-    padding-top:25px;
-
-    border-top:
-
-    1px solid rgba(255,255,255,.25);
-
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
 }
 
+.photo-area h3 {
+  font-size: 25px;
 
-.photo-area h3{
-
-    font-size:25px;
-
-    font-family:
-
-    'Cormorant Garamond',
-    serif;
-
+  font-family: "Cormorant Garamond", serif;
 }
 
-
-.upload-button input{
-
-    display:none;
-
+.upload-button input {
+  display: none;
 }
-```
 ```css
 /* ======================================================
             GALLERY — BACHECA DEI RICORDI
 ====================================================== */
 
+.gallery {
+  position: relative;
 
-.gallery{
+  margin-top: 50px;
 
-    position:relative;
+  display: grid;
 
-    margin-top:30px;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
 
-    display:grid;
+  align-items: start;
 
-    grid-template-columns:
+  justify-items: center;
 
-    repeat(3,minmax(0,1fr));
+  gap: 34px 22px;
 
-    align-items:center;
+  padding: 40px 24px 46px;
 
-    justify-items:center;
+  overflow: visible;
 
-    gap:34px 22px;
+  touch-action: pan-y;
 
-    padding:
+  -webkit-overflow-scrolling: touch;
 
-    38px 24px 45px;
+  border-radius: 18px;
 
-    overflow:visible;
-
-    border-radius:18px;
-
-    background:
-
+  background:
     radial-gradient(
-
-        circle at 20% 30%,
-
-        rgba(255,255,255,.08) 0 1px,
-
-        transparent 2px
-
+      circle at 15% 20%,
+      rgba(79, 39, 13, 0.28) 0 1px,
+      transparent 1.8px
     ),
-
     radial-gradient(
-
-        circle at 70% 65%,
-
-        rgba(70,35,15,.12) 0 1px,
-
-        transparent 2px
-
+      circle at 75% 35%,
+      rgba(255, 224, 178, 0.2) 0 1px,
+      transparent 2px
     ),
-
+    radial-gradient(
+      ellipse at 40% 75%,
+      rgba(92, 47, 18, 0.24) 0 1.5px,
+      transparent 2.5px
+    ),
+    radial-gradient(
+      ellipse at 85% 80%,
+      rgba(255, 214, 157, 0.14) 0 1px,
+      transparent 2px
+    ),
+    repeating-linear-gradient(
+      25deg,
+      rgba(104, 56, 23, 0.09) 0,
+      rgba(104, 56, 23, 0.09) 1px,
+      transparent 1px,
+      transparent 5px
+    ),
     linear-gradient(
-
-        135deg,
-
-        #b77946,
-
-        #9e6339 45%,
-
-        #b97845
-
+      135deg,
+      #c58a52 0%,
+      #ad7140 45%,
+      #c1844d 100%
     );
 
-    background-size:
-
-    18px 18px,
-
-    23px 23px,
-
+  background-size:
+    17px 19px,
+    23px 21px,
+    31px 27px,
+    37px 35px,
+    8px 8px,
     100% 100%;
 
-    border:
+  border: 8px solid #704424;
 
-    8px solid rgba(86,45,23,.8);
-
-    box-shadow:
-
-    inset 0 0 25px
-    rgba(75,35,12,.35),
-
-    inset 0 2px 2px
-    rgba(255,255,255,.18),
-
-    0 15px 35px
-    rgba(0,0,0,.28);
-
+  box-shadow:
+    inset 0 0 32px rgba(82, 39, 12, 0.42),
+    inset 0 2px 3px rgba(255, 233, 200, 0.22),
+    0 15px 35px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -795,73 +564,55 @@ body{
                 POLAROID CONTAINER
 ====================================================== */
 
+.polaroid {
+  position: relative;
 
-.polaroid{
+  display: inline-flex;
 
-    position:relative;
+  justify-content: center;
 
-    display:inline-flex;
+  align-items: center;
 
-    justify-content:center;
+  width: 100%;
 
-    align-items:center;
+  max-width: 190px;
 
-    width:100%;
+  padding:
+    10px
+    10px
+    29px;
 
-    max-width:220px;
-
-    padding:
-
-    12px
-    12px
-    34px;
-
-    background:
-
+  background:
     linear-gradient(
-
-        145deg,
-
-        #fffefa,
-
-        #f1eee6
-
+      145deg,
+      #fffefa,
+      #f1eee6
     );
 
-    border-radius:3px;
+  border-radius: 3px;
 
-    box-shadow:
+  box-shadow:
+    0 4px 7px rgba(40, 20, 10, 0.25),
+    0 13px 20px rgba(40, 20, 10, 0.25);
 
-    0 4px 7px
-    rgba(40,20,10,.25),
-
-    0 13px 20px
-    rgba(40,20,10,.25);
-
-    transform:
-
+  transform:
     rotate(
-        var(--photo-rotation,0deg)
+      var(--photo-rotation, 0deg)
     )
-
     translateY(
-        var(--photo-offset,0px)
+      var(--photo-offset, 0px)
     );
 
-    transform-origin:center top;
+  transform-origin: center top;
 
-    transition:
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
-    transform .3s ease,
+  animation:
+    polaroidAppear 0.55s ease both;
 
-    box-shadow .3s ease;
-
-    animation:
-
-    polaroidAppear .55s ease both;
-
-    z-index:1;
-
+  z-index: 1;
 }
 
 
@@ -869,86 +620,65 @@ body{
                     PUNTINA
 ====================================================== */
 
+.polaroid::before {
+  content: "";
 
-.polaroid::before{
+  position: absolute;
 
-    content:"";
+  z-index: 3;
 
-    position:absolute;
+  top: 5px;
 
-    z-index:3;
+  left: 50%;
 
-    top:5px;
+  width: 14px;
 
-    left:50%;
+  height: 14px;
 
-    width:14px;
+  border-radius: 50%;
 
-    height:14px;
+  transform: translateX(-50%);
 
-    border-radius:50%;
-
-    transform:
-
-    translateX(-50%);
-
-    background:
-
+  background:
     radial-gradient(
-
-        circle at 35% 30%,
-
-        #ffaaaa 0 15%,
-
-        #c94343 35%,
-
-        #801e1e 100%
-
+      circle at 35% 30%,
+      rgba(255, 255, 255, 0.8) 0 12%,
+      var(--pin-color, #c94343) 38%,
+      var(--pin-dark, #801e1e) 100%
     );
 
-    box-shadow:
+  box-shadow:
+    0 3px 4px rgba(0, 0, 0, 0.42),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
 
-    0 3px 4px
-    rgba(0,0,0,.42),
-
-    inset 0 1px 2px
-    rgba(255,255,255,.6);
-
-    pointer-events:none;
-
+  pointer-events: none;
 }
 
+.polaroid::after {
+  content: "";
 
-.polaroid::after{
+  position: absolute;
 
-    content:"";
+  z-index: 2;
 
-    position:absolute;
+  top: 16px;
 
-    z-index:2;
+  left: 50%;
 
-    top:16px;
+  width: 12px;
 
-    left:50%;
+  height: 5px;
 
-    width:12px;
+  border-radius: 50%;
 
-    height:5px;
+  transform: translateX(-50%);
 
-    border-radius:50%;
+  background:
+    rgba(0, 0, 0, 0.22);
 
-    transform:
+  filter: blur(2px);
 
-    translateX(-50%);
-
-    background:
-
-    rgba(0,0,0,.22);
-
-    filter:blur(2px);
-
-    pointer-events:none;
-
+  pointer-events: none;
 }
 
 
@@ -956,35 +686,31 @@ body{
                 IMAGE INSIDE POLAROID
 ====================================================== */
 
+.polaroid img {
+  display: block;
 
-.polaroid img{
+  width: 100%;
 
-    display:block;
+  height: auto;
 
-    width:100%;
+  max-height: 205px;
 
-    height:auto;
+  object-fit: contain;
 
-    max-height:230px;
+  border-radius: 1px;
 
-    object-fit:contain;
+  background:
+    rgba(225, 225, 225, 0.25);
 
-    border-radius:1px;
+  cursor: pointer;
 
-    background:
+  -webkit-touch-callout: none;
 
-    rgba(225,225,225,.25);
+  -webkit-user-select: none;
 
-    cursor:pointer;
+  user-select: none;
 
-    -webkit-touch-callout:none;
-
-    -webkit-user-select:none;
-
-    user-select:none;
-
-    touch-action:pan-y;
-
+  touch-action: pan-y;
 }
 
 
@@ -992,30 +718,20 @@ body{
             DESKTOP POLAROID INTERACTION
 ====================================================== */
 
+@media (hover: hover) {
 
-@media(hover:hover){
+  .polaroid:hover {
+    transform:
+      rotate(0deg)
+      translateY(-7px)
+      scale(1.035);
 
-    .polaroid:hover{
+    box-shadow:
+      0 8px 12px rgba(40, 20, 10, 0.25),
+      0 20px 30px rgba(40, 20, 10, 0.32);
 
-        transform:
-
-        rotate(0deg)
-
-        translateY(-7px)
-
-        scale(1.035);
-
-        box-shadow:
-
-        0 8px 12px
-        rgba(40,20,10,.25),
-
-        0 20px 30px
-        rgba(40,20,10,.32);
-
-        z-index:4;
-
-    }
+    z-index: 4;
+  }
 
 }
 
@@ -1024,25 +740,79 @@ body{
             POLAROID APPEAR ANIMATION
 ====================================================== */
 
+@keyframes polaroidAppear {
 
-@keyframes polaroidAppear{
+  from {
+    opacity: 0;
 
-    from{
+    filter: blur(3px);
+  }
 
-        opacity:0;
+  to {
+    opacity: 1;
 
-        filter:blur(3px);
+    filter: blur(0);
+  }
 
-    }
+}
 
-    to{
 
-        opacity:1;
+/* ======================================================
+            LOAD MORE PHOTOS BUTTON
+====================================================== */
 
-        filter:blur(0);
+.load-more-button {
+  display: none;
 
-    }
+  width: fit-content;
 
+  margin:
+    30px auto
+    0;
+
+  padding:
+    14px 28px;
+
+  border: none;
+
+  border-radius: 40px;
+
+  background: white;
+
+  color: #111;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.load-more-button.visible {
+  display: block;
+}
+
+.load-more-button:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+.load-more-button:disabled {
+  cursor: default;
+
+  opacity: 0.55;
+
+  transform: none;
 }
 
 
@@ -1050,21 +820,18 @@ body{
                     FINAL
 ====================================================== */
 
+.final {
+  margin-top: 80px;
 
-.final{
+  padding-bottom: 60px;
 
-    margin-top:80px;
+  text-align: center;
 
-    padding-bottom:60px;
+  font-size: 27px;
 
-    text-align:center;
+  font-style: italic;
 
-    font-size:27px;
-
-    font-style:italic;
-
-    line-height:1.7;
-
+  line-height: 1.7;
 }
 ```
 ```css
@@ -1072,149 +839,129 @@ body{
                     MOBILE RESPONSIVE
 ====================================================== */
 
+@media (max-width: 768px) {
 
-@media(max-width:768px){
+  .hero-screen {
+    padding: 20px;
+  }
 
-    .hero-screen{
+  .graduation-icon {
+    font-size: 60px;
+  }
 
-        padding:20px;
+  .hero-screen h1 {
+    font-size: 42px;
+  }
 
-    }
+  .hero-screen p {
+    font-size: 18px;
+  }
 
+  #plane {
+    width: 42px;
+  }
 
-    .graduation-icon{
+  .content {
+    width: 100%;
 
-        font-size:60px;
+    padding:
+      40px
+      15px;
+  }
 
-    }
+  .card {
+    padding:
+      22px
+      18px;
 
+    border-radius: 22px;
+  }
 
-    .hero-screen h1{
+  .card-header h2 {
+    font-size: 30px;
+  }
 
-        font-size:42px;
+  .open-icon {
+    font-size: 28px;
+  }
 
-    }
+  .card p {
+    font-size: 16px;
+  }
 
+  .destination {
+    font-size: 38px;
 
-    .hero-screen p{
+    letter-spacing: 4px;
+  }
 
-        font-size:18px;
+  .gallery {
+    margin-top: 42px;
 
-    }
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
 
+    align-items: start;
 
-    #plane{
+    gap:
+      30px
+      8px;
 
-        width:42px;
+    padding:
+      30px
+      8px
+      40px;
 
-    }
+    border-width: 6px;
+  }
 
+  .polaroid {
+    width: 92%;
 
-    .content{
+    max-width: 145px;
 
-        width:100%;
+    padding:
+      7px
+      7px
+      22px;
+  }
 
-        padding:
+  .polaroid img {
+    width: 100%;
 
-        40px 15px;
+    max-height: 165px;
 
-    }
+    object-fit: contain;
+  }
 
+  .polaroid::before {
+    width: 12px;
 
-    .card{
+    height: 12px;
 
-        padding:22px 18px;
+    top: 4px;
+  }
 
-        border-radius:22px;
+  .polaroid::after {
+    top: 14px;
 
-    }
+    width: 10px;
+  }
 
+  .load-more-button {
+    width: 100%;
 
-    .card-header h2{
+    max-width: 260px;
 
-        font-size:30px;
+    margin-top: 26px;
+  }
 
-    }
-
-
-    .open-icon{
-
-        font-size:28px;
-
-    }
-
-
-    .card p{
-
-        font-size:16px;
-
-    }
-
-
-    .destination{
-
-        font-size:38px;
-
-        letter-spacing:4px;
-
-    }
-
-
-    .gallery{
-
-        grid-template-columns:
-
-        repeat(2,minmax(0,1fr));
-
-        gap:28px 10px;
-
-        padding:
-
-        32px 12px 38px;
-
-        border-width:6px;
-
-    }
-
-
-    .polaroid{
-
-        width:100%;
-
-        max-width:175px;
-
-        padding:
-
-        8px
-        8px
-        25px;
-
-    }
-
-
-    .polaroid img{
-
-        max-height:190px;
-
-    }
-
-
-    .polaroid::before{
-
-        width:12px;
-
-        height:12px;
-
-        top:4px;
-
-    }
-
-
-    .final{
-
-        font-size:22px;
-
-    }
+  .final {
+    font-size: 22px;
+  }
 
 }
 
@@ -1223,325 +970,297 @@ body{
         PHOTO LONG PRESS MENU
 ====================================================== */
 
+.photo-menu {
+  position: fixed;
 
-.photo-menu{
+  z-index: 9999;
 
-    position:fixed;
+  left: 0;
 
-    z-index:9999;
+  top: 0;
 
-    left:0;
+  transform:
+    translate(-50%, -50%)
+    scale(0.8);
 
-    top:0;
+  display: flex;
 
-    transform:
+  flex-direction: column;
 
-    translate(-50%,-50%)
+  gap: 12px;
 
-    scale(.8);
+  padding: 20px;
 
-    display:flex;
+  background:
+    rgba(20, 20, 30, 0.95);
 
-    flex-direction:column;
+  border:
+    1px solid rgba(255, 255, 255, 0.3);
 
-    gap:12px;
+  border-radius: 20px;
 
-    padding:20px;
+  backdrop-filter: blur(15px);
 
-    background:
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.5);
 
-    rgba(20,20,30,.95);
+  opacity: 0;
 
-    border:
+  pointer-events: none;
 
-    1px solid rgba(255,255,255,.3);
-
-    border-radius:20px;
-
-    backdrop-filter:blur(15px);
-
-    box-shadow:
-
-    0 20px 50px rgba(0,0,0,.5);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transition:.3s ease;
-
+  transition: 0.3s ease;
 }
 
+.photo-menu.active {
+  opacity: 1;
 
-.photo-menu.active{
+  pointer-events: auto;
 
-    opacity:1;
-
-    pointer-events:auto;
-
-    transform:
-
-    translate(-50%,-50%)
-
+  transform:
+    translate(-50%, -50%)
     scale(1);
-
 }
 
+.photo-menu button {
+  border: none;
 
-.photo-menu button{
+  border-radius: 30px;
 
-    border:none;
+  padding:
+    12px
+    25px;
 
-    border-radius:30px;
+  cursor: pointer;
 
-    padding:
+  font-size: 16px;
 
-    12px 25px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    font-family:
-
-    'Inter',
+  font-family:
+    "Inter",
     sans-serif;
 
-    background:white;
+  background: white;
 
-    color:#111;
+  color: #111;
 
-    transition:.25s;
+  transition: 0.25s;
+}
 
+.photo-menu button:hover {
+  transform: scale(1.05);
 }
 
 
-.photo-menu button:hover{
+/* ======================================================
+        PHOTO VIEWER — ALBUM
+====================================================== */
+
+.photo-viewer {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 10000;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: 0.35s ease;
+}
+
+.photo-viewer.active {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+.viewer-background {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    rgba(5, 8, 20, 0.88);
+
+  backdrop-filter: blur(12px);
+}
+
+.viewer-content {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      92vw,
+      900px
+    );
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 25px;
+
+  animation:
+    albumOpen
+    0.35s
+    ease;
+}
+
+#viewerImage {
+  display: block;
+
+  width: auto;
+
+  max-width: 100%;
+
+  height: auto;
+
+  max-height: 75vh;
+
+  object-fit: contain;
+
+  background: transparent;
+
+  padding: 0;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 30px 70px
+    rgba(0, 0, 0, 0.65);
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-touch-callout: none;
+}
+
+.viewer-actions {
+  display: flex;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+}
+
+.viewer-actions button {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-width: 70px;
+
+  min-height: 48px;
+
+  border: none;
+
+  border-radius: 40px;
+
+  padding:
+    14px
+    26px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  background: white;
+
+  color: #111;
+
+  transition: 0.25s;
+}
+
+.viewer-actions button:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes albumOpen {
+
+  from {
+    opacity: 0;
 
     transform:
+      translateY(40px)
+      scale(0.92);
+  }
 
-    scale(1.05);
+  to {
+    opacity: 1;
 
-}
-
-
-/* evita il menu nativo del telefono
-   durante la pressione sulle fotografie */
-
-
-.polaroid img{
-
-    -webkit-touch-callout:none;
-
-    -webkit-user-select:none;
-
-    user-select:none;
+    transform:
+      translateY(0)
+      scale(1);
+  }
 
 }
 
 
 /* ======================================================
-        PHOTO VIEWER (ALBUM)
+            VIEWER MOBILE
 ====================================================== */
 
+@media (max-width: 768px) {
 
-.photo-viewer{
+  .viewer-content {
+    width: 92vw;
 
-    position:fixed;
+    gap: 18px;
+  }
 
-    inset:0;
+  #viewerImage {
+    width: auto;
 
-    z-index:10000;
+    max-width: 100%;
 
-    display:flex;
+    max-height: 68vh;
 
-    justify-content:center;
+    padding: 0;
+  }
 
-    align-items:center;
+  .viewer-actions {
+    width: 100%;
 
-    opacity:0;
+    display: grid;
 
-    pointer-events:none;
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
 
-    transition:.35s ease;
+    gap: 10px;
+  }
 
-}
+  .viewer-actions button {
+    width: 100%;
 
+    min-width: 0;
 
-.photo-viewer.active{
+    padding:
+      13px
+      18px;
+  }
 
-    opacity:1;
-
-    pointer-events:auto;
-
-}
-
-
-.viewer-background{
-
-    position:absolute;
-
-    inset:0;
-
-    background:rgba(5,8,20,.88);
-
-    backdrop-filter:blur(12px);
-
-}
-
-
-.viewer-content{
-
-    position:relative;
-
-    z-index:2;
-
-    width:min(92vw,900px);
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    gap:25px;
-
-    animation:albumOpen .35s ease;
-
-}
-
-
-#viewerImage{
-
-    display:block;
-
-    width:auto;
-
-    max-width:100%;
-
-    height:auto;
-
-    max-height:75vh;
-
-    object-fit:contain;
-
-    background:transparent;
-
-    padding:0;
-
-    border-radius:10px;
-
-    box-shadow:
-
-    0 30px 70px
-    rgba(0,0,0,.65);
-
-    user-select:none;
-
-    -webkit-user-select:none;
-
-}
-
-
-.viewer-actions{
-
-    display:flex;
-
-    gap:15px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-}
-
-
-.viewer-actions button{
-
-    border:none;
-
-    border-radius:40px;
-
-    padding:14px 26px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    background:white;
-
-    color:#111;
-
-    transition:.25s;
-
-}
-
-
-.viewer-actions button:hover{
-
-    transform:translateY(-2px);
-
-}
-
-
-@keyframes albumOpen{
-
-    from{
-
-        opacity:0;
-
-        transform:
-
-        translateY(40px)
-
-        scale(.92);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-
-        translateY(0)
-
-        scale(1);
-
-    }
-
-}
-
-
-@media(max-width:768px){
-
-    #viewerImage{
-
-        width:auto;
-
-        max-width:100%;
-
-        max-height:68vh;
-
-        padding:0;
-
-    }
-
-
-    .viewer-actions{
-
-        width:100%;
-
-        flex-direction:column;
-
-    }
-
-
-    .viewer-actions button{
-
-        width:100%;
-
-    }
+  #viewerClose {
+    grid-column:
+      1 / -1;
+  }
 
 }
 ```
