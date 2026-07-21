@@ -1433,6 +1433,66 @@ e=>{
 
 
 });
+/* ======================================================
+        MOUSE LONG PRESS DESKTOP
+====================================================== */
+
+
+document.addEventListener(
+
+"mousedown",
+
+e=>{
+
+
+    if(
+
+        e.target.tagName === "IMG"
+
+    ){
+
+
+        startPress(
+            e.target
+        );
+
+
+    }
+
+
+});
+
+
+
+
+
+document.addEventListener(
+
+"mouseup",
+
+()=>{
+
+
+    cancelPress();
+
+
+});
+
+
+
+
+
+document.addEventListener(
+
+"mouseleave",
+
+()=>{
+
+
+    cancelPress();
+
+
+});
 
 
 
