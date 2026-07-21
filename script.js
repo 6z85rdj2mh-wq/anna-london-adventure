@@ -1471,3 +1471,43 @@ document.addEventListener(
 
 
 });
+/* ======================================================
+        SAVE PHOTO
+====================================================== */
+
+
+document
+.getElementById("savePhoto")
+.addEventListener(
+"click",
+()=>{
+
+
+    if(!selectedImage)
+    return;
+
+
+
+    const link = document.createElement("a");
+
+
+    link.href = selectedImage.src;
+
+
+    link.download = "anna-photo.jpg";
+
+
+    document.body.appendChild(link);
+
+
+    link.click();
+
+
+    document.body.removeChild(link);
+
+
+
+    closePhotoMenu();
+
+
+});
