@@ -1,6 +1,6 @@
 /* ======================================================
    ANNA'S LONDON ADVENTURE
-   STYLE CSS 2.3
+   STYLE CSS FINAL
 ====================================================== */
 
 
@@ -64,9 +64,6 @@ body{
 
 
 }
-
-
-
 
 
 
@@ -159,8 +156,6 @@ body{
 
 
 }
-
-
 
 
 
@@ -278,6 +273,7 @@ body{
 
 
 
+
 /* ======================================================
                     FLIGHT OVERLAY
 ====================================================== */
@@ -330,6 +326,7 @@ body{
 
 
 
+
 .overlay-background{
 
 
@@ -346,6 +343,7 @@ body{
 
 
 }
+
 
 
 
@@ -377,6 +375,7 @@ body{
 
 
 
+
 /* ======================================================
                     SVG ROTTA
 ====================================================== */
@@ -398,15 +397,6 @@ body{
     top:50%;
 
     transform:translateY(-50%);
-
-}
-.flight-container{
-
-    position:relative;
-
-    width:100%;
-
-    overflow:hidden;
 
 }
 
@@ -454,90 +444,57 @@ body{
 
 
 
-
 /* ======================================================
-                    CITTA'
+                PUNTI E TESTI SVG
 ====================================================== */
 
 
-.city{
 
+.map-dot{
 
-    position:absolute;
+    fill:white;
 
-
-    display:flex;
-
-
-    align-items:center;
-
-
-    gap:10px;
-
-
-    font-size:16px;
-
-
-    letter-spacing:3px;
-
-
-    z-index:5;
-
+    filter:
+    drop-shadow(
+    0 0 10px white
+    );
 
 }
 
 
 
+.map-label{
 
+    fill:white;
 
-.dot{
+    font-size:26px;
 
+    font-weight:500;
 
-    width:12px;
+    letter-spacing:4px;
 
+    font-family:'Inter', sans-serif;
 
-    height:12px;
-
-
-    border-radius:50%;
-
-
-    background:white;
-
-
-    box-shadow:
-
-    0 0 20px white;
-
+    filter:
+    drop-shadow(
+    0 0 8px rgba(255,255,255,.8)
+    );
 
 }
 
 
 
+.start-label{
 
-.perugia{
-
-
-    left:14%;
-
-
-    top:72%;
-
+    text-anchor:middle;
 
 }
 
 
 
+.end-label{
 
-
-.london{
-
-
-    left:86%;
-
-
-    top:34%;
-
+    text-anchor:end;
 
 }
 
@@ -573,27 +530,34 @@ body{
 
 
 
-
-
 #plane svg{
+
 
     width:100%;
 
+
     fill:white;
 
+
     filter:
+
     drop-shadow(
+
     0 0 8px rgba(255,255,255,.7)
+
     );
-   #plane{
+
+
+}
+
+
+
+#plane{
+
 
     transition:
+
     opacity .5s ease;
-
-}
-
-}
-
 
 }
 /* ======================================================
@@ -632,6 +596,8 @@ body{
 
 
 
+
+
 @keyframes fadeIn{
 
 
@@ -664,6 +630,7 @@ body{
 
 
 }
+
 
 
 
@@ -718,8 +685,6 @@ body{
 
 
 
-
-
 .adventure-card{
 
 
@@ -727,6 +692,8 @@ body{
 
 
 }
+
+
 
 
 
@@ -759,6 +726,7 @@ body{
 
 
 
+
 .card-header h2{
 
 
@@ -783,6 +751,8 @@ body{
 
 
 
+
+
 .open-icon{
 
 
@@ -793,7 +763,6 @@ body{
 
 
 }
-
 
 
 
@@ -850,6 +819,7 @@ body{
 
 
 
+
 .card-body.open{
 
 
@@ -864,6 +834,7 @@ body{
 
 
 }
+
 
 
 
@@ -887,10 +858,10 @@ body{
 
 
 
+
 /* ======================================================
                 DESTINAZIONE
 ====================================================== */
-
 
 
 .destination{
@@ -923,8 +894,9 @@ body{
 
 
 
+
 /* ======================================================
-                BUTTON
+                BUTTONS
 ====================================================== */
 
 
@@ -999,6 +971,8 @@ body{
 
 
 
+
+
 /* ======================================================
                 PHOTO AREA
 ====================================================== */
@@ -1024,6 +998,9 @@ body{
 
 
 
+
+
+
 .photo-area h3{
 
 
@@ -1043,8 +1020,6 @@ body{
 
 
 
-/* NASCONDE INPUT ORIGINALE */
-
 
 .upload-button input{
 
@@ -1053,6 +1028,7 @@ body{
 
 
 }
+
 
 
 
@@ -1088,6 +1064,9 @@ body{
 
 
 
+
+
+
 .gallery img{
 
 
@@ -1112,6 +1091,8 @@ body{
 
 
 }
+
+
 
 
 
@@ -1151,6 +1132,9 @@ body{
 
 
 }
+
+
+
 
 
 
@@ -1240,16 +1224,12 @@ body{
 
 
 
+
+
 /* ===============================
             FLIGHT
 ================================ */
 
-
-/*
-Manteniamo lo stesso sistema
-di coordinate dell'SVG desktop.
-Niente deformazioni.
-*/
 
 
 .flight-container{
@@ -1262,6 +1242,7 @@ Niente deformazioni.
 
 
 }
+
 
 
 
@@ -1291,6 +1272,7 @@ Niente deformazioni.
 
 
 
+
 #plane{
 
 
@@ -1302,70 +1284,6 @@ Niente deformazioni.
 
 
 
-
-
-
-/* città */
-
-
-.city{
-
-
-    font-size:10px;
-
-
-    letter-spacing:1px;
-
-
-    gap:6px;
-
-
-}
-
-
-
-.dot{
-
-
-    width:9px;
-
-
-    height:9px;
-
-
-}
-
-
-
-
-
-.perugia{
-
-
-    left:10%;
-
-
-    top:70%;
-
-
-}
-
-
-
-
-.london{
-
-
-    left:82%;
-
-
-    top:35%;
-
-
-    flex-direction:row-reverse;
-
-
-}
 
 
 
@@ -1391,6 +1309,8 @@ Niente deformazioni.
 
 
 
+
+
 .card{
 
 
@@ -1401,6 +1321,8 @@ Niente deformazioni.
 
 
 }
+
+
 
 
 
@@ -1416,6 +1338,8 @@ Niente deformazioni.
 
 
 
+
+
 .open-icon{
 
 
@@ -1427,6 +1351,8 @@ Niente deformazioni.
 
 
 
+
+
 .card p{
 
 
@@ -1434,6 +1360,8 @@ Niente deformazioni.
 
 
 }
+
+
 
 
 
@@ -1456,6 +1384,8 @@ Niente deformazioni.
 
 
 
+
+
 .gallery{
 
 
@@ -1471,6 +1401,8 @@ Niente deformazioni.
 
 
 
+
+
 .final{
 
 
@@ -1479,81 +1411,6 @@ Niente deformazioni.
 
 }
 
-.map-dot{
-
-    fill:white;
-
-    filter:
-    drop-shadow(
-    0 0 10px white
-    );
-
-}
-
-
-
-.map-label{
-
-    fill:white;
-
-    font-size:28px;
-
-    letter-spacing:3px;
-
-    font-family:Inter,sans-serif;
-
-}
-
-
-.end-label{
-
-    text-anchor:end;
-
-}
-
-
-.start-label{
-
-    text-anchor:middle;
-
-}
-.map-dot{
-
-    fill:white;
-
-    filter:
-    drop-shadow(0 0 10px white);
-
-}
-
-
-
-.map-label{
-
-    fill:white;
-
-    font-size:28px;
-
-    letter-spacing:3px;
-
-    font-family:'Inter', sans-serif;
-
-}
-
-.map-label{
-
-    fill:white;
-
-    font-size:26px;
-
-    font-weight:500;
-
-    letter-spacing:4px;
-
-    filter:
-    drop-shadow(0 0 8px rgba(255,255,255,.8));
-
-}
 
 
 }
