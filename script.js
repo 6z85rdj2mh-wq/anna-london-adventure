@@ -1,13 +1,40 @@
 function startJourney(){
 
-    document.getElementById("hero").style.opacity = "0";
+
+    const plane = document.getElementById("plane");
+
+    const hero = document.getElementById("hero");
+
+    const content = document.getElementById("content");
+
+
+
+    plane.classList.add("fly");
+
+
 
     setTimeout(function(){
 
-        document.getElementById("hero").style.display="none";
 
-        document.getElementById("content").style.display="block";
+        hero.style.opacity="0";
 
-    },1000);
+
+    },1500);
+
+
+
+
+    setTimeout(function(){
+
+
+        hero.style.display="none";
+
+
+        content.style.display="block";
+
+
+    },2500);
+
+
 
 }
