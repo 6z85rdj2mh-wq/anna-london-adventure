@@ -29,10 +29,6 @@ const button = document.getElementById("startButton");
 
 
 
-// sicurezza:
-// il contenuto resta nascosto
-// fino alla fine del viaggio
-
 
 if(content){
 
@@ -43,6 +39,7 @@ if(content){
 
 
 let started = false;
+
 
 
 
@@ -68,9 +65,6 @@ function startJourney(){
 
 
 
-    // musica
-
-
     song.volume = 0.35;
 
 
@@ -91,14 +85,12 @@ function startJourney(){
 
 
 
-    // nasconde pulsante
-
-
     button.style.opacity = "0";
 
 
     button.style.transform =
     "scale(.8)";
+
 
 
 
@@ -118,9 +110,6 @@ function startJourney(){
 
 
 
-    // apre overlay volo
-
-
     setTimeout(()=>{
 
 
@@ -135,9 +124,6 @@ function startJourney(){
 
 
 
-    // parte animazione
-
-
     setTimeout(()=>{
 
 
@@ -149,11 +135,6 @@ function startJourney(){
 
 
 }
-
-
-
-
-
 
 
 
@@ -235,7 +216,6 @@ function startFlight(){
 
 
 
-
     setTimeout(()=>{
 
 
@@ -248,11 +228,6 @@ function startFlight(){
 
 
 }
-
-
-
-
-
 
 
 
@@ -296,6 +271,7 @@ function animatePlane(){
 
 
 
+
     function frame(time){
 
 
@@ -316,6 +292,7 @@ function animatePlane(){
 
         const current =
         totalLength * progress;
+
 
 
 
@@ -352,9 +329,9 @@ function animatePlane(){
 
 
 
-
         const matrix =
         svg.getScreenCTM();
+
 
 
 
@@ -371,6 +348,7 @@ function animatePlane(){
 
         )
         .matrixTransform(matrix);
+
 
 
 
@@ -396,8 +374,6 @@ function animatePlane(){
 
 
 
-        // posizione aereo
-
 
         plane.style.left =
         screenPoint.x + "px";
@@ -414,8 +390,6 @@ function animatePlane(){
 
 
 
-
-        // rotazione
 
 
         const angle =
@@ -455,7 +429,6 @@ function animatePlane(){
 
 
 
-
         if(progress<1){
 
 
@@ -482,16 +455,12 @@ function animatePlane(){
 
 
 
+
     requestAnimationFrame(frame);
 
 
 
 }
-
-
-
-
-
 
 
 
@@ -574,11 +543,6 @@ function finishFlight(){
 
 
 
-
-
-
-
-
 /* ======================================================
                 CLOSE FLIGHT
 ====================================================== */
@@ -640,6 +604,8 @@ function closeFlight(){
 
 
 
+
+
             window.scrollTo({
 
                 top:0,
@@ -647,6 +613,7 @@ function closeFlight(){
                 behavior:"smooth"
 
             });
+
 
 
 
@@ -665,6 +632,15 @@ function closeFlight(){
 
 
 }
+
+
+
+
+
+
+
+
+
 /* ======================================================
             CARD OPEN / CLOSE
 ====================================================== */
@@ -688,9 +664,6 @@ function toggleSection(header){
 
 
 
-    // chiude tutte le sezioni
-
-
     document
     .querySelectorAll(
         ".card-body"
@@ -704,7 +677,6 @@ function toggleSection(header){
 
 
     });
-
 
 
 
@@ -733,9 +705,6 @@ function toggleSection(header){
 
 
 
-    // apre quella selezionata
-
-
     if(!isOpen){
 
 
@@ -753,20 +722,6 @@ function toggleSection(header){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ======================================================
             SUPABASE PHOTO UPLOAD
 ====================================================== */
@@ -851,6 +806,7 @@ async function uploadToSupabase(event,galleryId){
 
 
 
+
             const filePath =
 
             `${folder}/${fileName}`;
@@ -919,16 +875,6 @@ async function uploadToSupabase(event,galleryId){
 
 
 
-            /*
-                Dopo il caricamento
-                ricarichiamo la galleria
-                direttamente dal bucket.
-
-                In questo modo:
-                - niente doppioni
-                - sincronizzazione reale
-            */
-
 
             await loadGallery(
 
@@ -980,7 +926,6 @@ async function uploadToSupabase(event,galleryId){
 
 
 
-
 /* ======================================================
             LOAD SAVED PHOTOS
 ====================================================== */
@@ -999,6 +944,7 @@ async function loadGallery(folder,galleryId){
 
 
 
+
     if(!gallery)
     return;
 
@@ -1008,15 +954,8 @@ async function loadGallery(folder,galleryId){
 
 
 
-    /*
-        pulizia preventiva
-
-        evita doppioni se viene
-        richiamata più volte
-    */
-
-
     gallery.innerHTML = "";
+
 
 
 
@@ -1095,6 +1034,8 @@ async function loadGallery(folder,galleryId){
 
 
 
+
+
         const {data:urlData}=
 
         supabaseClient
@@ -1143,13 +1084,6 @@ async function loadGallery(folder,galleryId){
 
 
 
-        /*
-            percorso salvato
-
-            servirà nel prossimo step
-            per eliminazione foto
-        */
-
 
         img.dataset.path =
 
@@ -1174,12 +1108,22 @@ async function loadGallery(folder,galleryId){
 
 
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 /* ======================================================
                 RESET + INITIAL LOAD
 ====================================================== */
-
 
 
 let galleryLoaded = false;
@@ -1196,9 +1140,6 @@ window.addEventListener(
 
 
 
-    // reset linea volo
-
-
     if(line){
 
 
@@ -1211,9 +1152,11 @@ window.addEventListener(
 
 
 
+
         line.style.strokeDasharray =
 
         length;
+
 
 
 
@@ -1234,12 +1177,6 @@ window.addEventListener(
 
 
 
-    /*
-        evita doppio caricamento
-        delle gallerie
-    */
-
-
     if(galleryLoaded)
     return;
 
@@ -1252,8 +1189,6 @@ window.addEventListener(
 
 
 
-
-    // carica foto laurea
 
 
     loadGallery(
@@ -1271,9 +1206,6 @@ window.addEventListener(
 
 
 
-    // carica foto londra
-
-
     loadGallery(
 
         "londra",
@@ -1281,6 +1213,7 @@ window.addEventListener(
         "londonGallery"
 
     );
+
 
 
 
@@ -1300,50 +1233,23 @@ window.addEventListener(
 
 
 
-
 /* ======================================================
-        LONG PRESS PREPARATION
-        (STEP SUCCESSIVO)
+        PHOTO LONG PRESS SYSTEM
 ====================================================== */
 
 
 let pressTimer = null;
 
 
-
 let selectedImage = null;
-/* ======================================================
-        PHOTO MENU CREATION
-====================================================== */
-
-
-const photoMenu = document.createElement("div");
-
-
-photoMenu.className = "photo-menu";
-
-
-photoMenu.innerHTML = `
-
-<button id="savePhoto">
-💾 Salva foto
-</button>
-
-
-<button id="deletePhoto">
-🗑 Elimina
-</button>
-
-
-<button id="closePhotoMenu">
-❌ Chiudi
-</button>
-
-`;
 
 
 
-document.body.appendChild(photoMenu);
+
+const photoMenu = 
+document.getElementById(
+    "photoMenu"
+);
 
 
 
@@ -1353,15 +1259,11 @@ document.body.appendChild(photoMenu);
 function startPress(img){
 
 
-
     selectedImage = img;
 
 
 
-
-
     pressTimer = setTimeout(()=>{
-
 
 
         openPhotoMenu(img);
@@ -1380,16 +1282,12 @@ function startPress(img){
 
 
 
-
-
 function cancelPress(){
-
 
 
     clearTimeout(
         pressTimer
     );
-
 
 
 }
@@ -1405,22 +1303,35 @@ function cancelPress(){
 function openPhotoMenu(img){
 
 
+
     selectedImage = img;
 
 
 
     const rect =
+
     img.getBoundingClientRect();
 
 
 
+
+
+
     photoMenu.style.left =
+
     rect.left + rect.width/2 + "px";
 
 
 
+
+
     photoMenu.style.top =
+
     rect.top + rect.height/2 + "px";
+
+
+
+
 
 
 
@@ -1434,22 +1345,53 @@ function openPhotoMenu(img){
 
 
 
-    /*
-        Qui nel prossimo step
-        inseriremo:
-
-        - ELIMINA FOTO
-        - SALVA SU DISPOSITIVO
-
-    */
 
 
 
 
 
 
+function closePhotoMenu(){
 
 
+
+    photoMenu.classList.remove(
+        "active"
+    );
+
+
+
+    selectedImage = null;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+document
+
+.getElementById(
+    "closePhotoMenu"
+)
+
+.addEventListener(
+
+"click",
+
+()=>{
+
+
+    closePhotoMenu();
+
+
+});
 
 
 
@@ -1460,41 +1402,56 @@ function openPhotoMenu(img){
 
 
 /* ======================================================
-        ATTIVA LONG PRESS SULLE FOTO
+        TOUCH LONG PRESS
 ====================================================== */
 
 
 document.addEventListener(
 
-"DOMContentLoaded",
+"touchstart",
+
+e=>{
+
+
+
+    if(
+
+        e.target.tagName === "IMG"
+
+    ){
+
+
+
+        startPress(
+            e.target
+        );
+
+
+
+    }
+
+
+
+});
+
+
+
+
+
+
+
+document.addEventListener(
+
+"touchend",
 
 ()=>{
 
 
-
-    document.addEventListener(
-
-    "touchstart",
-
-    e=>{
+    cancelPress();
 
 
 
-        if(
-            e.target.tagName === "IMG"
-        ){
-
-
-            startPress(
-                e.target
-            );
-
-
-        }
-
-
-
-    });
+});
 
 
 
@@ -1502,35 +1459,14 @@ document.addEventListener(
 
 
 
-    document.addEventListener(
+document.addEventListener(
 
-    "touchend",
+"touchmove",
 
-    ()=>{
-
-
-        cancelPress();
+()=>{
 
 
-    });
-
-
-
-
-
-
-
-    document.addEventListener(
-
-    "touchmove",
-
-    ()=>{
-
-
-        cancelPress();
-
-
-    });
+    cancelPress();
 
 
 
