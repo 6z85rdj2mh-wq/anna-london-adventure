@@ -1,126 +1,104 @@
 <!DOCTYPE html>
-
 <html lang="it">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anna's London Adventure</title>
 
-<meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<title>Anna's London Adventure</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-
 
 <body>
 
+<!-- ================= HERO ================= -->
 
-<!-- COPERTINA -->
+<section class="hero-screen" id="hero">
 
-<div class="hero-screen" id="hero">
+    <div class="hero-content">
 
+        <div class="graduation-icon">
+            🎓
+        </div>
 
-<div class="graduation-icon">
-🎓
-</div>
+        <h1>
+            Congratulazioni,<br>
+            Dottoressa Anna
+        </h1>
 
+        <p>
+            Un traguardo raggiunto.<br>
+            Una nuova avventura pronta ad iniziare.
+        </p>
 
+        <button id="startButton" onclick="startJourney()">
+            ✈️ INIZIA IL VIAGGIO
+        </button>
 
-<h1>
-Congratulazioni,<br>
-Dottoressa Anna
-</h1>
+    </div>
 
-
-
-<p>
-Un traguardo raggiunto.<br>
-Una nuova avventura pronta ad iniziare.
-</p>
-
-
-
-
-<button onclick="startJourney()">
-
-✈️ INIZIA IL VIAGGIO
-
-</button>
+</section>
 
 
 
 
 
-<!-- AEREO -->
+<!-- ================= FLIGHT OVERLAY ================= -->
 
-<div class="plane" id="plane">
+<div id="flightOverlay">
 
+    <div class="overlay-background"></div>
 
-<svg viewBox="0 0 100 50">
+    <div class="flight-container">
 
-<path d="M95 25 L40 10 L45 23 L5 25 L45 27 L40 40 Z"/>
+        <div class="city perugia">
+            <div class="dot"></div>
+            <span>Perugia</span>
+        </div>
 
-</svg>
+        <div class="city london">
+            <div class="dot destination-dot"></div>
+            <span>LONDON</span>
+        </div>
 
+        <svg id="flightSVG"
+             viewBox="0 0 1000 500"
+             preserveAspectRatio="none">
 
-</div>
+            <!-- percorso invisibile -->
 
+            <path
+                id="flightPath"
+                d="M140 360 C340 140 650 140 860 170"
+            />
 
+            <!-- linea tratteggiata -->
 
-</div>
+            <path
+                id="flightLine"
+                d="M140 360 C340 140 650 140 860 170"
+            />
 
+        </svg>
 
+        <!-- aeroplano -->
 
+        <div id="plane">
 
+            <svg viewBox="0 0 64 64">
 
+                <path d="M60 32L37 27L25 6L19 7L23 27L5 23L3 27L18 32L3 37L5 41L23 37L19 57L25 58L37 37L60 32Z"/>
 
+            </svg>
 
-<!-- CONTENUTO -->
+        </div>
 
-<div class="content" id="content">
-
-
-
-
-
-<div class="card">
-
-
-<h2>
-🎓 La tua laurea
-</h2>
-
-
-
-<p>
-
-Anni di studio, sacrifici e impegno.
-
-<br><br>
-
-Il giorno in cui tutto questo
-è diventato un risultato.
-
-<br><br>
-
-Qui conserveremo i ricordi
-di una giornata speciale.
-
-</p>
-
-
-
-
-<a class="button">
-
-📸 I RICORDI DELLA LAUREA
-
-</a>
-
-
+    </div>
 
 </div>
 
@@ -130,62 +108,38 @@ di una giornata speciale.
 
 
 
+<!-- ================= CONTENUTO ================= -->
 
-<div class="card">
+<main class="content" id="content">
 
+    <section class="card">
 
-<h2>
-✈️ Il tuo viaggio
-</h2>
+        <h2>🎓 La tua laurea</h2>
 
+        <p>
 
+            Anni di studio,
+            sacrifici,
+            esami,
+            notti infinite.
 
-<p>
+            <br><br>
 
-DESTINAZIONE CONFERMATA
+            Tutto questo ti ha portata qui.
 
+            <br><br>
 
-<br><br>
+            Questo spazio custodirà i ricordi
+            di uno dei giorni più importanti
+            della tua vita.
 
+        </p>
 
-🇬🇧
+        <a class="button">
+            📸 I RICORDI DELLA LAUREA
+        </a>
 
-
-<br>
-
-
-<span class="destination">
-
-LONDON
-
-</span>
-
-
-
-<br><br>
-
-
-Il biglietto è pronto.
-
-Ora manca solo scegliere
-quando partire.
-
-
-</p>
-
-
-
-
-
-<a class="button">
-
-🌃 LA TUA AVVENTURA
-
-</a>
-
-
-
-</div>
+    </section>
 
 
 
@@ -193,42 +147,70 @@ quando partire.
 
 
 
+    <section class="card">
+
+        <h2>✈️ Il tuo viaggio</h2>
+
+        <p>
+
+            DESTINAZIONE CONFERMATA
+
+            <br><br>
+
+            <span class="destination">
+                LONDON
+            </span>
+
+            <br><br>
+
+            Hai studiato.
+
+            Hai lottato.
+
+            Hai raggiunto il tuo obiettivo.
+
+            <br><br>
+
+            Ora è il momento
+            di vivere una nuova avventura.
+
+        </p>
+
+        <a class="button">
+            🌃 LA TUA AVVENTURA
+        </a>
+
+    </section>
 
 
-<div class="final">
-
-Alcuni regali si aprono una volta sola.
-
-<br><br>
-
-Altri si vivono per sempre.
-
-
-</div>
 
 
 
 
 
+    <section class="final">
 
+        Alcuni regali
+        si aprono una volta sola.
 
-</div>
+        <br><br>
+
+        Altri si vivono
+        per sempre.
+
+    </section>
+
+</main>
+
 
 
 
 
 <audio id="song" loop>
-
-<source src="music.mp3" type="audio/mpeg">
-
+    <source src="music.mp3" type="audio/mpeg">
 </audio>
-
 
 <script src="script.js"></script>
 
-
-
 </body>
-
-
 </html>
