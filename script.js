@@ -1445,7 +1445,7 @@ function openPhotoMenu(img){
 
 
 
-}
+
 
 
 
