@@ -650,7 +650,7 @@ function toggleSection(header){
 ====================================================== */
 
 
-function uploadPhotos(event,galleryId){
+function uploadToSupabase(event,galleryId){
 
 
 
