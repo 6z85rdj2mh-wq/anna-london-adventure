@@ -529,7 +529,7 @@ function finishFlight(){
         closeFlight();
 
 
-    },1500);
+    },1000);
 
 
 
