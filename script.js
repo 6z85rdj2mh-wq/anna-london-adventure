@@ -1,8 +1,7 @@
 /* ======================================================
    ANNA'S LONDON ADVENTURE
-   SCRIPT.JS FINAL
+   SCRIPT.JS FINAL CLEAN
 ====================================================== */
-
 
 
 /* ======================================================
@@ -31,21 +30,19 @@ const button = document.getElementById("startButton");
 
 
 // sicurezza:
-// il contenuto appare solo dopo il volo
+// il contenuto resta nascosto
+// fino alla fine del viaggio
+
 
 if(content){
 
-    content.style.display="none";
+    content.style.display = "none";
 
 }
 
 
 
-
 let started = false;
-
-
-
 
 
 
@@ -64,11 +61,15 @@ function startJourney(){
     return;
 
 
-    started=true;
+
+    started = true;
+
+
 
 
 
     // musica
+
 
     song.volume = 0.35;
 
@@ -90,7 +91,7 @@ function startJourney(){
 
 
 
-    // nasconde bottone
+    // nasconde pulsante
 
 
     button.style.opacity = "0";
@@ -117,8 +118,6 @@ function startJourney(){
 
 
 
-
-
     // apre overlay volo
 
 
@@ -136,9 +135,7 @@ function startJourney(){
 
 
 
-
-
-    // avvia animazione
+    // parte animazione
 
 
     setTimeout(()=>{
@@ -196,6 +193,7 @@ function startFlight(){
 
 
 
+
     line.animate(
 
         [
@@ -237,6 +235,7 @@ function startFlight(){
 
 
 
+
     setTimeout(()=>{
 
 
@@ -249,6 +248,7 @@ function startFlight(){
 
 
 }
+
 
 
 
@@ -289,8 +289,7 @@ function animatePlane(){
 
 
 
-
-    plane.style.opacity="1";
+    plane.style.opacity = "1";
 
 
 
@@ -303,7 +302,6 @@ function animatePlane(){
 
         let progress =
         (time-start)/duration;
-
 
 
 
@@ -336,6 +334,7 @@ function animatePlane(){
 
 
 
+
         const next =
         path.getPointAtLength(
 
@@ -345,8 +344,19 @@ function animatePlane(){
             )
 
         );
-               const matrix =
+
+
+
+
+
+
+
+
+
+        const matrix =
         svg.getScreenCTM();
+
+
 
 
 
@@ -385,9 +395,8 @@ function animatePlane(){
 
 
 
-        /*
-            POSIZIONE AEREO
-        */
+
+        // posizione aereo
 
 
         plane.style.left =
@@ -406,9 +415,7 @@ function animatePlane(){
 
 
 
-        /*
-            ROTAZIONE
-        */
+        // rotazione
 
 
         const angle =
@@ -475,12 +482,12 @@ function animatePlane(){
 
 
 
-
     requestAnimationFrame(frame);
 
 
 
 }
+
 
 
 
@@ -525,7 +532,6 @@ function finishFlight(){
 
 
 
-
     if(destination){
 
 
@@ -539,8 +545,8 @@ function finishFlight(){
         "drop-shadow(0 0 30px white)";
 
 
-    }
 
+    }
 
 
 
@@ -554,12 +560,12 @@ function finishFlight(){
         closeFlight();
 
 
-
     },1500);
 
 
 
 }
+
 
 
 
@@ -582,13 +588,11 @@ function closeFlight(){
 
 
 
-    overlay.style.opacity="0";
-
+    overlay.style.opacity = "0";
 
 
     overlay.style.transform =
     "scale(1.05)";
-
 
 
 
@@ -609,8 +613,7 @@ function closeFlight(){
 
 
 
-
-        hero.style.opacity="0";
+        hero.style.opacity = "0";
 
 
         hero.style.transform =
@@ -622,33 +625,26 @@ function closeFlight(){
 
 
 
-
-
-
         setTimeout(()=>{
 
 
 
-            hero.style.display="none";
+            hero.style.display =
+            "none";
 
 
 
-
-
-            content.style.display="block";
-
+            content.style.display =
+            "block";
 
 
 
 
             window.scrollTo({
 
-
                 top:0,
 
-
                 behavior:"smooth"
-
 
             });
 
@@ -663,24 +659,12 @@ function closeFlight(){
 
 
 
+
     },900);
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ======================================================
             CARD OPEN / CLOSE
 ====================================================== */
@@ -689,18 +673,12 @@ function closeFlight(){
 function toggleSection(header){
 
 
-
     const body =
-
     header.nextElementSibling;
 
 
 
-
-
-
     const isOpen =
-
     body.classList.contains(
         "open"
     );
@@ -710,16 +688,14 @@ function toggleSection(header){
 
 
 
+    // chiude tutte le sezioni
 
 
     document
-
     .querySelectorAll(
         ".card-body"
     )
-
     .forEach(section=>{
-
 
 
         section.classList.remove(
@@ -727,10 +703,7 @@ function toggleSection(header){
         );
 
 
-
     });
-
-
 
 
 
@@ -739,19 +712,15 @@ function toggleSection(header){
 
 
     document
-
     .querySelectorAll(
         ".card-header"
     )
-
     .forEach(item=>{
-
 
 
         item.classList.remove(
             "active"
         );
-
 
 
     });
@@ -764,8 +733,10 @@ function toggleSection(header){
 
 
 
-    if(!isOpen){
+    // apre quella selezionata
 
+
+    if(!isOpen){
 
 
         body.classList.add(
@@ -773,24 +744,35 @@ function toggleSection(header){
         );
 
 
-
         header.classList.add(
             "active"
         );
 
 
-
     }
 
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ======================================================
             SUPABASE PHOTO UPLOAD
 ====================================================== */
 
 
-async function uploadToSupabase(event, galleryId){
+async function uploadToSupabase(event,galleryId){
 
 
 
@@ -799,11 +781,18 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-
     const gallery =
     document.getElementById(
         galleryId
     );
+
+
+
+
+
+    if(!gallery)
+    return;
+
 
 
 
@@ -829,19 +818,17 @@ async function uploadToSupabase(event, galleryId){
             if(galleryId === "degreeGallery"){
 
 
-                folder="laurea";
+                folder = "laurea";
 
 
             }
-
-
 
 
 
             if(galleryId === "londonGallery"){
 
 
-                folder="londra";
+                folder = "londra";
 
 
             }
@@ -852,10 +839,11 @@ async function uploadToSupabase(event, galleryId){
 
 
 
+
+
             const fileName =
 
             `${Date.now()}-${file.name}`;
-
 
 
 
@@ -875,696 +863,7 @@ async function uploadToSupabase(event, galleryId){
 
 
 
-            const {data,error} =
-
-            await supabaseClient
-
-            .storage
-
-            .from(
-                "anna-graduation-trip"
-            )
-
-            .upload(
-
-                filePath,
-
-                file,
-
-                {
-
-                    contentType:file.type,
-
-                    upsert:false
-
-                }
-
-            );
-
-
-
-
-
-
-
-            if(error){
-
-
-                throw error;
-
-
-            }
-
-
-
-
-
-
-
-
-
-            const {data:urlData}=
-
-            supabaseClient
-
-            .storage
-
-            .from(
-                "anna-graduation-trip"
-            )
-
-            .getPublicUrl(
-
-                filePath
-
-            );
-
-
-
-
-
-
-
-
-
-           const img =
-
-document.createElement(
-    "img"
-);
-
-
-
-
-
-img.src =
-
-urlData.publicUrl;
-
-
-
-// salva il percorso Supabase
-// servirà per eliminare la foto
-
-img.dataset.path =
-
-`${folder}/${file.name}`;
-
-
-
-
-
-gallery.appendChild(
-    img
-);
-
-
-
-
-
-        }
-
-
-
-        catch(error){
-
-
-
-            console.error(
-
-                "Errore upload:",
-
-                error
-
-            );
-
-
-
-        }
-
-
-
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ======================================================
-            LOAD SAVED PHOTOS
-====================================================== */
-
-
-async function loadGallery(folder,galleryId){
-
-
-
-    const gallery =
-
-    document.getElementById(
-        galleryId
-    );
-
-
-
-
-    if(!gallery)
-    return;
-   gallery.innerHTML="";
-
-
-
-
-
-
-
-
-
-    const {data,error}=
-
-    await supabaseClient
-
-    .storage
-
-    .from(
-        "anna-graduation-trip"
-    )
-
-    .list(
-        folder
-    );
-
-
-
-
-
-
-
-
-
-    if(error){
-
-
-        console.error(
-
-            "Errore caricamento galleria:",
-
-            error
-
-        );
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-
-
-
-    data.forEach(file=>{
-
-
-
-
-
-
-        const {data:urlData}=
-
-        supabaseClient
-
-        .storage
-
-        .from(
-            "anna-graduation-trip"
-        )
-
-        .getPublicUrl(
-
-            `${folder}/${file.name}`
-
-        );
-
-
-
-
-
-
-
-
-
-        const img=
-
-        document.createElement(
-            "img"
-        );
-
-
-
-
-
-
-
-
-        img.src=
-
-        urlData.publicUrl;
-
-
-
-
-
-
-        ;
-
-
-
-
-
-    });
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ======================================================
-                RESET + LOAD
-====================================================== */
-
-
-
-window.addEventListener(
-
-"load",
-
-()=>{
-
-
-
-
-
-
-    // reset linea volo
-
-
-
-    if(line){
-
-
-
-        const length=
-
-        line.getTotalLength();
-
-
-
-
-
-        line.style.strokeDasharray=
-
-        length;
-
-
-
-
-
-        line.style.strokeDashoffset=
-
-        length;
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-    // carica immagini già presenti
-
-
-
-    loadGallery(
-
-        "laurea",
-
-        "degreeGallery"
-
-    );
-
-
-
-
-
-
-
-    loadGallery(
-
-        "londra",
-
-        "londonGallery"
-
-    );
-
-
-
-
-
-});
-/* ======================================================
-                ARRIVAL
-====================================================== */
-
-
-function finishFlight(){
-
-
-    plane.classList.add(
-        "landing-glow"
-    );
-
-
-
-
-    const destination =
-
-    document.querySelector(
-        ".destination-dot"
-    );
-
-
-
-
-
-    if(destination){
-
-
-        destination.style.transform =
-        "scale(2)";
-
-
-        destination.style.filter =
-        "drop-shadow(0 0 30px white)";
-
-
-    }
-
-
-
-
-
-    setTimeout(()=>{
-
-
-        closeFlight();
-
-
-    },1500);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ======================================================
-                CLOSE FLIGHT
-====================================================== */
-
-
-function closeFlight(){
-
-
-    overlay.style.opacity="0";
-
-
-    overlay.style.transform =
-    "scale(1.05)";
-
-
-
-
-
-
-    setTimeout(()=>{
-
-
-        overlay.classList.remove(
-            "active"
-        );
-
-
-
-
-
-        hero.style.opacity="0";
-
-
-        hero.style.transform =
-        "scale(1.05)";
-
-
-
-
-
-
-
-        setTimeout(()=>{
-
-
-            hero.style.display="none";
-
-
-            content.style.display="block";
-
-
-
-            window.scrollTo({
-
-                top:0,
-
-                behavior:"smooth"
-
-            });
-
-
-
-        },700);
-
-
-
-
-    },900);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ======================================================
-            CARD OPEN / CLOSE
-====================================================== */
-
-
-function toggleSection(header){
-
-
-    const body =
-    header.nextElementSibling;
-
-
-
-    const isOpen =
-    body.classList.contains(
-        "open"
-    );
-
-
-
-
-
-    document
-    .querySelectorAll(
-        ".card-body"
-    )
-    .forEach(section=>{
-
-
-        section.classList.remove(
-            "open"
-        );
-
-
-    });
-
-
-
-
-
-
-    document
-    .querySelectorAll(
-        ".card-header"
-    )
-    .forEach(item=>{
-
-
-        item.classList.remove(
-            "active"
-        );
-
-
-    });
-
-
-
-
-
-
-    if(!isOpen){
-
-
-        body.classList.add(
-            "open"
-        );
-
-
-        header.classList.add(
-            "active"
-        );
-
-
-    }
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ======================================================
-            SUPABASE PHOTO UPLOAD
-====================================================== */
-
-
-async function uploadToSupabase(event,galleryId){
-
-
-    const files =
-    event.target.files;
-
-
-
-    const gallery =
-    document.getElementById(
-        galleryId
-    );
-
-
-
-
-
-    for(const file of files){
-
-
-        try{
-
-
-            let folder="";
-
-
-
-            if(galleryId==="degreeGallery"){
-
-                folder="laurea";
-
-            }
-
-
-
-            if(galleryId==="londonGallery"){
-
-                folder="londra";
-
-            }
-
-
-
-
-
-
-
-            const fileName =
-
-            `${Date.now()}-${file.name}`;
-
-
-
-
-
-            const filePath =
-
-            `${folder}/${fileName}`;
-
-
-
-
-
-
-
-            const {data,error}=
+            const {error} =
 
             await supabaseClient
 
@@ -1602,69 +901,6 @@ async function uploadToSupabase(event,galleryId){
 
             }
 
-
-
-
-
-
-
-            const {data:urlData}=
-
-            supabaseClient
-
-            .storage
-
-            .from(
-                "anna-graduation-trip"
-            )
-
-            .getPublicUrl(
-
-                filePath
-
-            );
-
-
-
-
-
-
-
-
-            const img =
-
-            document.createElement(
-                "img"
-            );
-
-
-
-
-
-            img.src =
-
-            urlData.publicUrl;
-
-
-
-
-
-            // percorso necessario
-            // per eliminazione futura
-
-            img.dataset.path =
-
-            `${folder}/${fileName}`;
-
-
-
-
-
-
-
-            gallery.appendChild(
-                img
-            );
 
 
 
@@ -1673,24 +909,44 @@ async function uploadToSupabase(event,galleryId){
 
 
             console.log(
-
                 "Foto caricata:",
+                filePath
+            );
 
-                urlData.publicUrl
+
+
+
+
+
+
+            /*
+                Dopo il caricamento
+                ricarichiamo la galleria
+                direttamente dal bucket.
+
+                In questo modo:
+                - niente doppioni
+                - sincronizzazione reale
+            */
+
+
+            await loadGallery(
+
+                folder,
+
+                galleryId
 
             );
-         loadGallery(
-    folder,
-    galleryId
-);
+
+
 
 
 
         }
 
 
-
         catch(error){
+
 
 
             console.error(
@@ -1710,7 +966,22 @@ async function uploadToSupabase(event,galleryId){
 
 
 
-}/* ======================================================
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================
             LOAD SAVED PHOTOS
 ====================================================== */
 
@@ -1727,8 +998,26 @@ async function loadGallery(folder,galleryId){
 
 
 
+
     if(!gallery)
     return;
+
+
+
+
+
+
+
+    /*
+        pulizia preventiva
+
+        evita doppioni se viene
+        richiamata più volte
+    */
+
+
+    gallery.innerHTML = "";
+
 
 
 
@@ -1747,7 +1036,23 @@ async function loadGallery(folder,galleryId){
     )
 
     .list(
-        folder
+
+        folder,
+
+        {
+
+            limit:100,
+
+            sort:{
+
+                column:"created_at",
+
+                order:"asc"
+
+            }
+
+        }
+
     );
 
 
@@ -1756,7 +1061,10 @@ async function loadGallery(folder,galleryId){
 
 
 
+
+
     if(error){
+
 
 
         console.error(
@@ -1772,6 +1080,7 @@ async function loadGallery(folder,galleryId){
 
 
     }
+
 
 
 
@@ -1822,6 +1131,8 @@ async function loadGallery(folder,galleryId){
 
 
 
+
+
         img.src =
 
         urlData.publicUrl;
@@ -1831,12 +1142,20 @@ async function loadGallery(folder,galleryId){
 
 
 
-        // salva il percorso Supabase
-        // servirà per delete
+
+        /*
+            percorso salvato
+
+            servirà nel prossimo step
+            per eliminazione foto
+        */
+
 
         img.dataset.path =
 
         `${folder}/${file.name}`;
+
+
 
 
 
@@ -1850,29 +1169,21 @@ async function loadGallery(folder,galleryId){
 
 
 
-
-
     });
 
 
 
 
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
 /* ======================================================
-                RESET + LOAD
+                RESET + INITIAL LOAD
 ====================================================== */
+
+
+
+let galleryLoaded = false;
+
 
 
 window.addEventListener(
@@ -1880,6 +1191,8 @@ window.addEventListener(
 "load",
 
 ()=>{
+
+
 
 
 
@@ -1897,9 +1210,11 @@ window.addEventListener(
 
 
 
+
         line.style.strokeDasharray =
 
         length;
+
 
 
 
@@ -1912,6 +1227,25 @@ window.addEventListener(
 
     }
 
+
+
+
+
+
+
+
+    /*
+        evita doppio caricamento
+        delle gallerie
+    */
+
+
+    if(galleryLoaded)
+    return;
+
+
+
+    galleryLoaded = true;
 
 
 
@@ -1936,6 +1270,7 @@ window.addEventListener(
 
 
 
+
     // carica foto londra
 
 
@@ -1948,6 +1283,201 @@ window.addEventListener(
     );
 
 
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================
+        LONG PRESS PREPARATION
+        (STEP SUCCESSIVO)
+====================================================== */
+
+
+let pressTimer = null;
+
+
+
+let selectedImage = null;
+
+
+
+
+
+
+function startPress(img){
+
+
+
+    selectedImage = img;
+
+
+
+
+
+    pressTimer = setTimeout(()=>{
+
+
+
+        openPhotoMenu(img);
+
+
+
+    },1500);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function cancelPress(){
+
+
+
+    clearTimeout(
+        pressTimer
+    );
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function openPhotoMenu(img){
+
+
+
+    console.log(
+        "Pressione lunga:",
+        img.dataset.path
+    );
+
+
+
+    /*
+        Qui nel prossimo step
+        inseriremo:
+
+        - ELIMINA FOTO
+        - SALVA SU DISPOSITIVO
+
+    */
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================================
+        ATTIVA LONG PRESS SULLE FOTO
+====================================================== */
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+
+    document.addEventListener(
+
+    "touchstart",
+
+    e=>{
+
+
+
+        if(
+            e.target.tagName === "IMG"
+        ){
+
+
+            startPress(
+                e.target
+            );
+
+
+        }
+
+
+
+    });
+
+
+
+
+
+
+
+    document.addEventListener(
+
+    "touchend",
+
+    ()=>{
+
+
+        cancelPress();
+
+
+    });
+
+
+
+
+
+
+
+    document.addEventListener(
+
+    "touchmove",
+
+    ()=>{
+
+
+        cancelPress();
+
+
+    });
 
 
 
