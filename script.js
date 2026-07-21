@@ -1,8 +1,13 @@
 /* ======================================================
    ANNA'S LONDON ADVENTURE
-   SCRIPT.JS 2.3
+   SCRIPT.JS FINAL
 ====================================================== */
 
+
+
+/* ======================================================
+                ELEMENTS
+====================================================== */
 
 
 const hero = document.getElementById("hero");
@@ -31,6 +36,8 @@ let started = false;
 
 
 
+
+
 /* ======================================================
                 START JOURNEY
 ====================================================== */
@@ -39,13 +46,11 @@ let started = false;
 function startJourney(){
 
 
-
     if(started)
     return;
 
 
-    started=true;
-
+    started = true;
 
 
 
@@ -57,9 +62,11 @@ function startJourney(){
     song.play()
     .catch(()=>{
 
+
         console.log(
-        "Audio bloccato dal browser"
+            "Audio bloccato dal browser"
         );
+
 
     });
 
@@ -70,17 +77,19 @@ function startJourney(){
     // nasconde bottone
 
 
-    button.style.opacity="0";
+    button.style.opacity = "0";
 
-    button.style.transform=
+
+    button.style.transform =
     "scale(.8)";
+
 
 
 
     setTimeout(()=>{
 
 
-        button.style.display="none";
+        button.style.display = "none";
 
 
     },500);
@@ -91,7 +100,7 @@ function startJourney(){
 
 
 
-    // apre volo
+    // apre overlay volo
 
 
     setTimeout(()=>{
@@ -107,8 +116,7 @@ function startJourney(){
 
 
 
-
-    // parte animazione
+    // avvia animazione
 
 
     setTimeout(()=>{
@@ -145,6 +153,7 @@ function startFlight(){
 
 
 
+
     line.style.strokeDasharray =
     length;
 
@@ -152,6 +161,8 @@ function startFlight(){
 
     line.style.strokeDashoffset =
     length;
+
+
 
 
 
@@ -194,14 +205,16 @@ function startFlight(){
 
 
 
+
+
     setTimeout(()=>{
 
 
         animatePlane();
 
 
-    },700);
 
+    },700);
 
 
 
@@ -227,8 +240,10 @@ function animatePlane(){
     const duration = 4300;
 
 
+
     const totalLength =
     path.getTotalLength();
+
 
 
 
@@ -237,7 +252,10 @@ function animatePlane(){
 
 
 
+
+
     plane.style.opacity="1";
+
 
 
 
@@ -249,6 +267,7 @@ function animatePlane(){
 
         let progress =
         (time-start)/duration;
+
 
 
 
@@ -268,10 +287,15 @@ function animatePlane(){
 
 
 
+
         const point =
         path.getPointAtLength(
             current
         );
+
+
+
+
 
 
 
@@ -290,14 +314,14 @@ function animatePlane(){
 
 
 
-        /*
-            conversione SVG
-            responsive
-        */
 
 
         const matrix =
         svg.getScreenCTM();
+
+
+
+
 
 
 
@@ -310,6 +334,10 @@ function animatePlane(){
 
         )
         .matrixTransform(matrix);
+
+
+
+
 
 
 
@@ -329,10 +357,6 @@ function animatePlane(){
 
 
 
-        /*
-            posizione aereo
-        */
-
 
         plane.style.left =
         screenPoint.x + "px";
@@ -347,11 +371,6 @@ function animatePlane(){
 
 
 
-
-
-        /*
-            rotazione
-        */
 
 
         const angle =
@@ -371,6 +390,8 @@ function animatePlane(){
         /
 
         Math.PI;
+
+
 
 
 
@@ -399,6 +420,7 @@ function animatePlane(){
 
 
         }
+
         else{
 
 
@@ -410,6 +432,8 @@ function animatePlane(){
 
 
     }
+
+
 
 
 
@@ -434,10 +458,13 @@ function finishFlight(){
 
 
 
+
     const destination =
     document.querySelector(
         ".destination-dot"
     );
+
+
 
 
 
@@ -459,6 +486,7 @@ function finishFlight(){
 
 
 
+
     setTimeout(()=>{
 
 
@@ -470,6 +498,8 @@ function finishFlight(){
 
 
 }
+
+
 
 
 
@@ -511,8 +541,10 @@ function closeFlight(){
 
         hero.style.opacity="0";
 
-        hero.style.transform=
+
+        hero.style.transform =
         "scale(1.05)";
+
 
 
 
@@ -574,10 +606,15 @@ function toggleSection(header){
 
 
 
+
+
     const isOpen =
     body.classList.contains(
         "open"
     );
+
+
+
 
 
 
@@ -598,6 +635,9 @@ function toggleSection(header){
 
 
 
+
+
+
     document
     .querySelectorAll(
         ".card-header"
@@ -611,6 +651,8 @@ function toggleSection(header){
 
 
     });
+
+
 
 
 
@@ -645,98 +687,383 @@ function toggleSection(header){
 
 
 
+
 /* ======================================================
-            PHOTO UPLOAD PREVIEW
+            SUPABASE PHOTO UPLOAD
 ====================================================== */
 
 
 async function uploadToSupabase(event, galleryId){
 
-    const files = event.target.files;
-
-    const gallery = document.getElementById(galleryId);
 
 
-    for (const file of files){
+    const files =
+    event.target.files;
 
-        try {
+
+
+
+    const gallery =
+    document.getElementById(
+        galleryId
+    );
+
+
+
+
+
+
+    for(const file of files){
+
+
+
+        try{
+
+
+
+
 
             let folder = "";
 
+
+
+
+
             if(galleryId === "degreeGallery"){
+
+
                 folder = "laurea";
+
+
             }
 
+
+
+
+
             if(galleryId === "londonGallery"){
+
+
                 folder = "londra";
+
+
             }
+
+
+
+
+
 
 
             const fileName =
+
             `${Date.now()}-${file.name}`;
 
 
+
+
+
+
+
             const filePath =
+
             `${folder}/${fileName}`;
 
 
 
+
+
+
+
+
+
             const {data,error} =
+
             await supabaseClient
+
             .storage
-            .from("anna-graduation-trip")
+
+            .from(
+                "anna-graduation-trip"
+            )
+
             .upload(
+
                 filePath,
-                file
+
+                file,
+
+                {
+
+                    contentType:file.type,
+
+                    upsert:false
+
+                }
+
             );
 
 
+
+
+
+
+
+
             if(error){
+
+
                 throw error;
+
+
             }
 
 
 
+
+
+
+
+
+
             const {data:urlData} =
+
             supabaseClient
+
             .storage
-            .from("anna-graduation-trip")
+
+            .from(
+                "anna-graduation-trip"
+            )
+
             .getPublicUrl(
+
                 filePath
+
             );
+
+
+
+
+
+
 
 
 
             const img =
-            document.createElement("img");
+
+            document.createElement(
+                "img"
+            );
+
+
+
+
 
 
             img.src =
+
             urlData.publicUrl;
 
 
-            gallery.appendChild(img);
+
+
+
+
+
+
+            gallery.appendChild(
+                img
+            );
+
+
+
+
+
 
 
 
             console.log(
+
                 "Foto caricata:",
+
                 urlData.publicUrl
+
             );
 
 
+
+
+
+
+
         }
+
+
+
+
 
         catch(error){
 
+
+
             console.error(
+
                 "Errore upload:",
+
                 error
+
             );
+
+
 
         }
 
+
+
+
     }
+
+
+
+}
+/* ======================================================
+            LOAD SAVED PHOTOS
+====================================================== */
+
+
+async function loadGallery(folder, galleryId){
+
+
+
+    const gallery =
+
+    document.getElementById(
+        galleryId
+    );
+
+
+
+
+    if(!gallery)
+    return;
+
+
+
+
+
+
+
+    const {data,error} =
+
+    await supabaseClient
+
+    .storage
+
+    .from(
+        "anna-graduation-trip"
+    )
+
+    .list(
+        folder
+    );
+
+
+
+
+
+
+
+
+    if(error){
+
+
+        console.error(
+
+            "Errore caricamento galleria:",
+
+            error
+
+        );
+
+
+        return;
+
+
+    }
+
+
+
+
+
+
+
+
+    data.forEach(file=>{
+
+
+
+
+
+        const {data:urlData} =
+
+        supabaseClient
+
+        .storage
+
+        .from(
+            "anna-graduation-trip"
+        )
+
+        .getPublicUrl(
+
+            `${folder}/${file.name}`
+
+        );
+
+
+
+
+
+
+
+
+        const img =
+
+        document.createElement(
+            "img"
+        );
+
+
+
+
+
+
+
+
+        img.src =
+
+        urlData.publicUrl;
+
+
+
+
+
+
+
+
+        gallery.appendChild(
+            img
+        );
+
+
+
+
+    });
+
+
+
+
 
 }
 
@@ -749,34 +1076,84 @@ async function uploadToSupabase(event, galleryId){
 
 
 /* ======================================================
-            RESET
+                RESET + LOAD
 ====================================================== */
 
 
+
 window.addEventListener(
+
 "load",
+
 ()=>{
+
+
+
+
+
+    // reset linea volo
 
 
     if(line){
 
 
+
         const length =
+
         line.getTotalLength();
 
 
 
+
+
         line.style.strokeDasharray =
+
         length;
 
 
 
+
+
         line.style.strokeDashoffset =
+
         length;
 
 
 
     }
+
+
+
+
+
+
+
+
+    // carica foto salvate
+
+
+    loadGallery(
+
+        "laurea",
+
+        "degreeGallery"
+
+    );
+
+
+
+
+
+
+    loadGallery(
+
+        "londra",
+
+        "londonGallery"
+
+    );
+
+
 
 
 
