@@ -684,7 +684,7 @@ async function uploadToSupabase(event, galleryId){
             const {data,error} =
             await supabaseClient
             .storage
-            .from("anna-adventure")
+            .from("anna-graduation-trip")
             .upload(
                 filePath,
                 file
