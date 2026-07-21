@@ -1696,4 +1696,103 @@ body{
 
 
 }
+   /* ======================================================
+        PHOTO LONG PRESS MENU
+====================================================== */
+
+
+.photo-menu{
+
+    position:fixed;
+
+    z-index:9999;
+
+    transform:
+    translate(-50%,-50%)
+    scale(.8);
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+
+    padding:15px;
+
+
+    background:
+
+    rgba(20,20,30,.95);
+
+
+    border:
+
+    1px solid rgba(255,255,255,.3);
+
+
+    border-radius:20px;
+
+
+    backdrop-filter:blur(15px);
+
+
+    opacity:0;
+
+    pointer-events:none;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+.photo-menu.active{
+
+
+    opacity:1;
+
+    pointer-events:auto;
+
+
+    transform:
+
+    translate(-50%,-50%)
+    scale(1);
+
+
+}
+
+
+
+
+.photo-menu button{
+
+
+    border:none;
+
+
+    border-radius:30px;
+
+
+    padding:
+
+    12px 25px;
+
+
+    font-size:16px;
+
+
+    cursor:pointer;
+
+
+    background:white;
+
+    color:#111;
+
+
+}
 }
