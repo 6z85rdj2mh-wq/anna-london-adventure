@@ -1,173 +1,793 @@
-* {
+/* ===========================================================
+   ANNA'S LONDON ADVENTURE
+   VERSIONE 2.0
+=========================================================== */
 
-box-sizing:border-box;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --white:#ffffff;
+
+    --text:#edf3ff;
+
+    --glass:rgba(255,255,255,.08);
+
+    --glassBorder:rgba(255,255,255,.18);
+
+    --blue:#dbe8ff;
+
+    --light:#ffffff;
+
+    --shadow:0 25px 70px rgba(0,0,0,.45);
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    color:var(--text);
+
+    overflow-x:hidden;
+
+    background:
+    linear-gradient(
+    rgba(7,12,28,.50),
+    rgba(6,11,25,.88)),
+    url("https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2000&q=80");
+
+    background-size:cover;
+
+    background-position:center;
+
+    background-attachment:fixed;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================
+        BACKGROUND GLOW
+========================================== */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+    radial-gradient(circle at 15% 20%,
+    rgba(255,255,255,.08),
+    transparent 30%),
+
+    radial-gradient(circle at 90% 15%,
+    rgba(102,170,255,.10),
+    transparent 25%),
+
+    radial-gradient(circle at 50% 100%,
+    rgba(255,255,255,.05),
+    transparent 45%);
+
+    pointer-events:none;
+
+    z-index:-1;
+
+}
+
+/* ==========================================
+              HERO
+========================================== */
+
+.hero-screen{
+
+    position:relative;
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+    transition:
+    opacity 1.6s ease,
+    transform 1.6s ease;
+
+}
+
+.hero-content{
+
+    text-align:center;
+
+    max-width:760px;
+
+    padding:40px;
+
+    z-index:5;
+
+}
+
+.graduation-icon{
+
+    font-size:82px;
+
+    animation:float 5s ease-in-out infinite;
+
+    filter:drop-shadow(0 0 25px rgba(255,255,255,.35));
+
+}
+
+.hero-content h1{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:68px;
+
+    font-weight:600;
+
+    line-height:1.05;
+
+    margin-top:30px;
+
+    letter-spacing:.5px;
+
+}
+
+.hero-content p{
+
+    margin-top:30px;
+
+    font-size:22px;
+
+    line-height:1.8;
+
+    opacity:.88;
+
+    font-weight:300;
+
+}
+
+/* ==========================================
+              BUTTON
+========================================== */
+
+#startButton{
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-top:60px;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:22px 60px;
+
+    border-radius:60px;
+
+    background:linear-gradient(
+    135deg,
+    #ffffff,
+    #dde8ff);
+
+    color:#081224;
+
+    font-size:18px;
+
+    letter-spacing:3px;
+
+    font-weight:600;
+
+    transition:.45s;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.45);
+
+}
+
+#startButton:hover{
+
+    transform:
+    translateY(-6px)
+    scale(1.03);
+
+}
+
+#startButton::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.8),
+    transparent);
+
+    transform:skewX(-20deg);
+
+}
+
+#startButton:hover::before{
+
+    animation:shine 1.2s linear;
+
+}
+
+@keyframes shine{
+
+0%{
+
+left:-120%;
+
+}
+
+100%{
+
+left:140%;
+
+}
+
+}
+
+/* ==========================================
+        FLOAT ICON
+========================================== */
+
+@keyframes float{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-14px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ==========================================
+        FLIGHT OVERLAY
+========================================== */
+
+#flightOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:1s;
+
+    z-index:100;
+
+}
+
+#flightOverlay.active{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.overlay-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+    rgba(5,8,18,.92),
+    rgba(8,13,28,.96));
+
+    backdrop-filter:blur(10px);
+
+}
+
+/* ==========================================
+        FLIGHT AREA
+========================================== */
+
+.flight-container{
+
+    position:relative;
+
+    width:100%;
+
+    height:100%;
+
+}
+
+/* ==========================================
+           CITY LABELS
+========================================== */
+
+.city{
+
+    position:absolute;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:18px;
+
+    letter-spacing:2px;
+
+    font-weight:500;
+
+    color:white;
+
+}
+
+.perugia{
+
+    left:10%;
+
+    top:68%;
+
+}
+
+.london{
+
+    right:9%;
+
+    top:32%;
+
+}
+
+.dot{
+
+    width:13px;
+
+    height:13px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+
+    0 0 18px white;
+
+}
+
+.destination-dot{
+
+    animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%,100%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.5);
+
+}
+
+}
+
+/* ==========================================
+            SVG ROUTE
+========================================== */
+
+#flightSVG{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+}
+
+#flightPath{
+
+    fill:none;
+
+    stroke:none;
+
+}
+
+#flightLine{
+
+    fill:none;
+
+    stroke:#d8e7ff;
+
+    stroke-width:4;
+
+    stroke-linecap:round;
+
+    stroke-dasharray:12 16;
+
+    filter:drop-shadow(0 0 10px rgba(255,255,255,.35));
+
+}
+/* ==========================================
+              PLANE
+========================================== */
+
+#plane{
+
+    position:absolute;
+
+    width:70px;
+
+    height:70px;
+
+    opacity:0;
+
+    z-index:20;
+
+    transform-origin:center;
+
+    filter:
+    drop-shadow(
+    0 0 18px rgba(255,255,255,.8));
 
 }
 
 
-body {
+#plane svg{
+
+    width:100%;
+
+    height:100%;
+
+    fill:white;
+
+}
 
 
-margin:0;
+/* ==========================================
+              ARRIVAL EFFECT
+========================================== */
 
-padding:0;
+.landing-glow{
+
+    animation:
+    landingGlow 1.5s ease forwards;
+
+}
 
 
-font-family:'Georgia', serif;
+@keyframes landingGlow{
 
+    0%{
+
+        filter:
+        drop-shadow(
+        0 0 10px white);
+
+        transform:scale(1);
+
+    }
+
+
+    50%{
+
+        filter:
+        drop-shadow(
+        0 0 45px white);
+
+        transform:scale(1.25);
+
+    }
+
+
+    100%{
+
+        filter:
+        drop-shadow(
+        0 0 15px white);
+
+        transform:scale(1);
+
+    }
+
+}
+
+
+/* ==========================================
+              CLOUDS
+========================================== */
+
+
+.cloud{
+
+    position:absolute;
+
+    width:240px;
+
+    height:80px;
+
+    background:
+
+    rgba(255,255,255,.05);
+
+    border-radius:100px;
+
+    filter:blur(3px);
+
+    animation:
+    cloudMove linear infinite;
+
+}
+
+
+.cloud::before,
+.cloud::after{
+
+    content:"";
+
+    position:absolute;
+
+    background:
+
+    rgba(255,255,255,.05);
+
+    border-radius:50%;
+
+}
+
+
+.cloud::before{
+
+    width:90px;
+
+    height:90px;
+
+    left:40px;
+
+    top:-35px;
+
+}
+
+
+.cloud::after{
+
+    width:120px;
+
+    height:120px;
+
+    right:30px;
+
+    top:-50px;
+
+}
+
+
+
+@keyframes cloudMove{
+
+
+from{
+
+transform:translateX(-300px);
+
+}
+
+
+to{
+
+transform:translateX(120vw);
+
+}
+
+}
+
+
+
+/* ==========================================
+              CONTENT
+========================================== */
+
+
+.content{
+
+    display:none;
+
+    width:min(90%,850px);
+
+    margin:auto;
+
+    padding:80px 20px;
+
+    animation:
+
+    contentReveal 1.8s ease;
+
+}
+
+
+
+@keyframes contentReveal{
+
+
+from{
+
+opacity:0;
+
+transform:
+translateY(80px);
+
+filter:blur(10px);
+
+}
+
+
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+filter:blur(0);
+
+}
+
+}
+
+
+
+/* ==========================================
+              CARDS
+========================================== */
+
+
+.card{
+
+
+padding:45px;
+
+margin-bottom:45px;
+
+
+border-radius:35px;
 
 
 background:
 
-linear-gradient(
+rgba(255,255,255,.10);
 
-rgba(8,15,35,0.55),
 
-rgba(8,15,35,0.85)
+border:
 
-),
-
-url("https://images.unsplash.com/photo-1520986606214-8b456906c813");
+1px solid rgba(255,255,255,.18);
 
 
 
-background-size:cover;
+backdrop-filter:
 
-background-position:center;
-
-background-attachment:fixed;
+blur(22px);
 
 
 
-color:white;
+box-shadow:
 
-min-height:100vh;
+0 30px 80px rgba(0,0,0,.45);
 
-
-}
-
-
-
-
-
-/* COPERTINA */
-
-
-.hero-screen {
-
-
-height:100vh;
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-text-align:center;
-
-
-padding:30px;
-
-
-opacity:1;
 
 
 transition:
 
-opacity 1.5s ease,
-
-transform 1.5s ease;
-
-
-}
-
-
-
-
-
-.graduation-icon {
-
-
-font-size:75px;
-
-
-animation:float 3s ease-in-out infinite;
+transform .5s ease,
+background .5s ease;
 
 
 }
 
 
 
+.card:hover{
 
 
-@keyframes float {
+transform:
+
+translateY(-8px);
 
 
-0% {
+background:
 
-transform:translateY(0);
-
-}
-
-
-50% {
-
-transform:translateY(-12px);
-
-}
-
-
-100% {
-
-transform:translateY(0);
-
-}
+rgba(255,255,255,.14);
 
 
 }
 
 
 
+.card h2{
 
 
+font-family:
+
+"Cormorant Garamond",
+serif;
 
 
-.hero-screen h1 {
+font-size:42px;
 
 
-font-size:48px;
+font-weight:600;
 
 
-font-weight:normal;
-
-
-line-height:1.2;
-
-
-margin:25px 0;
+margin-bottom:25px;
 
 
 }
 
 
 
+.card p{
 
 
-.hero-screen p {
+font-size:19px;
 
 
-font-size:22px;
+line-height:1.9;
 
 
-line-height:1.6;
+font-weight:300;
 
 
 opacity:.9;
@@ -177,411 +797,344 @@ opacity:.9;
 
 
 
+/* ==========================================
+              DESTINATION
+========================================== */
 
 
-
-
-.hero-screen button {
-
-
-margin-top:40px;
-
-
-padding:20px 50px;
-
-
-border:none;
-
-
-border-radius:50px;
-
-
-font-size:20px;
-
-
-letter-spacing:1px;
-
-
-cursor:pointer;
-
-
-
-background:
-
-linear-gradient(
-
-135deg,
-
-white,
-
-#dce9ff
-
-);
-
-
-
-box-shadow:
-
-0 15px 40px rgba(0,0,0,.5);
-
-
-transition:.3s;
-
-
-}
-
-
-
-.hero-screen button:hover {
-
-
-transform:translateY(-5px) scale(1.03);
-
-
-}
-
-
-
-
-
-
-
-/* AEREO */
-
-
-.plane {
-
-
-position:fixed;
-
-
-width:90px;
-
-
-left:-120px;
-
-
-top:45%;
-
-
-opacity:0;
-
-
-z-index:20;
-
-
-}
-
-
-
-
-.plane svg {
-
-
-width:100%;
-
-
-fill:white;
-
-
-filter:
-
-drop-shadow(
-
-0 0 15px rgba(255,255,255,.8)
-
-);
-
-
-}
-
-
-
-
-
-.plane.fly {
-
-
-animation:
-
-flight 3s cubic-bezier(.65,0,.35,1) forwards;
-
-
-}
-
-
-
-
-
-@keyframes flight {
-
-
-
-0% {
-
-left:-120px;
-
-top:55%;
-
-opacity:0;
-
-transform:rotate(15deg) scale(.8);
-
-}
-
-
-
-15% {
-
-opacity:1;
-
-}
-
-
-
-50% {
-
-top:35%;
-
-}
-
-
-
-100% {
-
-left:120%;
-
-top:20%;
-
-opacity:0;
-
-transform:rotate(-10deg) scale(1);
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-/* CONTENUTO */
-
-
-.content {
-
-
-display:none;
-
-
-width:90%;
-
-
-max-width:800px;
-
-
-margin:auto;
-
-
-padding:60px 20px;
-
-
-animation:fadeIn 1.2s;
-
-
-}
-
-
-
-
-@keyframes fadeIn {
-
-
-from {
-
-opacity:0;
-
-transform:translateY(30px);
-
-}
-
-
-to {
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-
-}
-
-
-
-
-
-
-.card {
-
-
-margin-bottom:40px;
-
-
-padding:35px;
-
-
-border-radius:25px;
-
-
-background:
-
-rgba(255,255,255,.12);
-
-
-
-backdrop-filter:blur(15px);
-
-
-
-border:
-
-1px solid rgba(255,255,255,.25);
-
-
-
-box-shadow:
-
-0 20px 50px rgba(0,0,0,.35);
-
-
-}
-
-
-
-
-
-
-.card h2 {
-
-
-font-size:32px;
-
-
-font-weight:normal;
-
-
-}
-
-
-
-.card p {
-
-
-font-size:19px;
-
-
-line-height:1.7;
-
-
-}
-
-
-
-
-
-
-.destination {
-
-
-font-size:42px;
-
-
-letter-spacing:5px;
-
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-.button {
+.destination{
 
 
 display:inline-block;
 
 
-margin-top:25px;
+font-family:
+
+"Cormorant Garamond",
+serif;
 
 
-padding:15px 35px;
+font-size:70px;
 
 
-background:white;
+letter-spacing:12px;
 
 
-color:#111;
+font-weight:700;
+
+
+background:
+
+linear-gradient(
+90deg,
+white,
+#c7dbff);
+
+
+-webkit-background-clip:text;
+
+
+color:transparent;
+
+
+}
+
+
+
+/* ==========================================
+              BUTTONS
+========================================== */
+
+
+.button{
+
+
+display:inline-flex;
+
+
+margin-top:35px;
+
+
+padding:17px 38px;
 
 
 border-radius:50px;
 
 
-text-decoration:none;
+background:white;
 
 
-font-size:17px;
+color:#101525;
 
 
-transition:.3s;
+font-weight:600;
 
 
-}
+letter-spacing:1px;
 
 
-
-
-
-.button:hover {
-
-
-transform:scale(1.05);
+transition:.4s;
 
 
 }
 
 
 
+.button:hover{
 
 
-.final {
+transform:
+
+translateY(-5px);
 
 
-margin-top:80px;
+box-shadow:
+
+0 20px 40px rgba(0,0,0,.35);
+
+
+}
+
+
+
+/* ==========================================
+              FINAL MESSAGE
+========================================== */
+
+
+.final{
 
 
 text-align:center;
 
 
-font-size:27px;
+font-family:
+
+"Cormorant Garamond",
+serif;
+
+
+font-size:36px;
+
+
+line-height:1.5;
 
 
 font-style:italic;
 
 
-line-height:1.7;
+padding:80px 20px;
 
 
-padding-bottom:50px;
+opacity:.9;
+
+
+}
+
+
+
+/* ==========================================
+              MOBILE
+========================================== */
+
+
+@media(max-width:768px){
+
+
+.hero-content{
+
+padding:25px;
+
+}
+
+
+.hero-content h1{
+
+font-size:44px;
+
+}
+
+
+.hero-content p{
+
+font-size:18px;
+
+}
+
+
+
+#startButton{
+
+
+padding:18px 35px;
+
+
+font-size:15px;
+
+
+}
+
+
+
+.city{
+
+
+font-size:13px;
+
+
+}
+
+
+
+.perugia{
+
+
+left:5%;
+
+}
+
+
+
+.london{
+
+
+right:5%;
+
+}
+
+
+
+.destination{
+
+
+font-size:48px;
+
+
+letter-spacing:6px;
+
+
+}
+
+
+
+.card{
+
+
+padding:30px;
+
+
+}
+
+
+
+.card h2{
+
+
+font-size:34px;
+
+
+}
+
+
+
+.final{
+
+
+font-size:28px;
+
+
+}
+
+
+}
+
+
+
+/* ==========================================
+              SMOOTH EXIT
+========================================== */
+
+
+.fade-away{
+
+
+opacity:0 !important;
+
+
+transform:
+
+scale(1.08);
+
+
+filter:
+
+blur(8px);
+
+
+}
+
+
+
+/* ==========================================
+              PREMIUM LIGHT
+========================================== */
+
+
+.hero-screen::after{
+
+
+content:"";
+
+
+position:absolute;
+
+
+width:500px;
+
+
+height:500px;
+
+
+border-radius:50%;
+
+
+background:
+
+radial-gradient(
+circle,
+rgba(255,255,255,.12),
+transparent 70%);
+
+
+
+animation:
+
+ambientLight 8s infinite alternate;
+
+
+
+}
+
+
+@keyframes ambientLight{
+
+
+from{
+
+transform:
+
+translate(-100px,-50px);
+
+}
+
+
+to{
+
+transform:
+
+translate(100px,50px);
+
+}
 
 
 }
