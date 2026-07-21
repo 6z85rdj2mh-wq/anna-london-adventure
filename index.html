@@ -240,52 +240,91 @@ Z
 
 
 
+<!-- ================= LAUREA ================= -->
 
 
-<section class="card">
+<section class="card adventure-card">
+
+
+<div class="card-header" onclick="toggleSection(this)">
 
 
 <h2>
-
 🎓 La tua laurea
-
 </h2>
 
 
+<span class="open-icon">
+＋
+</span>
+
+
+</div>
+
+
+
+<div class="card-body">
+
 
 <p>
-
 
 Anni di studio,
 sacrifici,
 impegno e determinazione.
 
-
 <br><br>
-
 
 Un percorso che ti ha portata
 a raggiungere un traguardo
 importantissimo.
 
-
 <br><br>
 
-
-Qui conserveremo i ricordi
-di una giornata speciale.
-
+Questo spazio conserverà
+i ricordi di una giornata speciale.
 
 </p>
 
 
 
-<a class="button">
 
-📸 I RICORDI DELLA LAUREA
+<div class="photo-area">
 
-</a>
 
+<h3>
+📸 Ricordi della laurea
+</h3>
+
+
+<label class="upload-button">
+
+
+＋ CARICA FOTO
+
+
+<input 
+type="file"
+accept="image/*"
+multiple
+onchange="uploadPhotos(event,'degreeGallery')">
+
+
+</label>
+
+
+
+<div 
+class="gallery"
+id="degreeGallery">
+
+</div>
+
+
+</div>
+
+
+
+</div>
 
 
 </section>
@@ -296,15 +335,33 @@ di una giornata speciale.
 
 
 
-<section class="card">
+
+<!-- ================= VIAGGIO ================= -->
+
+
+<section class="card adventure-card">
+
+
+<div class="card-header" onclick="toggleSection(this)">
 
 
 <h2>
-
 ✈️ Il tuo viaggio
-
 </h2>
 
+
+<span class="open-icon">
+＋
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="card-body">
 
 
 <p>
@@ -319,7 +376,7 @@ DESTINAZIONE CONFERMATA
 
 <span class="destination">
 
-Londra
+LONDRA
 
 </span>
 
@@ -328,30 +385,117 @@ Londra
 <br><br>
 
 
-
-Un nuovo capitolo sta per iniziare.
-
+Una nuova avventura sta per iniziare.
 
 <br><br>
 
 
 Il biglietto è pronto.
 
-Ora manca solo scegliere
-quando partire.
+Ora manca solo partire.
 
 
 </p>
 
 
 
-<a class="button">
-
-🌃 LA TUA AVVENTURA
-
-</a>
 
 
+
+<div class="photo-area">
+
+
+<h3>
+
+🌃 Album Londra
+
+</h3>
+
+
+
+<label class="upload-button">
+
+
+＋ AGGIUNGI FOTO
+
+
+<input 
+type="file"
+accept="image/*"
+multiple
+onchange="uploadPhotos(event,'londonGallery')">
+
+
+</label>
+
+
+
+<div 
+class="gallery"
+id="londonGallery">
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ================= FUTURO ================= -->
+
+
+<section class="card adventure-card">
+
+
+<div class="card-header">
+
+
+<h2>
+
+🗺️ La nostra avventura
+
+</h2>
+
+
+</div>
+
+
+
+<div class="card-body">
+
+
+<p>
+
+
+Questo spazio crescerà insieme ai ricordi.
+
+<br><br>
+
+
+Nuove tappe,
+nuove fotografie,
+nuove storie.
+
+</p>
+
+
+
+</div>
 
 
 </section>
@@ -383,10 +527,7 @@ per sempre.
 
 
 
-
-
 </main>
-
 
 
 
