@@ -1152,9 +1152,7 @@ async function loadGallery(folder,galleryId){
 
 
 
-        gallery.appendChild(
-            img
-        );
+        ;
 
 
 
