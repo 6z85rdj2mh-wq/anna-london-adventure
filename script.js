@@ -1,38 +1,51 @@
-/* ==========================================================
+/* ======================================================
    ANNA'S LONDON ADVENTURE
-   SCRIPT 2.1
-========================================================== */
+   SCRIPT.JS 2.3
+====================================================== */
+
 
 
 const hero = document.getElementById("hero");
+
 const overlay = document.getElementById("flightOverlay");
+
 const plane = document.getElementById("plane");
 
+const svg = document.getElementById("flightSVG");
+
 const path = document.getElementById("flightPath");
+
 const line = document.getElementById("flightLine");
 
 const content = document.getElementById("content");
+
 const song = document.getElementById("song");
+
 const button = document.getElementById("startButton");
 
-const flightContainer = document.querySelector(".flight-container");
 
 
 let started = false;
 
 
 
-/* ==========================================================
-                START
-========================================================== */
+
+
+/* ======================================================
+                START JOURNEY
+====================================================== */
 
 
 function startJourney(){
 
 
-    if(started) return;
+
+    if(started)
+    return;
+
 
     started=true;
+
 
 
 
@@ -40,23 +53,35 @@ function startJourney(){
 
     song.volume = 0.35;
 
+
     song.play()
-    .catch(()=>{});
+    .catch(()=>{
+
+        console.log(
+        "Audio bloccato dal browser"
+        );
+
+    });
 
 
 
 
-    // pulsante
+
+    // nasconde bottone
+
 
     button.style.opacity="0";
 
-    button.style.transform="scale(.8)";
+    button.style.transform=
+    "scale(.8)";
 
 
 
     setTimeout(()=>{
 
+
         button.style.display="none";
+
 
     },500);
 
@@ -64,11 +89,16 @@ function startJourney(){
 
 
 
+
+
     // apre volo
+
 
     setTimeout(()=>{
 
+
         overlay.classList.add("active");
+
 
     },600);
 
@@ -76,11 +106,16 @@ function startJourney(){
 
 
 
+
+
     // parte animazione
+
 
     setTimeout(()=>{
 
-        prepareFlight();
+
+        startFlight();
+
 
     },1200);
 
@@ -94,12 +129,15 @@ function startJourney(){
 
 
 
-/* ==========================================================
-             PREPARAZIONE VOLO
-========================================================== */
 
 
-function prepareFlight(){
+/* ======================================================
+                START FLIGHT
+====================================================== */
+
+
+function startFlight(){
+
 
 
     const length =
@@ -109,6 +147,7 @@ function prepareFlight(){
 
     line.style.strokeDasharray =
     length;
+
 
 
     line.style.strokeDashoffset =
@@ -122,14 +161,21 @@ function prepareFlight(){
         [
 
             {
+
                 strokeDashoffset:length
+
             },
 
+
             {
+
                 strokeDashoffset:0
+
             }
 
+
         ],
+
 
         {
 
@@ -141,18 +187,21 @@ function prepareFlight(){
 
         }
 
+
     );
+
+
 
 
 
     setTimeout(()=>{
 
 
-        flyPlane();
-
+        animatePlane();
 
 
     },700);
+
 
 
 
@@ -165,12 +214,14 @@ function prepareFlight(){
 
 
 
-/* ==========================================================
-              AEREO SULLA CURVA
-========================================================== */
+
+/* ======================================================
+            PLANE FOLLOW SVG PATH
+====================================================== */
 
 
-function flyPlane(){
+function animatePlane(){
+
 
 
     const duration = 4300;
@@ -191,7 +242,8 @@ function flyPlane(){
 
 
 
-    function animate(time){
+
+    function frame(time){
 
 
 
@@ -205,64 +257,72 @@ function flyPlane(){
 
 
 
-        const currentLength =
+
+
+
+        const current =
         totalLength * progress;
+
+
+
 
 
 
         const point =
         path.getPointAtLength(
-            currentLength
+            current
         );
-
 
 
 
         const next =
         path.getPointAtLength(
+
             Math.min(
-                currentLength + 5,
+                current+5,
                 totalLength
             )
+
         );
 
 
 
 
 
+
         /*
-            conversione SVG -> pixel
+            conversione SVG
+            responsive
         */
 
 
-        const svg =
-        document.getElementById("flightSVG");
+        const matrix =
+        svg.getScreenCTM();
 
 
 
-        const rect =
-        svg.getBoundingClientRect();
+        const screenPoint =
+        new DOMPoint(
+
+            point.x,
+
+            point.y
+
+        )
+        .matrixTransform(matrix);
 
 
 
-        const scaleX =
-        rect.width / 1000;
+        const screenNext =
+        new DOMPoint(
 
+            next.x,
 
+            next.y
 
-        const scaleY =
-        rect.height / 500;
+        )
+        .matrixTransform(matrix);
 
-
-
-
-        const x =
-        point.x * scaleX;
-
-
-
-        const y =
-        point.y * scaleY;
 
 
 
@@ -270,30 +330,48 @@ function flyPlane(){
 
 
         /*
-            angolo aereo
+            posizione aereo
+        */
+
+
+        plane.style.left =
+        screenPoint.x + "px";
+
+
+
+        plane.style.top =
+        (screenPoint.y - 25)
+        + "px";
+
+
+
+
+
+
+
+        /*
+            rotazione
         */
 
 
         const angle =
+
         Math.atan2(
-            next.y-point.y,
-            next.x-point.x
+
+            screenNext.y-screenPoint.y,
+
+            screenNext.x-screenPoint.x
+
         )
+
         *
-        180 /
+
+        180
+
+        /
+
         Math.PI;
 
-
-
-
-
-
-     plane.style.left =
-x + "px";
-
-
-plane.style.top =
-(y - 18) + "px";
 
 
 
@@ -309,11 +387,14 @@ plane.style.top =
 
 
 
-        if(progress < 1){
+
+
+
+        if(progress<1){
 
 
             requestAnimationFrame(
-                animate
+                frame
             );
 
 
@@ -321,8 +402,7 @@ plane.style.top =
         else{
 
 
-            arrive();
-
+            finishFlight();
 
 
         }
@@ -333,29 +413,24 @@ plane.style.top =
 
 
 
-    requestAnimationFrame(
-        animate
-    );
+    requestAnimationFrame(frame);
+
+
 
 }
+/* ======================================================
+                ARRIVAL
+====================================================== */
 
 
+function finishFlight(){
 
-
-
-
-
-/* ==========================================================
-              ARRIVO
-========================================================== */
-
-
-function arrive(){
 
 
     plane.classList.add(
         "landing-glow"
     );
+
 
 
 
@@ -366,13 +441,19 @@ function arrive(){
 
 
 
-    destination.style.transform=
-    "scale(2)";
+    if(destination){
 
 
+        destination.style.transform =
+        "scale(2)";
 
-    destination.style.boxShadow=
-    "0 0 60px white";
+
+        destination.style.boxShadow =
+        "0 0 60px white";
+
+
+    }
+
 
 
 
@@ -381,10 +462,10 @@ function arrive(){
     setTimeout(()=>{
 
 
-        finish();
+        closeFlight();
 
 
-    },1600);
+    },1500);
 
 
 
@@ -396,22 +477,28 @@ function arrive(){
 
 
 
-/* ==========================================================
-              FINE TRANSIZIONE
-========================================================== */
+/* ======================================================
+                CLOSE FLIGHT
+====================================================== */
 
 
-function finish(){
+function closeFlight(){
+
 
 
     overlay.style.opacity="0";
 
-    overlay.style.transform=
+
+    overlay.style.transform =
     "scale(1.05)";
 
 
 
+
+
+
     setTimeout(()=>{
+
 
 
         overlay.classList.remove(
@@ -420,24 +507,42 @@ function finish(){
 
 
 
-        hero.classList.add(
-            "fade-away"
-        );
+
+
+        hero.style.opacity="0";
+
+        hero.style.transform=
+        "scale(1.05)";
+
+
+
 
 
 
         setTimeout(()=>{
 
 
+
             hero.style.display="none";
 
 
-            content.style.display=
-            "block";
+
+            content.style.display="block";
 
 
 
-        },800);
+            window.scrollTo({
+
+                top:0,
+
+                behavior:"smooth"
+
+            });
+
+
+
+        },700);
+
 
 
 
@@ -453,9 +558,179 @@ function finish(){
 
 
 
-/* ==========================================================
-              RESET LINEA
-========================================================== */
+
+
+/* ======================================================
+            CARD OPEN / CLOSE
+====================================================== */
+
+
+function toggleSection(header){
+
+
+
+    const body =
+    header.nextElementSibling;
+
+
+
+    const isOpen =
+    body.classList.contains(
+        "open"
+    );
+
+
+
+    document
+    .querySelectorAll(
+        ".card-body"
+    )
+    .forEach(section=>{
+
+
+        section.classList.remove(
+            "open"
+        );
+
+
+    });
+
+
+
+
+    document
+    .querySelectorAll(
+        ".card-header"
+    )
+    .forEach(item=>{
+
+
+        item.classList.remove(
+            "active"
+        );
+
+
+    });
+
+
+
+
+
+
+    if(!isOpen){
+
+
+
+        body.classList.add(
+            "open"
+        );
+
+
+
+        header.classList.add(
+            "active"
+        );
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ======================================================
+            PHOTO UPLOAD PREVIEW
+====================================================== */
+
+
+function uploadPhotos(event,galleryId){
+
+
+
+    const files =
+    event.target.files;
+
+
+
+    const gallery =
+    document.getElementById(
+        galleryId
+    );
+
+
+
+
+
+    Array.from(files)
+    .forEach(file=>{
+
+
+
+        const reader =
+        new FileReader();
+
+
+
+
+        reader.onload =
+        function(e){
+
+
+
+            const img =
+            document.createElement(
+                "img"
+            );
+
+
+
+            img.src =
+            e.target.result;
+
+
+
+            gallery.appendChild(
+                img
+            );
+
+
+
+        };
+
+
+
+
+
+        reader.readAsDataURL(
+            file
+        );
+
+
+
+    });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ======================================================
+            RESET
+====================================================== */
 
 
 window.addEventListener(
@@ -463,17 +738,25 @@ window.addEventListener(
 ()=>{
 
 
-    const length =
-    line.getTotalLength();
+    if(line){
+
+
+        const length =
+        line.getTotalLength();
 
 
 
-    line.style.strokeDasharray =
-    length;
+        line.style.strokeDasharray =
+        length;
 
 
-    line.style.strokeDashoffset =
-    length;
+
+        line.style.strokeDashoffset =
+        length;
+
+
+
+    }
 
 
 
