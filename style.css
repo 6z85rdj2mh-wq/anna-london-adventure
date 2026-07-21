@@ -1141,6 +1141,77 @@ transform:
 translate(100px,50px);
 
 }
+/* ==========================================
+        MOBILE FLIGHT FIX
+========================================== */
 
+
+@media(max-width:768px){
+
+
+.flight-container{
+
+    height:420px;
+
+    overflow:hidden;
+
+}
+
+
+
+#flightSVG{
+
+    width:130%;
+
+    height:100%;
+
+    left:-15%;
+
+    position:absolute;
+
+}
+
+
+
+
+#plane{
+
+    width:45px;
+
+}
+
+
+
+
+.city{
+
+    font-size:12px;
+
+    letter-spacing:1px;
+
+}
+
+
+
+.perugia{
+
+    left:8%;
+
+    top:72%;
+
+}
+
+
+
+.london{
+
+    left:75%;
+
+    top:35%;
+
+}
+
+
+}
 
 }
