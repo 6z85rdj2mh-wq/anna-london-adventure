@@ -1,66 +1,52 @@
 /* ==========================================================
    ANNA'S LONDON ADVENTURE
-   SCRIPT VERSIONE 2.0
+   SCRIPT 2.1
 ========================================================== */
 
 
 const hero = document.getElementById("hero");
-
 const overlay = document.getElementById("flightOverlay");
-
 const plane = document.getElementById("plane");
 
 const path = document.getElementById("flightPath");
-
 const line = document.getElementById("flightLine");
 
 const content = document.getElementById("content");
-
 const song = document.getElementById("song");
-
 const button = document.getElementById("startButton");
 
+const flightContainer = document.querySelector(".flight-container");
 
 
-let animationStarted = false;
+let started = false;
 
 
 
 /* ==========================================================
-        START JOURNEY
+                START
 ========================================================== */
 
 
 function startJourney(){
 
 
-    if(animationStarted) return;
+    if(started) return;
+
+    started=true;
 
 
-    animationStarted = true;
 
-
-    /*
-        musica
-    */
+    // musica
 
     song.volume = 0.35;
 
     song.play()
-    .catch(()=>{
-
-        console.log(
-        "Autoplay bloccato dal browser"
-        );
-
-    });
+    .catch(()=>{});
 
 
 
-    /*
-        nasconde pulsante
-    */
 
+    // pulsante
 
     button.style.opacity="0";
 
@@ -70,39 +56,31 @@ function startJourney(){
 
     setTimeout(()=>{
 
-
         button.style.display="none";
-
 
     },500);
 
 
 
-    /*
-        apre volo
-    */
 
+
+    // apre volo
 
     setTimeout(()=>{
 
-
         overlay.classList.add("active");
-
 
     },600);
 
 
 
-    /*
-        avvia animazione
-    */
 
+
+    // parte animazione
 
     setTimeout(()=>{
 
-
-        animateFlight();
-
+        prepareFlight();
 
     },1200);
 
@@ -113,18 +91,15 @@ function startJourney(){
 
 
 
+
+
+
 /* ==========================================================
-        FLIGHT ANIMATION
+             PREPARAZIONE VOLO
 ========================================================== */
 
 
-function animateFlight(){
-
-
-
-    /*
-        prepara linea
-    */
+function prepareFlight(){
 
 
     const length =
@@ -136,20 +111,16 @@ function animateFlight(){
     length;
 
 
-
     line.style.strokeDashoffset =
     length;
 
 
 
-    /*
-        animazione linea
-    */
-
 
     line.animate(
 
         [
+
             {
                 strokeDashoffset:length
             },
@@ -164,8 +135,7 @@ function animateFlight(){
 
             duration:3500,
 
-            easing:
-            "ease-in-out",
+            easing:"ease-in-out",
 
             fill:"forwards"
 
@@ -175,12 +145,14 @@ function animateFlight(){
 
 
 
-    /*
-        animazione aereo
-    */
+    setTimeout(()=>{
 
 
-    animatePlane();
+        flyPlane();
+
+
+
+    },700);
 
 
 
@@ -190,26 +162,36 @@ function animateFlight(){
 
 
 
+
+
+
 /* ==========================================================
-        PLANE FOLLOW SVG PATH
+              AEREO SULLA CURVA
 ========================================================== */
 
 
-function animatePlane(){
+function flyPlane(){
 
 
-    const duration = 4200;
+    const duration = 4300;
 
 
-    const start = performance.now();
-
-
-
-    plane.style.opacity=1;
+    const totalLength =
+    path.getTotalLength();
 
 
 
-    function frame(time){
+    const start =
+    performance.now();
+
+
+
+    plane.style.opacity="1";
+
+
+
+
+    function animate(time){
 
 
 
@@ -219,21 +201,18 @@ function animatePlane(){
 
 
         if(progress>1)
-        {
+        progress=1;
 
-            progress=1;
 
-        }
+
+        const currentLength =
+        totalLength * progress;
 
 
 
         const point =
         path.getPointAtLength(
-
-            path.getTotalLength()
-            *
-            progress
-
+            currentLength
         );
 
 
@@ -241,56 +220,87 @@ function animatePlane(){
 
         const next =
         path.getPointAtLength(
-
             Math.min(
-
-            path.getTotalLength(),
-
-            path.getTotalLength()
-            *
-            (progress+.01)
-
+                currentLength + 5,
+                totalLength
             )
-
         );
 
 
 
+
+
         /*
-            posizione
+            conversione SVG -> pixel
         */
 
 
-        plane.style.left =
-        point.x/10 + "%";
+        const svg =
+        document.getElementById("flightSVG");
 
 
-        plane.style.top =
-        point.y/10 + "%";
+
+        const rect =
+        svg.getBoundingClientRect();
+
+
+
+        const scaleX =
+        rect.width / 1000;
+
+
+
+        const scaleY =
+        rect.height / 500;
+
+
+
+
+        const x =
+        point.x * scaleX;
+
+
+
+        const y =
+        point.y * scaleY;
+
+
+
 
 
 
         /*
-            rotazione aereo
+            angolo aereo
         */
 
 
         const angle =
         Math.atan2(
-
             next.y-point.y,
-
             next.x-point.x
-
         )
         *
-        180
-        /
+        180 /
         Math.PI;
 
 
 
+
+
+
+        plane.style.left =
+        x + "px";
+
+
+
+        plane.style.top =
+        y + "px";
+
+
+
+
         plane.style.transform =
+
         `
         translate(-50%,-50%)
         rotate(${angle}deg)
@@ -298,18 +308,22 @@ function animatePlane(){
 
 
 
-        if(progress<1){
 
 
-            requestAnimationFrame(frame);
+        if(progress < 1){
+
+
+            requestAnimationFrame(
+                animate
+            );
 
 
         }
-
         else{
 
 
-            finishFlight();
+            arrive();
+
 
 
         }
@@ -320,22 +334,24 @@ function animatePlane(){
 
 
 
-    requestAnimationFrame(frame);
-
+    requestAnimationFrame(
+        animate
+    );
 
 }
+
+
+
+
+
+
+
 /* ==========================================================
-        ARRIVAL
+              ARRIVO
 ========================================================== */
 
 
-function finishFlight(){
-
-
-
-    /*
-        effetto arrivo aereo
-    */
+function arrive(){
 
 
     plane.classList.add(
@@ -344,44 +360,32 @@ function finishFlight(){
 
 
 
-    /*
-        illumina destinazione
-    */
-
-
-    const londonDot =
+    const destination =
     document.querySelector(
         ".destination-dot"
     );
 
 
-    if(londonDot){
 
-
-        londonDot.style.transform =
-        "scale(2)";
-
-
-        londonDot.style.boxShadow =
-        "0 0 50px white";
-
-
-    }
+    destination.style.transform=
+    "scale(2)";
 
 
 
-    /*
-        attesa prima apertura
-    */
+    destination.style.boxShadow=
+    "0 0 60px white";
+
+
+
 
 
     setTimeout(()=>{
 
 
-        closeFlight();
+        finish();
 
 
-    },1500);
+    },1600);
 
 
 
@@ -392,32 +396,20 @@ function finishFlight(){
 
 
 
+
 /* ==========================================================
-        CLOSE FLIGHT
+              FINE TRANSIZIONE
 ========================================================== */
 
 
-function closeFlight(){
-
-
-
-    /*
-        dissolve overlay
-    */
+function finish(){
 
 
     overlay.style.opacity="0";
 
-
-
     overlay.style.transform=
     "scale(1.05)";
 
-
-
-    /*
-        apre contenuto
-    */
 
 
     setTimeout(()=>{
@@ -441,27 +433,16 @@ function closeFlight(){
             hero.style.display="none";
 
 
-
             content.style.display=
             "block";
 
 
 
-            window.scrollTo({
-
-                top:0,
-
-                behavior:"smooth"
-
-            });
+        },800);
 
 
 
-        },700);
-
-
-
-    },1000);
+    },900);
 
 
 
@@ -471,8 +452,10 @@ function closeFlight(){
 
 
 
+
+
 /* ==========================================================
-        PRELOAD EFFECTS
+              RESET LINEA
 ========================================================== */
 
 
@@ -481,29 +464,18 @@ window.addEventListener(
 ()=>{
 
 
-    /*
-        prepara linea SVG
-    */
-
-
-    if(line){
-
-
-        const length =
-        line.getTotalLength();
+    const length =
+    line.getTotalLength();
 
 
 
-        line.style.strokeDasharray =
-        length;
+    line.style.strokeDasharray =
+    length;
 
 
+    line.style.strokeDashoffset =
+    length;
 
-        line.style.strokeDashoffset =
-        length;
-
-
-    }
 
 
 });
