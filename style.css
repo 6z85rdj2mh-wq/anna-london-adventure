@@ -1742,6 +1742,200 @@ body{
 
     user-select:none;
 
+/* ======================================================
+        PHOTO VIEWER (ALBUM)
+====================================================== */
 
+.photo-viewer{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:10000;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.35s ease;
+
+}
+
+
+
+.photo-viewer.active{
+
+    opacity:1;
+
+    pointer-events:auto;
+
+}
+
+
+
+.viewer-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(5,8,20,.88);
+
+    backdrop-filter:blur(12px);
+
+}
+
+
+
+.viewer-content{
+
+    position:relative;
+
+    z-index:2;
+
+    width:min(92vw,900px);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:25px;
+
+    animation:albumOpen .35s ease;
+
+}
+
+
+
+#viewerImage{
+
+    width:100%;
+
+    max-height:75vh;
+
+    object-fit:contain;
+
+    background:white;
+
+    padding:18px 18px 60px 18px;
+
+    border-radius:6px;
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.6);
+
+}
+
+
+
+.viewer-actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+}
+
+
+
+.viewer-actions button{
+
+    border:none;
+
+    border-radius:40px;
+
+    padding:14px 26px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    background:white;
+
+    color:#111;
+
+    transition:.25s;
+
+}
+
+
+
+.viewer-actions button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+
+@keyframes albumOpen{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+        translateY(40px)
+
+        scale(.92);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+
+        translateY(0)
+
+        scale(1);
+
+    }
+
+}
+
+
+
+@media(max-width:768px){
+
+    #viewerImage{
+
+        max-height:60vh;
+
+        padding:12px 12px 45px 12px;
+
+    }
+
+    .viewer-actions{
+
+        width:100%;
+
+        flex-direction:column;
+
+    }
+
+    .viewer-actions button{
+
+        width:100%;
+
+    }
+
+}
 
 }
