@@ -28,8 +28,6 @@ const song = document.getElementById("song");
 const button = document.getElementById("startButton");
 
 
-
-
 if(content){
 
     content.style.display = "none";
@@ -37,13 +35,7 @@ if(content){
 }
 
 
-
 let started = false;
-
-
-
-
-
 
 
 /* ======================================================
@@ -53,95 +45,46 @@ let started = false;
 
 function startJourney(){
 
-
     if(started)
     return;
 
-
-
     started = true;
-
-
-
-
 
     song.volume = 0.35;
 
-
     song.play()
     .catch(()=>{
-
 
         console.log(
             "Audio bloccato dal browser"
         );
 
-
     });
 
-
-
-
-
-
-
     button.style.opacity = "0";
-
 
     button.style.transform =
     "scale(.8)";
 
-
-
-
-
-
     setTimeout(()=>{
-
 
         button.style.display = "none";
 
-
     },500);
 
-
-
-
-
-
-
     setTimeout(()=>{
-
 
         overlay.classList.add("active");
 
-
     },600);
-
-
-
-
-
-
 
     setTimeout(()=>{
 
-
         startFlight();
-
 
     },1200);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -151,50 +94,28 @@ function startJourney(){
 
 function startFlight(){
 
-
-
     const length =
     line.getTotalLength();
-
-
-
-
 
     line.style.strokeDasharray =
     length;
 
-
-
     line.style.strokeDashoffset =
     length;
-
-
-
-
-
-
-
 
     line.animate(
 
         [
 
             {
-
                 strokeDashoffset:length
-
             },
 
-
             {
-
                 strokeDashoffset:0
-
             }
 
-
         ],
-
 
         {
 
@@ -206,35 +127,15 @@ function startFlight(){
 
         }
 
-
     );
-
-
-
-
-
-
-
 
     setTimeout(()=>{
 
-
         animatePlane();
-
-
 
     },700);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -244,73 +145,31 @@ function startFlight(){
 
 function animatePlane(){
 
-
-
     const duration = 4300;
-
-
 
     const totalLength =
     path.getTotalLength();
 
-
-
-
-
     const start =
     performance.now();
 
-
-
-
-
     plane.style.opacity = "1";
 
-
-
-
-
-
-
     function frame(time){
-
-
 
         let progress =
         (time-start)/duration;
 
-
-
         if(progress>1)
         progress=1;
 
-
-
-
-
-
-
         const current =
         totalLength * progress;
-
-
-
-
-
-
-
 
         const point =
         path.getPointAtLength(
             current
         );
-
-
-
-
-
-
-
 
         const next =
         path.getPointAtLength(
@@ -322,22 +181,8 @@ function animatePlane(){
 
         );
 
-
-
-
-
-
-
-
         const matrix =
         svg.getScreenCTM();
-
-
-
-
-
-
-
 
         const screenPoint =
         new DOMPoint(
@@ -349,13 +194,6 @@ function animatePlane(){
         )
         .matrixTransform(matrix);
 
-
-
-
-
-
-
-
         const screenNext =
         new DOMPoint(
 
@@ -366,31 +204,12 @@ function animatePlane(){
         )
         .matrixTransform(matrix);
 
-
-
-
-
-
-
-
-
-
         plane.style.left =
         screenPoint.x + "px";
-
-
 
         plane.style.top =
         (screenPoint.y - 25)
         + "px";
-
-
-
-
-
-
-
-
 
         const angle =
 
@@ -410,12 +229,6 @@ function animatePlane(){
 
         Math.PI;
 
-
-
-
-
-
-
         plane.style.transform =
 
         `
@@ -423,51 +236,25 @@ function animatePlane(){
         rotate(${angle}deg)
         `;
 
-
-
-
-
-
-
         if(progress<1){
-
 
             requestAnimationFrame(
                 frame
             );
 
-
         }
 
         else{
 
-
             finishFlight();
-
 
         }
 
-
-
     }
-
-
-
-
-
 
     requestAnimationFrame(frame);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -477,17 +264,9 @@ function animatePlane(){
 
 function finishFlight(){
 
-
-
     plane.classList.add(
         "landing-glow"
     );
-
-
-
-
-
-
 
     const destination =
 
@@ -495,52 +274,23 @@ function finishFlight(){
         ".destination-dot"
     );
 
-
-
-
-
-
-
     if(destination){
-
-
 
         destination.style.transform =
         "scale(2)";
 
-
-
         destination.style.filter =
         "drop-shadow(0 0 30px white)";
 
-
-
     }
-
-
-
-
-
-
 
     setTimeout(()=>{
 
-
         closeFlight();
-
 
     },1000);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -550,61 +300,29 @@ function finishFlight(){
 
 function closeFlight(){
 
-
-
     overlay.style.opacity = "0";
-
 
     overlay.style.transform =
     "scale(1.05)";
 
-
-
-
-
-
-
     setTimeout(()=>{
-
-
 
         overlay.classList.remove(
             "active"
         );
 
-
-
-
-
-
         hero.style.opacity = "0";
-
 
         hero.style.transform =
         "scale(1.05)";
 
-
-
-
-
-
-
         setTimeout(()=>{
-
-
 
             hero.style.display =
             "none";
 
-
-
             content.style.display =
             "block";
-
-
-
-
-
 
             window.scrollTo({
 
@@ -614,31 +332,11 @@ function closeFlight(){
 
             });
 
-
-
-
-
-
         },700);
-
-
-
-
-
-
 
     },900);
 
-
-
 }
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -648,21 +346,13 @@ function closeFlight(){
 
 function toggleSection(header){
 
-
     const body =
     header.nextElementSibling;
-
-
 
     const isOpen =
     body.classList.contains(
         "open"
     );
-
-
-
-
-
 
     document
     .querySelectorAll(
@@ -670,18 +360,11 @@ function toggleSection(header){
     )
     .forEach(section=>{
 
-
         section.classList.remove(
             "open"
         );
 
-
     });
-
-
-
-
-
 
     document
     .querySelectorAll(
@@ -689,37 +372,23 @@ function toggleSection(header){
     )
     .forEach(item=>{
 
-
         item.classList.remove(
             "active"
         );
 
-
     });
 
-
-
-
-
-
-
-
-
     if(!isOpen){
-
 
         body.classList.add(
             "open"
         );
 
-
         header.classList.add(
             "active"
         );
 
-
     }
-
 
 }
 /* ======================================================
@@ -729,95 +398,42 @@ function toggleSection(header){
 
 async function uploadToSupabase(event,galleryId){
 
-
-
     const files =
     event.target.files;
-
-
 
     const gallery =
     document.getElementById(
         galleryId
     );
 
-
-
-
-
     if(!gallery)
     return;
 
-
-
-
-
-
-
     for(const file of files){
-
-
 
         try{
 
-
-
-
-
             let folder = "";
-
-
-
-
 
             if(galleryId === "degreeGallery"){
 
-
                 folder = "laurea";
 
-
             }
-
-
 
             if(galleryId === "londonGallery"){
 
-
                 folder = "londra";
 
-
             }
-
-
-
-
-
-
-
-
 
             const fileName =
 
             `${Date.now()}-${file.name}`;
 
-
-
-
-
-
-
-
             const filePath =
 
             `${folder}/${fileName}`;
-
-
-
-
-
-
-
-
 
             const {error} =
 
@@ -845,36 +461,25 @@ async function uploadToSupabase(event,galleryId){
 
             );
 
-
-
-
-
-
-
             if(error){
 
                 throw error;
 
             }
 
-
-
-
-
-
-
-
             console.log(
                 "Foto caricata:",
                 filePath
             );
 
+            await new Promise(resolve=>
 
+                setTimeout(
+                    resolve,
+                    600
+                )
 
-
-
-
-
+            );
 
             await loadGallery(
 
@@ -884,16 +489,9 @@ async function uploadToSupabase(event,galleryId){
 
             );
 
-
-
-
-
         }
 
-
         catch(error){
-
-
 
             console.error(
 
@@ -903,27 +501,13 @@ async function uploadToSupabase(event,galleryId){
 
             );
 
-
         }
-
-
 
     }
 
-
+    event.target.value = "";
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -933,36 +517,16 @@ async function uploadToSupabase(event,galleryId){
 
 async function loadGallery(folder,galleryId){
 
-
-
     const gallery =
 
     document.getElementById(
         galleryId
     );
 
-
-
-
-
     if(!gallery)
     return;
 
-
-
-
-
-
-
     gallery.innerHTML = "";
-
-
-
-
-
-
-
-
 
     const {data,error}=
 
@@ -994,17 +558,7 @@ async function loadGallery(folder,galleryId){
 
     );
 
-
-
-
-
-
-
-
-
     if(error){
-
-
 
         console.error(
 
@@ -1014,27 +568,11 @@ async function loadGallery(folder,galleryId){
 
         );
 
-
         return;
-
 
     }
 
-
-
-
-
-
-
-
-
     data.forEach(file=>{
-
-
-
-
-
-
 
         const {data:urlData}=
 
@@ -1052,77 +590,27 @@ async function loadGallery(folder,galleryId){
 
         );
 
-
-
-
-
-
-
-
-
         const img =
 
         document.createElement(
             "img"
         );
 
-
-
-
-
-
-
-
-
         img.src =
 
         urlData.publicUrl;
 
-
-
-
-
-
-
-
         img.dataset.path =
-`${folder}/${file.name}`;
 
+        `${folder}/${file.name}`;
 
-
-img.addEventListener(
-    "click",
-    ()=>{
-
-        openPhotoViewer(img);
-
-    }
-);
-
-
-
-gallery.appendChild(
-    img
-);
-
-
+        gallery.appendChild(
+            img
+        );
 
     });
 
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -1132,68 +620,32 @@ gallery.appendChild(
 
 let galleryLoaded = false;
 
-
-
 window.addEventListener(
 
 "load",
 
 ()=>{
 
-
-
-
-
     if(line){
-
-
 
         const length =
 
         line.getTotalLength();
 
-
-
-
-
-
         line.style.strokeDasharray =
 
         length;
-
-
-
-
-
 
         line.style.strokeDashoffset =
 
         length;
 
-
-
     }
-
-
-
-
-
-
-
 
     if(galleryLoaded)
     return;
 
-
-
     galleryLoaded = true;
-
-
-
-
-
-
-
 
     loadGallery(
 
@@ -1203,13 +655,6 @@ window.addEventListener(
 
     );
 
-
-
-
-
-
-
-
     loadGallery(
 
         "londra",
@@ -1218,25 +663,7 @@ window.addEventListener(
 
     );
 
-
-
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ======================================================
         PHOTO LONG PRESS SYSTEM
 ====================================================== */
@@ -1244,165 +671,134 @@ window.addEventListener(
 
 let pressTimer = null;
 
-
 let selectedImage = null;
 
+let longPressTriggered = false;
+
+let touchMoved = false;
 
 
-
-const photoMenu = 
+const photoMenu =
 document.getElementById(
     "photoMenu"
 );
 
 
-
-
+/* ======================================================
+        START / CANCEL PRESS
+====================================================== */
 
 
 function startPress(img){
 
-
     selectedImage = img;
 
+    longPressTriggered = false;
 
-
-    pressTimer = setTimeout(()=>{
-
-
-        openPhotoMenu(img);
-
-
-
-    },1500);
-
-
-
-}
-
-
-
-
-
-
-
-function cancelPress(){
-
+    touchMoved = false;
 
     clearTimeout(
         pressTimer
     );
 
+    pressTimer = setTimeout(()=>{
+
+        longPressTriggered = true;
+
+        openPhotoMenu(img);
+
+    },1000);
 
 }
 
 
+function cancelPress(openViewer=false){
+
+    clearTimeout(
+        pressTimer
+    );
+
+    if(
+
+        openViewer &&
+
+        selectedImage &&
+
+        !longPressTriggered &&
+
+        !touchMoved
+
+    ){
+
+        openPhotoViewer(
+            selectedImage
+        );
+
+    }
+
+}
 
 
-
-
-
+/* ======================================================
+        OPEN / CLOSE PHOTO MENU
+====================================================== */
 
 
 function openPhotoMenu(img){
 
-
-
     selectedImage = img;
-
-
 
     const rect =
 
     img.getBoundingClientRect();
 
-
-
-
-
-
     photoMenu.style.left =
 
-    rect.left + rect.width/2 + "px";
-
-
-
-
+    rect.left +
+    rect.width / 2 +
+    "px";
 
     photoMenu.style.top =
 
-    rect.top + rect.height/2 + "px";
-
-
-
-
-
-
+    rect.top +
+    rect.height / 2 +
+    "px";
 
     photoMenu.classList.add(
         "active"
     );
 
-
-
 }
 
 
-
-
-
-
-
-
-
 function closePhotoMenu(){
-
-
 
     photoMenu.classList.remove(
         "active"
     );
 
-
-
     selectedImage = null;
 
+    longPressTriggered = false;
 
+    touchMoved = false;
 
 }
 
 
-
-
-
-
-
-
-
 document
-
 .getElementById(
     "closePhotoMenu"
 )
-
 .addEventListener(
 
 "click",
 
 ()=>{
 
-
     closePhotoMenu();
 
-
 });
-
-
-
-
-
-
-
 
 
 /* ======================================================
@@ -1416,7 +812,51 @@ document.addEventListener(
 
 e=>{
 
+    if(
 
+        e.target.tagName === "IMG"
+
+    ){
+
+        startPress(
+            e.target
+        );
+
+    }
+
+},
+
+{
+    passive:true
+}
+
+);
+
+
+document.addEventListener(
+
+"touchmove",
+
+()=>{
+
+    touchMoved = true;
+
+    cancelPress(false);
+
+},
+
+{
+    passive:true
+}
+
+);
+
+
+document.addEventListener(
+
+"touchend",
+
+e=>{
 
     if(
 
@@ -1424,19 +864,38 @@ e=>{
 
     ){
 
-
-
-        startPress(
-            e.target
-        );
-
-
+        cancelPress(true);
 
     }
 
+},
+
+{
+    passive:true
+}
+
+);
 
 
-});
+document.addEventListener(
+
+"touchcancel",
+
+()=>{
+
+    touchMoved = true;
+
+    cancelPress(false);
+
+},
+
+{
+    passive:true
+}
+
+);
+
+
 /* ======================================================
         MOUSE LONG PRESS DESKTOP
 ====================================================== */
@@ -1448,6 +907,26 @@ document.addEventListener(
 
 e=>{
 
+    if(
+
+        e.target.tagName === "IMG"
+
+    ){
+
+        startPress(
+            e.target
+        );
+
+    }
+
+});
+
+
+document.addEventListener(
+
+"mouseup",
+
+e=>{
 
     if(
 
@@ -1455,35 +934,11 @@ e=>{
 
     ){
 
-
-        startPress(
-            e.target
-        );
-
+        cancelPress(true);
 
     }
 
-
 });
-
-
-
-
-
-document.addEventListener(
-
-"mouseup",
-
-()=>{
-
-
-    cancelPress();
-
-
-});
-
-
-
 
 
 document.addEventListener(
@@ -1492,47 +947,7 @@ document.addEventListener(
 
 ()=>{
 
-
-    cancelPress();
-
-
-});
-
-
-
-
-
-
-
-document.addEventListener(
-
-"touchend",
-
-()=>{
-
-
-    cancelPress();
-
-
-
-});
-
-
-
-
-
-
-
-document.addEventListener(
-
-"touchmove",
-
-()=>{
-
-
-    cancelPress();
-
-
+    cancelPress(false);
 
 });
 /* ======================================================
@@ -1543,38 +958,38 @@ document.addEventListener(
 document
 .getElementById("savePhoto")
 .addEventListener(
-"click",
-()=>{
 
+"click",
+
+()=>{
 
     if(!selectedImage)
     return;
 
+    const link =
 
+    document.createElement("a");
 
-    const link = document.createElement("a");
+    link.href =
+    selectedImage.src;
 
+    link.download =
+    "anna-photo.jpg";
 
-    link.href = selectedImage.src;
-
-
-    link.download = "anna-photo.jpg";
-
-
-    document.body.appendChild(link);
-
+    document.body.appendChild(
+        link
+    );
 
     link.click();
 
-
-    document.body.removeChild(link);
-
-
+    document.body.removeChild(
+        link
+    );
 
     closePhotoMenu();
 
-
 });
+
 
 /* ======================================================
         DELETE PHOTO
@@ -1584,22 +999,17 @@ document
 document
 .getElementById("deletePhoto")
 .addEventListener(
-"click",
-async ()=>{
 
+"click",
+
+async ()=>{
 
     if(!selectedImage)
     return;
 
-
-
-
     const path =
 
     selectedImage.dataset.path;
-
-
-
 
     if(!path){
 
@@ -1611,34 +1021,16 @@ async ()=>{
 
     }
 
-
-
-
-
-
-
     const confirmDelete =
 
     confirm(
         "Vuoi eliminare questa foto?"
     );
 
-
-
-
-
     if(!confirmDelete)
     return;
 
-
-
-
-
-
-
     try{
-
-
 
         const {error}=
 
@@ -1652,41 +1044,18 @@ async ()=>{
 
         .remove([path]);
 
-
-
-
-
-
-
         if(error){
 
             throw error;
 
         }
 
-
-
-
-
-
-
         console.log(
             "Foto eliminata:",
             path
         );
 
-
-
-
-
-
-
-
-        // aggiorna la gallery corretta
-
-
         if(path.startsWith("laurea/")){
-
 
             await loadGallery(
 
@@ -1696,14 +1065,9 @@ async ()=>{
 
             );
 
-
         }
 
-
-
-
         if(path.startsWith("londra/")){
-
 
             await loadGallery(
 
@@ -1713,24 +1077,13 @@ async ()=>{
 
             );
 
-
         }
 
-
-
-
-
-
         closePhotoMenu();
-
-
-
 
     }
 
     catch(error){
-
-
 
         console.error(
 
@@ -1740,36 +1093,41 @@ async ()=>{
 
         );
 
-
-
         alert(
             "Errore durante eliminazione foto"
         );
 
-
     }
-
-
 
 });
 /* ======================================================
         PHOTO VIEWER
 ====================================================== */
 
+
 const photoViewer =
+
 document.getElementById(
     "photoViewer"
 );
 
+
 const viewerImage =
+
 document.getElementById(
     "viewerImage"
 );
 
 
+/* ======================================================
+        OPEN PHOTO VIEWER
+====================================================== */
 
 
 function openPhotoViewer(img){
+
+    if(!img)
+    return;
 
     viewerImage.src =
     img.src;
@@ -1781,6 +1139,9 @@ function openPhotoViewer(img){
 }
 
 
+/* ======================================================
+        CLOSE PHOTO VIEWER
+====================================================== */
 
 
 function closePhotoViewer(){
@@ -1792,17 +1153,22 @@ function closePhotoViewer(){
 }
 
 
+/* ======================================================
+        VIEWER EVENTS
+====================================================== */
+
 
 document
 .getElementById(
     "viewerClose"
 )
 .addEventListener(
-    "click",
-    closePhotoViewer
+
+"click",
+
+closePhotoViewer
+
 );
-
-
 
 
 document
@@ -1810,6 +1176,9 @@ document
     ".viewer-background"
 )
 .addEventListener(
-    "click",
-    closePhotoViewer
+
+"click",
+
+closePhotoViewer
+
 );
