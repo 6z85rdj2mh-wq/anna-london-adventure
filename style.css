@@ -1411,6 +1411,170 @@ body{
 
 }
 
+/* ======================================================
+            PHOTO ACTION MENU
+====================================================== */
 
+
+.photo-menu{
+
+
+    position:absolute;
+
+
+    z-index:100;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    gap:10px;
+
+
+    padding:15px;
+
+
+    border-radius:18px;
+
+
+
+    background:
+
+    rgba(20,25,50,.85);
+
+
+
+    backdrop-filter:
+
+    blur(15px);
+
+
+
+    border:
+
+    1px solid rgba(255,255,255,.25);
+
+
+
+    box-shadow:
+
+    0 15px 40px rgba(0,0,0,.45);
+
+
+
+    opacity:0;
+
+
+    transform:
+
+    scale(.8);
+
+
+
+    pointer-events:none;
+
+
+    transition:
+
+    .25s ease;
+
+
+}
+
+
+
+.photo-menu.active{
+
+
+    opacity:1;
+
+
+    transform:
+
+    scale(1);
+
+
+
+    pointer-events:auto;
+
+
+}
+
+
+
+
+.photo-menu button{
+
+
+    border:none;
+
+
+    border-radius:50px;
+
+
+
+    padding:
+
+    12px 22px;
+
+
+
+    cursor:pointer;
+
+
+
+    font-family:
+
+    'Inter',
+    sans-serif;
+
+
+
+    font-size:15px;
+
+
+
+    background:white;
+
+
+    color:#111;
+
+
+
+}
+
+
+
+
+.photo-menu button:hover{
+
+
+    transform:
+
+    scale(1.05);
+
+
+}
+
+
+
+
+
+/* evita il menu nativo del telefono sulle foto */
+
+
+.gallery img{
+
+
+    -webkit-touch-callout:none;
+
+
+    user-select:none;
+
+
+}
 
 }
