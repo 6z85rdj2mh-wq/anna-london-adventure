@@ -1312,6 +1312,38 @@ let pressTimer = null;
 
 
 let selectedImage = null;
+/* ======================================================
+        PHOTO MENU CREATION
+====================================================== */
+
+
+const photoMenu = document.createElement("div");
+
+
+photoMenu.className = "photo-menu";
+
+
+photoMenu.innerHTML = `
+
+<button id="savePhoto">
+💾 Salva foto
+</button>
+
+
+<button id="deletePhoto">
+🗑 Elimina
+</button>
+
+
+<button id="closePhotoMenu">
+❌ Chiudi
+</button>
+
+`;
+
+
+
+document.body.appendChild(photoMenu);
 
 
 
