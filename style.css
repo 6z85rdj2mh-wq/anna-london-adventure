@@ -715,6 +715,45 @@ body {
 
 
 /* ======================================================
+            POLAROID CAPTION
+====================================================== */
+
+.polaroid-caption {
+  position: absolute;
+
+  left: 8px;
+
+  right: 8px;
+
+  bottom: 6px;
+
+  overflow: hidden;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  color: #302c28;
+
+  font-family:
+    "Segoe Print",
+    "Bradley Hand",
+    "Brush Script MT",
+    cursive;
+
+  font-size: 14px;
+
+  font-style: italic;
+
+  line-height: 1.1;
+
+  pointer-events: none;
+}
+
+
+/* ======================================================
             DESKTOP POLAROID INTERACTION
 ====================================================== */
 
@@ -935,6 +974,16 @@ body {
     max-height: 165px;
 
     object-fit: contain;
+  }
+
+  .polaroid-caption {
+    left: 6px;
+
+    right: 6px;
+
+    bottom: 5px;
+
+    font-size: 11px;
   }
 
   .polaroid::before {
