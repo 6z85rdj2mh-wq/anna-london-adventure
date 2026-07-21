@@ -406,34 +406,64 @@ async function uploadToSupabase(event,galleryId){
         galleryId
     );
 
-    if(!gallery)
+    if(
+        !gallery ||
+        !files ||
+        files.length === 0
+    )
     return;
+
+
+    let folder = "";
+
+
+    if(galleryId === "degreeGallery"){
+
+        folder = "laurea";
+
+    }
+
+
+    if(galleryId === "londonGallery"){
+
+        folder = "londra";
+
+    }
+
+
+    if(!folder){
+
+        console.error(
+            "Galleria non riconosciuta:",
+            galleryId
+        );
+
+        return;
+
+    }
+
 
     for(const file of files){
 
         try{
 
-            let folder = "";
+            const safeName =
 
-            if(galleryId === "degreeGallery"){
+            file.name.replace(
+                /\s+/g,
+                "-"
+            );
 
-                folder = "laurea";
-
-            }
-
-            if(galleryId === "londonGallery"){
-
-                folder = "londra";
-
-            }
 
             const fileName =
 
-            `${Date.now()}-${file.name}`;
+            `${Date.now()}-${safeName}`;
+
 
             const filePath =
 
             `${folder}/${fileName}`;
+
 
             const {error} =
 
@@ -461,32 +491,43 @@ async function uploadToSupabase(event,galleryId){
 
             );
 
+
             if(error){
 
                 throw error;
 
             }
 
-            console.log(
-                "Foto caricata:",
+
+            const {data:urlData} =
+
+            supabaseClient
+
+            .storage
+
+            .from(
+                "anna-graduation-trip"
+            )
+
+            .getPublicUrl(
                 filePath
             );
 
-            await new Promise(resolve=>
 
-                setTimeout(
-                    resolve,
-                    600
-                )
+            addPhotoToGallery(
+
+                gallery,
+
+                urlData.publicUrl,
+
+                filePath
 
             );
 
-            await loadGallery(
 
-                folder,
-
-                galleryId
-
+            console.log(
+                "Foto caricata:",
+                filePath
             );
 
         }
@@ -494,18 +535,77 @@ async function uploadToSupabase(event,galleryId){
         catch(error){
 
             console.error(
-
                 "Errore upload:",
-
                 error
+            );
 
+
+            alert(
+                "Non è stato possibile caricare la foto. Riprova."
             );
 
         }
 
     }
 
+
     event.target.value = "";
+
+}
+
+
+/* ======================================================
+        CREATE GALLERY IMAGE
+====================================================== */
+
+
+function addPhotoToGallery(
+    gallery,
+    photoUrl,
+    filePath
+){
+
+    if(
+        !gallery ||
+        !photoUrl ||
+        !filePath
+    )
+    return null;
+
+
+    const img =
+
+    document.createElement(
+        "img"
+    );
+
+
+    img.src =
+    photoUrl;
+
+
+    img.dataset.path =
+    filePath;
+
+
+    img.alt =
+    "Ricordo di Anna";
+
+
+    img.loading =
+    "lazy";
+
+
+    img.draggable =
+    false;
+
+
+    gallery.appendChild(
+        img
+    );
+
+
+    return img;
 
 }
 
@@ -523,12 +623,15 @@ async function loadGallery(folder,galleryId){
         galleryId
     );
 
+
     if(!gallery)
     return;
 
+
     gallery.innerHTML = "";
 
-    const {data,error}=
+
+    const {data,error} =
 
     await supabaseClient
 
@@ -558,6 +661,7 @@ async function loadGallery(folder,galleryId){
 
     );
 
+
     if(error){
 
         console.error(
@@ -572,9 +676,10 @@ async function loadGallery(folder,galleryId){
 
     }
 
+
     data.forEach(file=>{
 
-        const {data:urlData}=
+        const {data:urlData} =
 
         supabaseClient
 
@@ -590,22 +695,15 @@ async function loadGallery(folder,galleryId){
 
         );
 
-        const img =
 
-        document.createElement(
-            "img"
-        );
+        addPhotoToGallery(
 
-        img.src =
+            gallery,
 
-        urlData.publicUrl;
+            urlData.publicUrl,
 
-        img.dataset.path =
+            `${folder}/${file.name}`
 
-        `${folder}/${file.name}`;
-
-        gallery.appendChild(
-            img
         );
 
     });
@@ -620,6 +718,7 @@ async function loadGallery(folder,galleryId){
 
 let galleryLoaded = false;
 
+
 window.addEventListener(
 
 "load",
@@ -632,9 +731,11 @@ window.addEventListener(
 
         line.getTotalLength();
 
+
         line.style.strokeDasharray =
 
         length;
+
 
         line.style.strokeDashoffset =
 
@@ -642,10 +743,13 @@ window.addEventListener(
 
     }
 
+
     if(galleryLoaded)
     return;
 
+
     galleryLoaded = true;
+
 
     loadGallery(
 
@@ -654,6 +758,7 @@ window.addEventListener(
         "degreeGallery"
 
     );
+
 
     loadGallery(
 
@@ -675,82 +780,131 @@ let selectedImage = null;
 
 let longPressTriggered = false;
 
-let touchMoved = false;
+let pointerMoved = false;
+
+let pressStartX = 0;
+
+let pressStartY = 0;
 
 
 const photoMenu =
+
 document.getElementById(
     "photoMenu"
 );
 
 
 /* ======================================================
-        START / CANCEL PRESS
+        CHECK GALLERY IMAGE
 ====================================================== */
 
 
-function startPress(img){
+function isGalleryImage(element){
+
+    if(
+        !element ||
+        element.tagName !== "IMG"
+    )
+    return false;
+
+
+    return Boolean(
+
+        element.closest(
+            "#degreeGallery, #londonGallery"
+        )
+
+    );
+
+}
+
+
+/* ======================================================
+        START PRESS
+====================================================== */
+
+
+function startPress(img,event){
+
+    if(!isGalleryImage(img))
+    return;
+
 
     selectedImage = img;
 
     longPressTriggered = false;
 
-    touchMoved = false;
+    pointerMoved = false;
+
+
+    pressStartX =
+    event.clientX ?? 0;
+
+
+    pressStartY =
+    event.clientY ?? 0;
+
 
     clearTimeout(
         pressTimer
     );
 
+
     pressTimer = setTimeout(()=>{
+
+        if(pointerMoved)
+        return;
+
 
         longPressTriggered = true;
 
-        openPhotoMenu(img);
+
+        openPhotoMenu(
+            img
+        );
 
     },1000);
 
 }
 
 
-function cancelPress(openViewer=false){
+/* ======================================================
+        CANCEL PRESS
+====================================================== */
+
+
+function cancelPress(){
 
     clearTimeout(
         pressTimer
     );
 
-    if(
-
-        openViewer &&
-
-        selectedImage &&
-
-        !longPressTriggered &&
-
-        !touchMoved
-
-    ){
-
-        openPhotoViewer(
-            selectedImage
-        );
-
-    }
+    pressTimer = null;
 
 }
 
 
 /* ======================================================
-        OPEN / CLOSE PHOTO MENU
+        OPEN PHOTO MENU
 ====================================================== */
 
 
 function openPhotoMenu(img){
 
+    if(
+        !photoMenu ||
+        !img
+    )
+    return;
+
+
     selectedImage = img;
+
 
     const rect =
 
     img.getBoundingClientRect();
+
 
     photoMenu.style.left =
 
@@ -758,11 +912,13 @@ function openPhotoMenu(img){
     rect.width / 2 +
     "px";
 
+
     photoMenu.style.top =
 
     rect.top +
     rect.height / 2 +
     "px";
+
 
     photoMenu.classList.add(
         "active"
@@ -771,183 +927,229 @@ function openPhotoMenu(img){
 }
 
 
+/* ======================================================
+        CLOSE PHOTO MENU
+====================================================== */
+
+
 function closePhotoMenu(){
 
-    photoMenu.classList.remove(
-        "active"
-    );
+    if(photoMenu){
+
+        photoMenu.classList.remove(
+            "active"
+        );
+
+    }
+
 
     selectedImage = null;
 
     longPressTriggered = false;
 
-    touchMoved = false;
+    pointerMoved = false;
+
+    cancelPress();
 
 }
 
 
-document
-.getElementById(
+/* ======================================================
+        CLOSE MENU BUTTON
+====================================================== */
+
+
+const closePhotoMenuButton =
+
+document.getElementById(
     "closePhotoMenu"
-)
-.addEventListener(
+);
 
-"click",
 
-()=>{
+if(closePhotoMenuButton){
 
-    closePhotoMenu();
+    closePhotoMenuButton.addEventListener(
 
-});
+        "click",
+
+        ()=>{
+
+            closePhotoMenu();
+
+        }
+
+    );
+
+}
 
 
 /* ======================================================
-        TOUCH LONG PRESS
+        POINTER DOWN
 ====================================================== */
 
 
 document.addEventListener(
 
-"touchstart",
+"pointerdown",
 
-e=>{
+event=>{
 
-    if(
-
-        e.target.tagName === "IMG"
-
-    ){
-
-        startPress(
-            e.target
-        );
-
-    }
-
-},
-
-{
-    passive:true
-}
-
-);
+    const img =
+    event.target;
 
 
-document.addEventListener(
-
-"touchmove",
-
-()=>{
-
-    touchMoved = true;
-
-    cancelPress(false);
-
-},
-
-{
-    passive:true
-}
-
-);
+    if(!isGalleryImage(img))
+    return;
 
 
-document.addEventListener(
+    startPress(
+        img,
+        event
+    );
 
-"touchend",
-
-e=>{
-
-    if(
-
-        e.target.tagName === "IMG"
-
-    ){
-
-        cancelPress(true);
-
-    }
-
-},
-
-{
-    passive:true
-}
-
-);
-
-
-document.addEventListener(
-
-"touchcancel",
-
-()=>{
-
-    touchMoved = true;
-
-    cancelPress(false);
-
-},
-
-{
-    passive:true
-}
-
-);
+});
 
 
 /* ======================================================
-        MOUSE LONG PRESS DESKTOP
+        POINTER MOVE
 ====================================================== */
 
 
 document.addEventListener(
 
-"mousedown",
+"pointermove",
 
-e=>{
+event=>{
+
+    if(!pressTimer)
+    return;
+
+
+    const currentX =
+    event.clientX ?? 0;
+
+
+    const currentY =
+    event.clientY ?? 0;
+
+
+    const distanceX =
+
+    Math.abs(
+        currentX - pressStartX
+    );
+
+
+    const distanceY =
+
+    Math.abs(
+        currentY - pressStartY
+    );
+
 
     if(
-
-        e.target.tagName === "IMG"
-
+        distanceX > 10 ||
+        distanceY > 10
     ){
 
-        startPress(
-            e.target
-        );
+        pointerMoved = true;
+
+        cancelPress();
 
     }
 
 });
 
 
+/* ======================================================
+        POINTER UP
+====================================================== */
+
+
 document.addEventListener(
 
-"mouseup",
+"pointerup",
 
-e=>{
+event=>{
 
-    if(
+    const img =
+    event.target;
 
-        e.target.tagName === "IMG"
 
-    ){
+    if(!isGalleryImage(img)){
 
-        cancelPress(true);
+        cancelPress();
+
+        return;
 
     }
+
+
+    cancelPress();
+
+
+    if(pointerMoved){
+
+        pointerMoved = false;
+
+        return;
+
+    }
+
+
+    if(longPressTriggered){
+
+        longPressTriggered = false;
+
+        return;
+
+    }
+
+
+    selectedImage = img;
+
+
+    openPhotoViewer(
+        img
+    );
 
 });
 
 
+/* ======================================================
+        POINTER CANCEL
+====================================================== */
+
+
 document.addEventListener(
 
-"mouseleave",
+"pointercancel",
 
 ()=>{
 
-    cancelPress(false);
+    pointerMoved = true;
+
+    cancelPress();
+
+});
+
+
+/* ======================================================
+        PREVENT NATIVE IMAGE MENU
+====================================================== */
+
+
+document.addEventListener(
+
+"contextmenu",
+
+event=>{
+
+    if(isGalleryImage(event.target)){
+
+        event.preventDefault();
+
+    }
 
 });
 /* ======================================================
@@ -955,40 +1157,62 @@ document.addEventListener(
 ====================================================== */
 
 
-document
-.getElementById("savePhoto")
-.addEventListener(
+const savePhotoButton =
 
-"click",
+document.getElementById(
+    "savePhoto"
+);
 
-()=>{
 
-    if(!selectedImage)
-    return;
+if(savePhotoButton){
 
-    const link =
+    savePhotoButton.addEventListener(
 
-    document.createElement("a");
+        "click",
 
-    link.href =
-    selectedImage.src;
+        ()=>{
 
-    link.download =
-    "anna-photo.jpg";
+            if(!selectedImage)
+            return;
 
-    document.body.appendChild(
-        link
+
+            const link =
+
+            document.createElement(
+                "a"
+            );
+
+
+            link.href =
+
+            selectedImage.src;
+
+
+            link.download =
+
+            "anna-photo.jpg";
+
+
+            document.body.appendChild(
+                link
+            );
+
+
+            link.click();
+
+
+            document.body.removeChild(
+                link
+            );
+
+
+            closePhotoMenu();
+
+        }
+
     );
 
-    link.click();
-
-    document.body.removeChild(
-        link
-    );
-
-    closePhotoMenu();
-
-});
+}
 
 
 /* ======================================================
@@ -996,110 +1220,145 @@ document
 ====================================================== */
 
 
-document
-.getElementById("deletePhoto")
-.addEventListener(
+const deletePhotoButton =
 
-"click",
+document.getElementById(
+    "deletePhoto"
+);
 
-async ()=>{
 
-    if(!selectedImage)
-    return;
+if(deletePhotoButton){
 
-    const path =
+    deletePhotoButton.addEventListener(
 
-    selectedImage.dataset.path;
+        "click",
 
-    if(!path){
+        async ()=>{
 
-        console.error(
-            "Percorso foto non trovato"
-        );
+            if(!selectedImage)
+            return;
 
-        return;
 
-    }
+            const imageToDelete =
 
-    const confirmDelete =
+            selectedImage;
 
-    confirm(
-        "Vuoi eliminare questa foto?"
+
+            const path =
+
+            imageToDelete.dataset.path;
+
+
+            if(!path){
+
+                console.error(
+                    "Percorso foto non trovato"
+                );
+
+                return;
+
+            }
+
+
+            const confirmDelete =
+
+            confirm(
+                "Vuoi eliminare questa foto?"
+            );
+
+
+            if(!confirmDelete)
+            return;
+
+
+            try{
+
+                const {error} =
+
+                await supabaseClient
+
+                .storage
+
+                .from(
+                    "anna-graduation-trip"
+                )
+
+                .remove([
+                    path
+                ]);
+
+
+                if(error){
+
+                    throw error;
+
+                }
+
+
+                console.log(
+                    "Foto eliminata:",
+                    path
+                );
+
+
+                /*
+                Rimuove subito la foto
+                dalla schermata
+                */
+
+                imageToDelete.remove();
+
+
+                /*
+                Chiude il menu
+                e azzera la selezione
+                */
+
+                closePhotoMenu();
+
+
+                /*
+                Se il viewer stava mostrando
+                la stessa foto, lo chiude
+                */
+
+                if(
+
+                    viewerImage &&
+
+                    viewerImage.src ===
+                    imageToDelete.src
+
+                ){
+
+                    closePhotoViewer();
+
+                }
+
+            }
+
+            catch(error){
+
+                console.error(
+
+                    "Errore eliminazione:",
+
+                    error
+
+                );
+
+
+                alert(
+                    "Errore durante eliminazione foto"
+                );
+
+            }
+
+        }
+
     );
 
-    if(!confirmDelete)
-    return;
-
-    try{
-
-        const {error}=
-
-        await supabaseClient
-
-        .storage
-
-        .from(
-            "anna-graduation-trip"
-        )
-
-        .remove([path]);
-
-        if(error){
-
-            throw error;
-
-        }
-
-        console.log(
-            "Foto eliminata:",
-            path
-        );
-
-        if(path.startsWith("laurea/")){
-
-            await loadGallery(
-
-                "laurea",
-
-                "degreeGallery"
-
-            );
-
-        }
-
-        if(path.startsWith("londra/")){
-
-            await loadGallery(
-
-                "londra",
-
-                "londonGallery"
-
-            );
-
-        }
-
-        closePhotoMenu();
-
-    }
-
-    catch(error){
-
-        console.error(
-
-            "Errore eliminazione:",
-
-            error
-
-        );
-
-        alert(
-            "Errore durante eliminazione foto"
-        );
-
-    }
-
-});
+}
 /* ======================================================
         PHOTO VIEWER
 ====================================================== */
@@ -1119,6 +1378,83 @@ document.getElementById(
 );
 
 
+const viewerCloseButton =
+
+document.getElementById(
+    "viewerClose"
+);
+
+
+const viewerBackground =
+
+document.querySelector(
+    ".viewer-background"
+);
+
+
+/*
+I vecchi pulsanti Salva ed Elimina
+del viewer vengono riutilizzati
+come precedente e successiva
+*/
+
+
+const viewerPreviousButton =
+
+document.getElementById(
+    "viewerSave"
+);
+
+
+const viewerNextButton =
+
+document.getElementById(
+    "viewerDelete"
+);
+
+
+let viewerPhotos = [];
+
+let viewerIndex = 0;
+
+let viewerTouchStartX = 0;
+
+let viewerTouchEndX = 0;
+
+
+/* ======================================================
+        GET CURRENT GALLERY PHOTOS
+====================================================== */
+
+
+function getGalleryPhotos(img){
+
+    if(!img)
+    return [];
+
+
+    const gallery =
+
+    img.closest(
+        "#degreeGallery, #londonGallery"
+    );
+
+
+    if(!gallery)
+    return [];
+
+
+    return Array.from(
+
+        gallery.querySelectorAll(
+            "img"
+        )
+
+    );
+
+}
+
+
 /* ======================================================
         OPEN PHOTO VIEWER
 ====================================================== */
@@ -1126,15 +1462,200 @@ document.getElementById(
 
 function openPhotoViewer(img){
 
-    if(!img)
+    if(
+        !photoViewer ||
+        !viewerImage ||
+        !img
+    )
     return;
 
-    viewerImage.src =
-    img.src;
+
+    viewerPhotos =
+
+    getGalleryPhotos(
+        img
+    );
+
+
+    viewerIndex =
+
+    viewerPhotos.indexOf(
+        img
+    );
+
+
+    if(viewerIndex < 0){
+
+        viewerIndex = 0;
+
+    }
+
+
+    updateViewerImage();
+
 
     photoViewer.classList.add(
         "active"
     );
+
+
+    document.body.style.overflow =
+    "hidden";
+
+}
+
+
+/* ======================================================
+        UPDATE VIEWER IMAGE
+====================================================== */
+
+
+function updateViewerImage(){
+
+    if(
+        !viewerImage ||
+        viewerPhotos.length === 0
+    )
+    return;
+
+
+    const currentPhoto =
+
+    viewerPhotos[
+        viewerIndex
+    ];
+
+
+    viewerImage.src =
+
+    currentPhoto.src;
+
+
+    viewerImage.alt =
+
+    currentPhoto.alt ||
+    "Foto dell'album";
+
+
+    updateViewerButtons();
+
+}
+
+
+/* ======================================================
+        UPDATE VIEWER BUTTONS
+====================================================== */
+
+
+function updateViewerButtons(){
+
+    const hasMultiplePhotos =
+
+    viewerPhotos.length > 1;
+
+
+    if(viewerPreviousButton){
+
+        viewerPreviousButton.style.display =
+
+        hasMultiplePhotos
+        ? "flex"
+        : "none";
+
+
+        viewerPreviousButton.innerHTML =
+        "←";
+
+
+        viewerPreviousButton.setAttribute(
+
+            "aria-label",
+
+            "Foto precedente"
+
+        );
+
+    }
+
+
+    if(viewerNextButton){
+
+        viewerNextButton.style.display =
+
+        hasMultiplePhotos
+        ? "flex"
+        : "none";
+
+
+        viewerNextButton.innerHTML =
+        "→";
+
+
+        viewerNextButton.setAttribute(
+
+            "aria-label",
+
+            "Foto successiva"
+
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+        PREVIOUS PHOTO
+====================================================== */
+
+
+function showPreviousPhoto(){
+
+    if(viewerPhotos.length <= 1)
+    return;
+
+
+    viewerIndex--;
+
+
+    if(viewerIndex < 0){
+
+        viewerIndex =
+        viewerPhotos.length - 1;
+
+    }
+
+
+    updateViewerImage();
+
+}
+
+
+/* ======================================================
+        NEXT PHOTO
+====================================================== */
+
+
+function showNextPhoto(){
+
+    if(viewerPhotos.length <= 1)
+    return;
+
+
+    viewerIndex++;
+
+
+    if(
+        viewerIndex >=
+        viewerPhotos.length
+    ){
+
+        viewerIndex = 0;
+
+    }
+
+
+    updateViewerImage();
 
 }
 
@@ -1146,151 +1667,214 @@ function openPhotoViewer(img){
 
 function closePhotoViewer(){
 
+    if(!photoViewer)
+    return;
+
+
     photoViewer.classList.remove(
         "active"
+    );
+
+
+    document.body.style.overflow =
+    "";
+
+
+    viewerPhotos = [];
+
+    viewerIndex = 0;
+
+}
+
+
+/* ======================================================
+        VIEWER BUTTON EVENTS
+====================================================== */
+
+
+if(viewerPreviousButton){
+
+    viewerPreviousButton.addEventListener(
+
+        "click",
+
+        event=>{
+
+            event.stopPropagation();
+
+            showPreviousPhoto();
+
+        }
+
+    );
+
+}
+
+
+if(viewerNextButton){
+
+    viewerNextButton.addEventListener(
+
+        "click",
+
+        event=>{
+
+            event.stopPropagation();
+
+            showNextPhoto();
+
+        }
+
+    );
+
+}
+
+
+if(viewerCloseButton){
+
+    viewerCloseButton.addEventListener(
+
+        "click",
+
+        event=>{
+
+            event.stopPropagation();
+
+            closePhotoViewer();
+
+        }
+
+    );
+
+}
+
+
+if(viewerBackground){
+
+    viewerBackground.addEventListener(
+
+        "click",
+
+        closePhotoViewer
+
     );
 
 }
 
 
 /* ======================================================
-        VIEWER EVENTS
+        SWIPE VIEWER
 ====================================================== */
 
 
-document
-.getElementById(
-    "viewerClose"
-)
-.addEventListener(
+if(photoViewer){
 
-"click",
+    photoViewer.addEventListener(
 
-closePhotoViewer
+        "touchstart",
 
-);
+        event=>{
 
+            viewerTouchStartX =
 
-document
-.querySelector(
-    ".viewer-background"
-)
-.addEventListener(
+            event.changedTouches[0]
+            .screenX;
 
-"click",
+        },
 
-closePhotoViewer
+        {
+            passive:true
+        }
 
-);
-
-/* ======================================================
-        DELETE PHOTO FROM VIEWER
-====================================================== */
-
-
-document
-.getElementById(
-    "viewerDelete"
-)
-.addEventListener(
-
-"click",
-
-async ()=>{
-
-    if(!selectedImage)
-    return;
-
-    const path =
-    selectedImage.dataset.path;
-
-    if(!path){
-
-        console.error(
-            "Percorso foto non trovato"
-        );
-
-        return;
-
-    }
-
-    const confirmDelete =
-
-    confirm(
-        "Vuoi eliminare questa foto?"
     );
 
-    if(!confirmDelete)
+
+    photoViewer.addEventListener(
+
+        "touchend",
+
+        event=>{
+
+            viewerTouchEndX =
+
+            event.changedTouches[0]
+            .screenX;
+
+
+            const swipeDistance =
+
+            viewerTouchEndX -
+            viewerTouchStartX;
+
+
+            if(
+                Math.abs(
+                    swipeDistance
+                ) < 50
+            )
+            return;
+
+
+            if(swipeDistance > 0){
+
+                showPreviousPhoto();
+
+            }
+
+            else{
+
+                showNextPhoto();
+
+            }
+
+        },
+
+        {
+            passive:true
+        }
+
+    );
+
+}
+
+
+/* ======================================================
+        KEYBOARD VIEWER CONTROLS
+====================================================== */
+
+
+document.addEventListener(
+
+"keydown",
+
+event=>{
+
+    if(
+        !photoViewer ||
+        !photoViewer.classList.contains(
+            "active"
+        )
+    )
     return;
 
-    try{
 
-        const {error} =
+    if(event.key === "ArrowLeft"){
 
-        await supabaseClient
-
-        .storage
-
-        .from(
-            "anna-graduation-trip"
-        )
-
-        .remove([path]);
-
-        if(error){
-
-            throw error;
-
-        }
-
-        console.log(
-            "Foto eliminata:",
-            path
-        );
-
-        closePhotoViewer();
-
-        if(path.startsWith("laurea/")){
-
-            await loadGallery(
-
-                "laurea",
-
-                "degreeGallery"
-
-            );
-
-        }
-
-        if(path.startsWith("londra/")){
-
-            await loadGallery(
-
-                "londra",
-
-                "londonGallery"
-
-            );
-
-        }
-
-        selectedImage = null;
+        showPreviousPhoto();
 
     }
 
-    catch(error){
 
-        console.error(
+    if(event.key === "ArrowRight"){
 
-            "Errore eliminazione:",
+        showNextPhoto();
 
-            error
+    }
 
-        );
 
-        alert(
-            "Errore durante eliminazione foto"
-        );
+    if(event.key === "Escape"){
+
+        closePhotoViewer();
 
     }
 
