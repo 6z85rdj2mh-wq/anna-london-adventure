@@ -1516,7 +1516,43 @@ Niente deformazioni.
     text-anchor:middle;
 
 }
+.map-dot{
 
+    fill:white;
+
+    filter:
+    drop-shadow(0 0 10px white);
+
+}
+
+
+
+.map-label{
+
+    fill:white;
+
+    font-size:28px;
+
+    letter-spacing:3px;
+
+    font-family:'Inter', sans-serif;
+
+}
+
+.map-label{
+
+    fill:white;
+
+    font-size:26px;
+
+    font-weight:500;
+
+    letter-spacing:4px;
+
+    filter:
+    drop-shadow(0 0 8px rgba(255,255,255,.8));
+
+}
 
 
 }
