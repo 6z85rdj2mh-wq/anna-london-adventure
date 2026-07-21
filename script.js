@@ -700,7 +700,7 @@ async function uploadToSupabase(event, galleryId){
             const {data:urlData} =
             supabaseClient
             .storage
-            .from("anna-adventure")
+            .from("anna-graduation-trip")
             .getPublicUrl(
                 filePath
             );
