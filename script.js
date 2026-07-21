@@ -1086,20 +1086,24 @@ async function loadGallery(folder,galleryId){
 
 
         img.dataset.path =
-
-        `${folder}/${file.name}`;
-
+`${folder}/${file.name}`;
 
 
 
+img.addEventListener(
+    "click",
+    ()=>{
+
+        openPhotoViewer(img);
+
+    }
+);
 
 
 
-
-
-        gallery.appendChild(
-            img
-        );
+gallery.appendChild(
+    img
+);
 
 
 
