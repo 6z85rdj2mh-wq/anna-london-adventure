@@ -1151,9 +1151,9 @@ translate(100px,50px);
 
 .flight-container{
 
-    height:420px;
+    height:350px;
 
-    overflow:hidden;
+    width:100%;
 
 }
 
@@ -1161,16 +1161,17 @@ translate(100px,50px);
 
 #flightSVG{
 
-    width:130%;
+    width:100%;
 
     height:100%;
 
-    left:-15%;
-
     position:absolute;
 
-}
+    left:0;
 
+    top:0;
+
+}
 
 
 
@@ -1182,20 +1183,16 @@ translate(100px,50px);
 
 
 
-
 .city{
 
     font-size:12px;
 
-    letter-spacing:1px;
-
 }
-
 
 
 .perugia{
 
-    left:8%;
+    left:14%;
 
     top:72%;
 
@@ -1205,9 +1202,9 @@ translate(100px,50px);
 
 .london{
 
-    left:75%;
+    left:86%;
 
-    top:35%;
+    top:34%;
 
 }
 
@@ -1243,5 +1240,10 @@ translate(100px,50px);
 }
 
 
+}.london span{
+
+    transform:translateX(-100%);
+
 }
+
 }
