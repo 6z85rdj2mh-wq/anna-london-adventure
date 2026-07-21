@@ -1042,6 +1042,7 @@ async function loadGallery(folder,galleryId){
 
     if(!gallery)
     return;
+   gallery.innerHTML="";
 
 
 
