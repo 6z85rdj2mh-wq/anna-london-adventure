@@ -1,4 +1,3 @@
-```javascript
 /* ======================================================
    ANNA'S LONDON ADVENTURE
    SCRIPT.JS FINAL CLEAN
@@ -392,7 +391,7 @@ function toggleSection(header){
     }
 
 }
-```
+
 /* ======================================================
             GALLERY PAGINATION SETTINGS
 ====================================================== */
@@ -543,13 +542,6 @@ async function uploadToSupabase(event,galleryId){
             );
 
 
-            /*
-            La fotografia viene aggiunta
-            immediatamente alla bacheca,
-            senza ricaricare la pagina.
-            */
-
-
             addPhotoToGallery(
 
                 gallery,
@@ -585,12 +577,6 @@ async function uploadToSupabase(event,galleryId){
     }
 
 
-    /*
-    Permette di selezionare di nuovo
-    anche la stessa fotografia.
-    */
-
-
     event.target.value = "";
 
 }
@@ -613,13 +599,6 @@ function addPhotoToGallery(
         !filePath
     )
     return null;
-
-
-    /*
-    Evita duplicati quando una foto
-    appena caricata viene poi incontrata
-    dalla paginazione di Supabase.
-    */
 
 
     const existingImage =
@@ -685,13 +664,6 @@ function addPhotoToGallery(
     false;
 
 
-    /*
-    Rotazione e altezza leggermente casuali.
-    Le Polaroid rimangono sempre separate
-    nelle rispettive celle della griglia.
-    */
-
-
     const rotation =
 
     Math.random() * 6 - 3;
@@ -718,13 +690,6 @@ function addPhotoToGallery(
         `${verticalOffset.toFixed(2)}px`
 
     );
-
-
-    /*
-    Puntine di colori casuali.
-    Ogni colore ha una tonalità
-    più scura per l'effetto tridimensionale.
-    */
 
 
     const pinColors = [
@@ -919,13 +884,6 @@ async function loadGallery(
 
 
     try{
-
-        /*
-        Richiediamo una foto in più
-        per sapere se esiste una pagina
-        successiva senza fare una seconda richiesta.
-        */
-
 
         const {data,error} =
 
@@ -1187,6 +1145,7 @@ window.addEventListener(
     );
 
 });
+
 /* ======================================================
         PHOTO LONG PRESS SYSTEM
 ====================================================== */
@@ -1256,11 +1215,17 @@ function startPress(img,event){
 
 
     pressStartX =
-    event.clientX ?? 0;
+
+    typeof event.clientX === "number"
+    ? event.clientX
+    : 0;
 
 
     pressStartY =
-    event.clientY ?? 0;
+
+    typeof event.clientY === "number"
+    ? event.clientY
+    : 0;
 
 
     clearTimeout(
@@ -1446,11 +1411,17 @@ event=>{
 
 
     const currentX =
-    event.clientX ?? 0;
+
+    typeof event.clientX === "number"
+    ? event.clientX
+    : 0;
 
 
     const currentY =
-    event.clientY ?? 0;
+
+    typeof event.clientY === "number"
+    ? event.clientY
+    : 0;
 
 
     const distanceX =
@@ -1746,12 +1717,6 @@ if(deletePhotoButton){
                 );
 
 
-                /*
-                Rimuove immediatamente
-                tutta la Polaroid dalla bacheca.
-                */
-
-
                 if(polaroidToDelete){
 
                     polaroidToDelete.remove();
@@ -1763,13 +1728,6 @@ if(deletePhotoButton){
                     imageToDelete.remove();
 
                 }
-
-
-                /*
-                Corregge l'offset della paginazione.
-                In questo modo la prossima pagina
-                non salta una fotografia.
-                */
 
 
                 if(
@@ -1784,12 +1742,6 @@ if(deletePhotoButton){
 
 
                 closePhotoMenu();
-
-
-                /*
-                Se il viewer stava mostrando
-                la stessa fotografia, lo chiude.
-                */
 
 
                 if(
@@ -1829,7 +1781,7 @@ if(deletePhotoButton){
     );
 
 }
-```javascript
+
 /* ======================================================
         PHOTO VIEWER
 ====================================================== */
@@ -1861,13 +1813,6 @@ const viewerBackground =
 document.querySelector(
     ".viewer-background"
 );
-
-
-/*
-I due pulsanti laterali del viewer
-vengono utilizzati per mostrare
-la foto precedente e successiva.
-*/
 
 
 const viewerPreviousButton =
@@ -2181,7 +2126,6 @@ if(viewerPreviousButton){
 
             event.stopPropagation();
 
-
             showPreviousPhoto();
 
         }
@@ -2201,7 +2145,6 @@ if(viewerNextButton){
 
             event.stopPropagation();
 
-
             showNextPhoto();
 
         }
@@ -2220,7 +2163,6 @@ if(viewerCloseButton){
         event=>{
 
             event.stopPropagation();
-
 
             closePhotoViewer();
 
@@ -2362,7 +2304,6 @@ event=>{
 
         event.preventDefault();
 
-
         showPreviousPhoto();
 
     }
@@ -2371,7 +2312,6 @@ event=>{
     if(event.key === "ArrowRight"){
 
         event.preventDefault();
-
 
         showNextPhoto();
 
@@ -2382,10 +2322,8 @@ event=>{
 
         event.preventDefault();
 
-
         closePhotoViewer();
 
     }
 
 });
-```
