@@ -434,6 +434,127 @@ const galleryStates = {
 };
 
 
+
+/* ======================================================
+        PHOTO CAPTION HELPERS
+====================================================== */
+
+
+function encodePhotoCaption(text){
+
+    try{
+
+        const bytes =
+
+        new TextEncoder()
+        .encode(text);
+
+
+        let binary = "";
+
+
+        bytes.forEach(byte=>{
+
+            binary +=
+            String.fromCharCode(byte);
+
+        });
+
+
+        return btoa(binary)
+
+        .replace(/\+/g,"-")
+
+        .replace(/\//g,"_")
+
+        .replace(/=+$/,"");
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Errore codifica didascalia:",
+            error
+        );
+
+
+        return "";
+
+    }
+
+}
+
+
+function decodePhotoCaption(value){
+
+    if(!value)
+    return "";
+
+
+    try{
+
+        const normalized =
+
+        value
+
+        .replace(/-/g,"+")
+
+        .replace(/_/g,"/");
+
+
+        const padding =
+
+        "=".repeat(
+
+            (4 - normalized.length % 4) % 4
+
+        );
+
+
+        const binary =
+
+        atob(
+            normalized + padding
+        );
+
+
+        const bytes =
+
+        Uint8Array.from(
+
+            binary,
+
+            character=>
+
+            character.charCodeAt(0)
+
+        );
+
+
+        return new TextDecoder()
+
+        .decode(bytes)
+
+        .trim();
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Errore lettura didascalia:",
+            error
+        );
+
+
+        return "";
+
+    }
+
+}
+
+
 /* ======================================================
             SUPABASE PHOTO UPLOAD
 ====================================================== */
@@ -468,6 +589,36 @@ async function uploadToSupabase(event,galleryId){
 
         try{
 
+            const requestedCaption =
+
+            prompt(
+
+                "Scrivi una breve didascalia per questa foto:",
+
+                ""
+
+            );
+
+
+            const captionText =
+
+            requestedCaption &&
+            requestedCaption.trim()
+
+            ? requestedCaption
+              .trim()
+              .slice(0,80)
+
+            : "Un ricordo speciale";
+
+
+            const encodedCaption =
+
+            encodePhotoCaption(
+                captionText
+            );
+
+
             const safeName =
 
             file.name.replace(
@@ -485,7 +636,7 @@ async function uploadToSupabase(event,galleryId){
 
             const fileName =
 
-            `${Date.now()}-${uniquePart}-${safeName}`;
+            `${Date.now()}-${uniquePart}--caption-${encodedCaption}--${safeName}`;
 
 
             const filePath =
@@ -759,8 +910,102 @@ function addPhotoToGallery(
     );
 
 
+    const storedFileName =
+
+    filePath.split(
+        "/"
+    )
+    .pop() || "";
+
+
+    const savedCaptionMatch =
+
+    storedFileName.match(
+
+        /--caption-([A-Za-z0-9_-]+)--/
+
+    );
+
+
+    const savedCaption =
+
+    savedCaptionMatch
+
+    ? decodePhotoCaption(
+        savedCaptionMatch[1]
+      )
+
+    : "";
+
+
+    const originalFileName =
+
+    storedFileName.replace(
+        /^\d+-[a-z0-9]+-/i,
+        ""
+    );
+
+
+    const cleanCaption =
+
+    originalFileName
+    .replace(
+        /\.[^/.]+$/,
+        ""
+    )
+    .replace(
+        /[-_]+/g,
+        " "
+    )
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .trim();
+
+
+    const captionText =
+
+    savedCaption ||
+
+    (
+
+        cleanCaption
+
+        ? cleanCaption.charAt(0).toUpperCase() +
+          cleanCaption.slice(1)
+
+        : "Un ricordo speciale"
+
+    );
+
+
+    const caption =
+
+    document.createElement(
+        "div"
+    );
+
+
+    caption.className =
+    "polaroid-caption";
+
+
+    caption.textContent =
+    captionText;
+
+
+    caption.title =
+    captionText;
+
+
     polaroid.appendChild(
         img
+    );
+
+
+    polaroid.appendChild(
+        caption
     );
 
 
